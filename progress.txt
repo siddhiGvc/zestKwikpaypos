@@ -1,0 +1,131 @@
+020124
+added table for report
+adding save report and get report
+
+291223
+added /SetModel and /SetName
+
+281223
+adding two APIs to set and get values of machine
+API/getSettings
+send machineNumber
+Get Price,MaximumBurningTime,AlarmTime,DoorCount,MinA, MaxA, MinB,MaxB,Model,Manufacturer
+
+API/setSettings
+send machineNumber
+Send Price,MaximumBurningTime,AlarmTime,DoorCount,MinA, MaxA, MinB,MaxB,Model,Manufacturer
+
+221223
+Adding Zone in Hourly report database
+Adding sum of zones in hourly report
+
+191223
+Adding x minute scheduler
+
+191223
+Adding APIs for Hourly Report
+
+
+181223
+Adding Refund from MQTT Command
+*DN,RFN,Amount,TxnID#
+
+
+141223
+10:20 - 10:45
+Decided to take support of some one experienced person.
+1. Command to confirm cash received *DN,UPI,Amount,TxnID# *02884,UPI,1000,11122334#
+(if mqtt packet received - onmessage - DN = serial and mqtt.TxnID = Req.body.TxnID )
+    clear timer
+Tested on local host
+
+
+10:45 - 11:10
+2. test on server (need working machine also for better testing.Simple testing done
+bug - timer clear coming multiple times some time.
+
+
+
+
+
+131223
+Add refund
+Command to send Cash Received is *UPI,Amount,TxnID# (10:00 - 10:15/13Dec23)
+add paytmRefund.js, paytmChecksum.js (10:15-10:25)
+add merchantKey in machinesdatabase (Refund needs merchant key also) (10:25 - 10:50)
+add merchantKey in refund API (10:50 - 11:00)
+verified that amt is TransactionAmount in Rs  and not in Paisas 
+refun Tried, getting reasonable response (11:00 - 11:10)
+try this on vending-iot.com with actual payments and refunds (11:10 - 11:20)
+If no confirmation received, then initiate refund - DOME
+
+Break 11:30 to 13:15
+increase time to 60 seconds (13:15 - 13:15)
+
+
+13:15 - 14:00 Siddhi experiement - no result
+14:00 - 14:30 MQTT incoming packets shoul work as before. - DONE 
+
+14:30 - 14:45 Vinay experiment with Siddhi Help 
+2. Command to inititate refund *DN,RFM,Amount,TxnID#
+*02884,TXN,900,1111222)
+if TxnID = TxnID
+amount/1000 <=req.body.TxnAmount
+
+
+
+(Data4 is MID and Data3 is MerchantKey)
+
+101223
+modified mqtt.js to use class constructor
+now send message by paytm controller
+add refund
+
+091223
+adding PAYTM backed as tested by Siddhi
+to be done
+1. add https in vending-iot.com. Point to port 3000/3001
+2. data database - DONE
+3. add Routes - DONE
+4. add Models - DONE
+4. add controller - DONE
+5. MQTT publish
+
+281123
+modified API /add/setDoorStatus to save doorStatus in MachineData
+tested modified API for saving door status in machineData
+
+lat/long set to 99.99 if null
+
+221123
+add databased for SimulateVending -userName,Zone,Ward,Beats,Qty,BurnCycles
+route to add and get log values
+
+url/add/setDoorStatus
+userName, machineID,currentLat,CurrentLong,doorStatus
+
+
+
+281123
+1. get lock status while getting machine info - already done as we are sending lock status in last_status
+2. set lock status as filter
+
+3. set lock status simulator  
+API /add/SetLockStatus
+City/Zone/Ward/Beats
+machineID
+LockStatus
+
+(Routes/controllers)
+
+211123
+add API /getloginfo
+input is startdate,enddate
+reply with loggedin info between both date and send backend
+target 1 hour 10:30 to 11:30
+201123
+add a API that will be called using /savelogin
+input is username, lat,long
+database is username, lat, long, created at, connectedTill.
+backend working at 16:10 (5 hours spent in adding a new database, creating route, and saving data)
+
