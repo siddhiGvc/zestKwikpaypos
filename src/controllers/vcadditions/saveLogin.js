@@ -44,6 +44,7 @@ export const saveLogin=async(req,res)=>{
             loginLat: req.body.lat || "99.99",
             loginLong: req.body.long || "99.99",
             LoggedInTill: currentDateTime,
+            deviceModel:req.body.deviceModel
         }) 
         res.status(200).json("okay");
     }

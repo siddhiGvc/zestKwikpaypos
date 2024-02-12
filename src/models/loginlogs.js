@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     userName : DataTypes.STRING,
     loginLat : DataTypes.STRING,
     loginLong : DataTypes.STRING,
-    LoggedInTill: DataTypes.DATE
+    LoggedInTill: DataTypes.DATE,
+    deviceModel:DataTypes.STRING
   }, {});
   loginLogs.associate = function(models) {
     // associations can be defined here
