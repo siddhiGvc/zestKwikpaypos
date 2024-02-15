@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
-
+const os = require('os');
+const dns = require('dns');
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
@@ -37,7 +38,20 @@ app.use('/add',vcRoutes);
 app.use('/', paytmRouter);
 app.use('/colors',colorRouter);
 app.use('/inventory',inventoryRouter);
-app.get('/hbt', (req, res) => res.send('Ok'));
+app.get('/hbt', (req, res) => {
+  const clientIP = req.ip.replace('::ffff:', '');
+
+  // Perform a reverse DNS lookup to get the hostname
+  dns.reverse(clientIP, (err, hostnames) => {
+    if (err) {
+      res.send('Unable to determine client hostname');
+    } else {
+      const clientHostname = hostnames[0] || 'Unknown';
+      res.send(`Client Hostname: ${clientHostname}`);
+    }
+  });
+}
+);
  
  
 

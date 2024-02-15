@@ -39,12 +39,12 @@ export const getHourlyReportData=async(req,res)=>{
     try{
         //console.log(req.body);    
         const time =req.body.hourTime;
-        //console.log(time); //1
+        //starting time //1
 
         const timeArray = time.split(":");
         timeArray[1] = "59";
         const Time = timeArray.join(":");
-         //console.log(Time); //2
+         //ending time; //2
 
         const dateObj1 = new Date(`1970-01-01T${time}`);
 

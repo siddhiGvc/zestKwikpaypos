@@ -1,4 +1,5 @@
 import { sequelize, loginLogs } from '../../models';
+const os = require('os');
 import dotenv from 'dotenv'
 import { successResponse, errorResponse, uniqueId } from '../../helpers';
 const { Op } = require("sequelize");
@@ -22,19 +23,21 @@ export const getLogInfo = async(req,res) => {
               },
               order: [['createdAt', 'ASC'], ['id', 'ASC']],
             });
+    
           return successResponse(req, res, { obj });    
 //          res.status(200).json("okay"); 
     }  
 
     catch(err){
         console.log("error in getting login info");
+        console.log(err);
     
     }
 
 }
 export const saveLogin=async(req,res)=>{
     try{
-        // console.log("Saving Login Info")
+        console.log("Saving Login Info")
         // console.log(req.body.userName);
         // console.log(req.body.lat);
         // console.log(req.body.long);
@@ -44,7 +47,9 @@ export const saveLogin=async(req,res)=>{
             loginLat: req.body.lat || "99.99",
             loginLong: req.body.long || "99.99",
             LoggedInTill: currentDateTime,
-            deviceModel:req.body.deviceModel
+            deviceModel: req.body.deviceModel,
+            Remark:req.body.Remark,
+            MachineNumber:req.body.MachineNumber
         }) 
         res.status(200).json("okay");
     }
