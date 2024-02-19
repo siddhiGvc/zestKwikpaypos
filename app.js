@@ -16,7 +16,7 @@ import vcRoutes from './src/routes/vcroutes';
 import colorRouter from './src/routes/hourlyReportColors';
 import inventoryRouter from './src/routes/inventory';
 const paytmRouter=require("./src/routes/paytmRoutes")
-
+const customerRouter=require("./src/routes/customer");
 
 dotenv.config();
 require('./src/config/sequelize');
@@ -38,6 +38,7 @@ app.use('/add',vcRoutes);
 app.use('/', paytmRouter);
 app.use('/colors',colorRouter);
 app.use('/inventory',inventoryRouter);
+app.use('/customers',customerRouter);
 app.get('/hbt', (req, res) => {
   const clientIP = req.ip.replace('::ffff:', '');
 
