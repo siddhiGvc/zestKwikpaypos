@@ -14,4 +14,7 @@ customerRouter.get("/deleteCustomerData",CustomeDataController.deleteById);
 customerRouter.post("/postCustomerInfo",CustomeInfoController.postCustomerInfo);
 customerRouter.post("/postCustomerData",CustomeDataController.postCustomerData);
 
+customerRouter.post("/getCustomerDataByName",CustomeDataController.getCustomerDataByName);
+customerRouter.post("/getCustomerInfoByName",CustomeInfoController.getCustomerInfoByName);
+
 module.exports=customerRouter;

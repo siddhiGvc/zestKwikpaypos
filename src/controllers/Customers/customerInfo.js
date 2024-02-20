@@ -85,6 +85,22 @@ export const getAllCustomerInfo=async(req,res)=>{
 
 }
 
+export const getCustomerInfoByName=async(req,res)=>{
+    try{
+    
+      
+        const obj = await CustomerInfo.findAll({where:{CustomerName:req.body.clientName}});
+         res.status(200).json({data:obj})
+
+    }
+    catch(err){
+        console.log(err);
+        res.status(505).json({status:505})
+
+    }
+
+}
+
 export const deleteById = async (req, res) => {
     try {
     

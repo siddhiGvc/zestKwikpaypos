@@ -93,6 +93,22 @@ export const getAllCustomerData=async(req,res)=>{
 
 }
 
+export const getCustomerDataByName=async(req,res)=>{
+    try{
+    
+      
+        const obj = await CustomerData.findAll({where:{CustomerName:req.body.clientName}});
+         res.status(200).json({data:obj})
+
+    }
+    catch(err){
+        console.log(err);
+        res.status(505).json({status:505})
+
+    }
+
+}
+
 export const deleteById = async (req, res) => {
     try {
     
