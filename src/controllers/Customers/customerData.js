@@ -17,7 +17,8 @@ export const updateCustomerData=async(req,res)=>{
                      \`CInfo1\`=:City1,
                      \`CInfo2\`=:City2,
                      \`CInfo3\`=:City3,
-                     \`CInfo4\`=:City4
+                     \`CInfo4\`=:City4,
+                     \`MachineType\`=:MachineType
 
                  WHERE id= :ID`,
                 {
@@ -28,21 +29,14 @@ export const updateCustomerData=async(req,res)=>{
                      City2:req.body.CInfo2,
                      City3:req.body.CInfo3,
                      City4:req.body.CInfo4,
-
+                     MachineType:req.body.MachineType
                   },
                   type: sequelize.QueryTypes.UPDATE,
                 }
               );
 
         }
-        else
-        {
-            await CustomerData.create({
-                UserName:req.body.userName,
-                TotalQty:req.body.qty,
-                TotalCash:req.body.cash
-             })
-        }
+       
         res.status(200).json("Okay");
 
     }
@@ -63,7 +57,10 @@ export const postCustomerData=async(req,res)=>{
             CInfo1:req.body.CInfo1,
             CInfo2:req.body.CInfo2,
             CInfo3:req.body.CInfo3,
-            CInfo4:req.body.CInfo4
+            CInfo4:req.body.CInfo4,
+            MachineType:req.body.MachineType
+            
+           
          })
 
          res.status(200).json("Okay");

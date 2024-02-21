@@ -15,6 +15,7 @@ export const updateCustomerInfo=async(req,res)=>{
                 `UPDATE CustomerInfo
                  SET \`CustomerName\`=:Customer,
                      \`City\`=:City
+                    
                    
 
                  WHERE id= :ID`,
@@ -24,6 +25,7 @@ export const updateCustomerInfo=async(req,res)=>{
                      Customer:req.body.CustomerName,
                      City:req.body.City,
                    
+                   
 
                   },
                   type: sequelize.QueryTypes.UPDATE,
@@ -31,14 +33,7 @@ export const updateCustomerInfo=async(req,res)=>{
               );
 
         }
-        else
-        {
-            await CustomerInfo.create({
-                UserName:req.body.userName,
-                TotalQty:req.body.qty,
-                TotalCash:req.body.cash
-             })
-        }
+       
         res.status(200).json("Okay");
 
     }

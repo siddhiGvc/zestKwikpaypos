@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     CInfo2:DataTypes.STRING,
     CInfo3:DataTypes.STRING,
     CInfo4:DataTypes.STRING,
+    MachineType:DataTypes.STRING,
 
    
   }, {
