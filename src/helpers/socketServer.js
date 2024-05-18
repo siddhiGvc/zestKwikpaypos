@@ -1,5 +1,5 @@
 const net = require("net");
-const {sequelize,MacMapping,Transations}=require("../models");
+const {sequelize,MacMapping,Transation}=require("../models");
 
 
 const port = 6666;
@@ -95,11 +95,11 @@ const server = net.createServer((socket) => {
             const address=command[1];
             console.log(`Mac Adress:${address}`);
             const data=await MacMapping.findOne({where:{MacID:address}});
-            await Transations.create({
+            await Transation.create({
                 machine:data.UID,
                 command:command[0],
                 p1:command[2],
-                p2:command[3],
+                p2:command[3]
             })
 
         }
