@@ -74,7 +74,7 @@ const server = net.createServer((socket) => {
         
         if(command[0]=="MAC")
         {
-            console.log("Timer Started");
+            //console.log("Timer Started");
             // await setTimeout(()=>{
             //    console.log("Resetting Connection");
             //    socket.write(`*RST#`);
@@ -86,21 +86,33 @@ const server = net.createServer((socket) => {
                 {
                     data.SocketNumber=remotePort;
                     await data.save();
+                      await Transaction.create({
+                          machine:data.UID,
+                          command:command[0],
+                          p1:command[1],
+                          p2:command[2]
+                      })
+                       console.log("Saved In Transactions");
                 }
            
           
         }  
         else{
 
-            const address=command[1];
-            console.log(`Mac Adress:${address}`);
-            const data=await MacMapping.findOne({where:{MacID:address}});
+
+            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+           // console.log(data);
+            if(data)
+            {
+            
             await Transaction.create({
                 machine:data.UID,
                 command:command[0],
-                p1:command[2],
-                p2:command[3]
+                p1:command[1],
+                p2:command[2]
             })
+             console.log("Saved In Transactions");
+            }
 
         }
         const operator = command[0];
