@@ -1,5 +1,5 @@
 const net = require("net");
-const {sequelize,MacMapping}=require("../models");
+const {sequelize,MacMapping,Transations}=require("../models");
 
 
 const port = 6666;
@@ -75,10 +75,10 @@ const server = net.createServer((socket) => {
         if(command[0]=="MAC")
         {
             console.log("Timer Started");
-            await setTimeout(()=>{
-               console.log("Resetting Connection");
-               socket.write(`*RST#`);
-            },10000)
+            // await setTimeout(()=>{
+            //    console.log("Resetting Connection");
+            //    socket.write(`*RST#`);
+            // },10000)
             const address=command[1];
             console.log(`Mac Adress:${address}`);
             const data=await MacMapping.findOne({where:{MacID:address}});
@@ -90,6 +90,19 @@ const server = net.createServer((socket) => {
            
           
         }  
+        else{
+
+            const address=command[1];
+            console.log(`Mac Adress:${address}`);
+            const data=await MacMapping.findOne({where:{MacID:address}});
+            await Transations.create({
+                machine:data.UID,
+                command:command[0],
+                p1:command[2],
+                p2:command[3],
+            })
+
+        }
         const operator = command[0];
         
       
