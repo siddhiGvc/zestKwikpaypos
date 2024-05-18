@@ -57,7 +57,7 @@ const server = net.createServer((socket) => {
     console.log(remoteAddress,remotePort);
 
     socket.on("data",async (data) => {
-        console.log(data);
+       
         const strData = data.toString();
         console.log(`Received: ${strData}`);
         if(strData.includes("*") || strData.includes("#"))
@@ -68,9 +68,9 @@ const server = net.createServer((socket) => {
               const splitWithHash=splitWithStar[1].split('#');
               const cleaned=splitWithHash[0];
               
-        console.log(cleaned);
+    
         const command = cleaned.split(",");
-        console.log("Mac Addres Receuved", command[0]);
+     
         
         if(command[0]=="MAC")
         {
