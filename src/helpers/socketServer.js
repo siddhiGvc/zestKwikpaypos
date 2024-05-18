@@ -87,7 +87,7 @@ const server = net.createServer((socket) => {
                 {
                     data.SocketNumber=remotePort;
                     data.lastHeartBeatTime=moment.now();
-                    await data.save();
+                    await new Date();
                       await Transaction.create({
                           machine:data.UID,
                           command:command[0],
@@ -106,7 +106,7 @@ const server = net.createServer((socket) => {
            // console.log(data);
             if(data)
             {
-                data.lastHeartBeatTime=moment.now();
+                data.lastHeartBeatTime=new Date();
                 await data.save();
             await Transaction.create({
                 machine:data.UID,

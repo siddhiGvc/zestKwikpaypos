@@ -1,5 +1,7 @@
 'use strict';
 
+const { type } = require("os");
+
 module.exports = (sequelize, DataTypes) => {
     const MacMapping = sequelize.define(
       'MacMapping',
@@ -67,6 +69,9 @@ module.exports = (sequelize, DataTypes) => {
           C7: {
             type: DataTypes.STRING,
           },
+          lastHeartBeatTime:{
+            type:DataTypes.DATE
+          }
          
 
       
