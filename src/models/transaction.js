@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     p11: DataTypes.STRING,
     p12: DataTypes.STRING
   }, {
-    tableName: 'Transaction'
+    tableName: 'Transactions'
   });
   Transaction.associate = function(models) {
     // associations can be defined here
