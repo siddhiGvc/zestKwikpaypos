@@ -1,4 +1,5 @@
 const net = require("net");
+const moment=require("moment");
 const {sequelize,MacMapping,Transaction}=require("../models");
 
 
@@ -85,6 +86,7 @@ const server = net.createServer((socket) => {
             if(data)
                 {
                     data.SocketNumber=remotePort;
+                    data.lastHeartBeatTime=moment.now();
                     await data.save();
                       await Transaction.create({
                           machine:data.UID,
@@ -104,7 +106,8 @@ const server = net.createServer((socket) => {
            // console.log(data);
             if(data)
             {
-            
+                data.lastHeartBeatTime=moment.now();
+                await data.save();
             await Transaction.create({
                 machine:data.UID,
                 command:command[0],
