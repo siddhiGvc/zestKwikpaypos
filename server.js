@@ -40,6 +40,9 @@ const setupWorkerProcesses = () => {
     });
   }
 
+  
+
+
   // Process is clustered on a core and process id is assigned
   cluster.on('online', function (worker) {
     console.log(`Worker ${worker.process.pid} is listening`);

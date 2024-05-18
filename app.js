@@ -20,6 +20,7 @@ const customerRouter=require("./src/routes/customer");
 
 dotenv.config();
 require('./src/config/sequelize');
+require('./src/helpers/socketServer')
 
 const app = express();
 app.use(

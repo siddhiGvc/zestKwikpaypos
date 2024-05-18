@@ -6,7 +6,7 @@ import auth from '../middleware/apiAuth'
 const router = express.Router();
 
 router.get('/', controller.get);
-router.get('/data', auth, dataController.getData);
+router.get('/data', dataController.getData);
 router.get('/lastBurn', dataController.lastBurningStart);
 router.get('/address', controller.getAddressData);
 router.post('/createMapping', controller.createMapping);

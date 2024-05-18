@@ -21,22 +21,22 @@ export const getData = async (req, res) => {
     if (req.query.ward) replObjG['ward'] = req.query.ward.split(',');
     if (req.query.beat) replObjG['beat'] = req.query.beat.split(',');
 
-    if (!req.user.isAdmin && replObjG['city'] && req.user.city)
-      replObjG['city'] = replObjG['city'].filter(q => req.user.city.split(',').indexOf(q) >= 0);
-    else if (!req.user.isAdmin && !replObjG['city'] && req.user.city)
-      replObjG['city'] = req.user.city.split(',');
-    if (!req.user.isAdmin && replObjG['zone'] && req.user.zone)
-      replObjG['zone'] = replObjG['zone'].filter(q => req.user.zone.split(',').indexOf(q) >= 0);
-    else if (!req.user.isAdmin && !replObjG['zone'] && req.user.zone)
-      replObjG['zone'] = req.user.zone.split(',');
-    if (!req.user.isAdmin && replObjG['ward'] && req.user.ward)
-      replObjG['ward'] = replObjG['ward'].filter(q => req.user.ward.split(',').indexOf(q) >= 0);
-    else if (!req.user.isAdmin && !replObjG['ward'] && req.user.ward)
-      replObjG['ward'] = req.user.ward.split(',');
-    if (!req.user.isAdmin && replObjG['beat'] && req.user.beat)
-      replObjG['beat'] = replObjG['beat'].filter(q => req.user.beat.split(',').indexOf(q) >= 0);
-    else if (!req.user.isAdmin && !replObjG['beat'] && req.user.beat)
-      replObjG['beat'] = req.user.beat.split(',');
+    // if (!req.user.isAdmin && replObjG['city'] && req.user.city)
+    //   replObjG['city'] = replObjG['city'].filter(q => req.user.city.split(',').indexOf(q) >= 0);
+    // else if (!req.user.isAdmin && !replObjG['city'] && req.user.city)
+    //   replObjG['city'] = req.user.city.split(',');
+    // if (!req.user.isAdmin && replObjG['zone'] && req.user.zone)
+    //   replObjG['zone'] = replObjG['zone'].filter(q => req.user.zone.split(',').indexOf(q) >= 0);
+    // else if (!req.user.isAdmin && !replObjG['zone'] && req.user.zone)
+    //   replObjG['zone'] = req.user.zone.split(',');
+    // if (!req.user.isAdmin && replObjG['ward'] && req.user.ward)
+    //   replObjG['ward'] = replObjG['ward'].filter(q => req.user.ward.split(',').indexOf(q) >= 0);
+    // else if (!req.user.isAdmin && !replObjG['ward'] && req.user.ward)
+    //   replObjG['ward'] = req.user.ward.split(',');
+    // if (!req.user.isAdmin && replObjG['beat'] && req.user.beat)
+    //   replObjG['beat'] = replObjG['beat'].filter(q => req.user.beat.split(',').indexOf(q) >= 0);
+    // else if (!req.user.isAdmin && !replObjG['beat'] && req.user.beat)
+    //   replObjG['beat'] = req.user.beat.split(',');
 
     var replObj = { machine_status: req.query.status.split(',') };
     if (req.query.stock_status) replObj['stock_status'] = req.query.stock_status.split(',');

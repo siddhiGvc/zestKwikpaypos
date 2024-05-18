@@ -16,11 +16,13 @@ export const getAddData=async(req,res)=>{
         console.log(req.body.wards);
         console.log(req.body.beats);
 
+        const cities = req.body.cities.map(city => sequelize.escape(city)).join(',');
+
         try {
             // var machineId = req.query.machineId;
             const [obj, metadata] = await sequelize.query(`
             select SUM(qtyCurrent+qtyLife) from MachineData  
-            where machineID in (select id from Machines where data1 = 'Mumbai');
+            where machineID in (select id from Machines where data1 in (${cities}));
           `);
             console.log("*******1")
             console.log(obj);
@@ -29,6 +31,7 @@ export const getAddData=async(req,res)=>{
              //res.status(200).json("ok")
              //return successResponse(req, res, obj[0]);
           } catch (error) {
+            console.log(error)
              //return errorResponse(req, res, error.message);
              //res.status(500).json(err)
           }
@@ -37,7 +40,7 @@ export const getAddData=async(req,res)=>{
             // var machineId = req.query.machineId;
             const [obj, metadata] = await sequelize.query(`
             select SUM(cashCurrent+cashLife) from MachineData  
-            where machineID in (select id from Machines where data1 = 'Mumbai');
+            where machineID in (select id from Machines where data1 in (${cities}));
           `);
           console.log("*******2")
           console.log(obj);
@@ -46,6 +49,7 @@ export const getAddData=async(req,res)=>{
             // res.status(200).json("ok")
             // return successResponse(req, res, obj[0]);
           } catch (error) {
+            console.log(error)
             // return errorResponse(req, res, error.message);
             // res.status(500).json(err)
           }
@@ -55,12 +59,12 @@ export const getAddData=async(req,res)=>{
               var splitWards = `${req.body.wards}`.split(',');
               splitWards = splitWards.join(`','`);
               
-              if ((req.body.beats == null) || (req.body.beats == undefined)  || (req.body.beats == [''])  || (req.body.beats == []) )
+              if ((req.body.beats == null) || (req.body.beats == undefined)  || (req.body.beats == [''])  || (req.body.beats.length == 0) )
               {
                 var mySQLQuery = `
                 update MachineData set qtyLIfe = (qtyLife + ${req.body.quantity}) , cashLife = (cashLife+ ${req.body.quantity*process.env.PAD_PRICE}) ,
                 burnCycleLife = (burnCycleLife+${req.body.cycles})  
-                where machineID in (select id from Machines where data1 = 'Mumbai'
+                where machineID in (select id from Machines where data1 in (${cities})
                 and zone in (${req.body.zones}) 
                 and ward in ('${splitWards}') 
                 );`
@@ -70,7 +74,7 @@ export const getAddData=async(req,res)=>{
                 var mySQLQuery = `
                 update MachineData set qtyLIfe = (qtyLife + ${req.body.quantity}) , cashLife = (cashLife+ ${req.body.quantity*process.env.PAD_PRICE}) ,
                 burnCycleLife = (burnCycleLife+${req.body.cycles})  
-                where machineID in (select id from Machines where data1 = 'Mumbai'
+                where machineID in (select id from Machines where data1 in (${cities})
                 and beat in (${req.body.beats})            
                 );`
               }                
@@ -80,6 +84,7 @@ export const getAddData=async(req,res)=>{
               
               const [obj, metadata] = await sequelize.query(mySQLQuery);
           } catch (error) {
+            console.log(error)
             // return errorResponse(req, res, error.message);
             // res.status(500).json(err)
           }
@@ -87,7 +92,7 @@ export const getAddData=async(req,res)=>{
             // var machineId = req.query.machineId;
             const [obj, metadata] = await sequelize.query(`
             select SUM(qtyCurrent+qtyLife) from MachineData  
-            where machineID in (select id from Machines where data1 = 'Mumbai');
+            where machineID in (select id from Machines where data1 in (${cities}));
           `);
           console.log("*******4")
 
@@ -97,6 +102,7 @@ export const getAddData=async(req,res)=>{
             // res.status(200).json("ok")
             // return successResponse(req, res, obj[0]);
           } catch (error) {
+            console.log(error)
             // return errorResponse(req, res, error.message);
             // res.status(500).json(err)
           }
@@ -104,7 +110,7 @@ export const getAddData=async(req,res)=>{
             // var machineId = req.query.machineId;
             const [obj, metadata] = await sequelize.query(`
             select SUM(cashCurrent+cashLife) from MachineData  
-            where machineID in (select id from Machines where data1 = 'Mumbai');
+            where machineID in (select id from Machines where data1 in (${cities}));
           `);
           console.log("*******5")
 
@@ -114,6 +120,7 @@ export const getAddData=async(req,res)=>{
             // res.status(200).json("ok")
             // return successResponse(req, res, obj[0]);
           } catch (error) {
+            console.log(error)
             // return errorResponse(req, res, error.message);
             // res.status(500).json(err)
           }
