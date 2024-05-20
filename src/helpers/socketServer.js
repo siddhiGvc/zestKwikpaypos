@@ -86,8 +86,8 @@ const server = net.createServer((socket) => {
             if(data)
                 {
                     data.SocketNumber=remotePort;
-                    data.lastHeartBeatTime=moment.now();
-                    await new Date();
+                    data.lastHeartBeatTime=new Date().toISOString();
+                    await data.save();
                       await Transaction.create({
                           machine:data.UID,
                           command:command[0],
@@ -98,7 +98,33 @@ const server = net.createServer((socket) => {
                 }
            
           
-        }  
+        } 
+        else  if(command[0]=="INH")
+            {
+                //console.log("Timer Started");
+                // await setTimeout(()=>{
+                //    console.log("Resetting Connection");
+                //    socket.write(`*RST#`);
+                // },10000)
+              
+             
+                const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                if(data)
+                    {
+                        data.INHinput=command[1];
+                        data.lastHeartBeatTime=new Date().toISOString();
+                        await data.save();
+                          await Transaction.create({
+                              machine:data.UID,
+                              command:command[0],
+                              p1:command[1],
+                              p2:command[2]
+                          })
+                           console.log("Saved In Transactions");
+                    }
+               
+              
+            } 
         else{
 
 

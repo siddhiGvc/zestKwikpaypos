@@ -15,6 +15,7 @@ import errorHandler from './src/middleware/errorHandler';
 import vcRoutes from './src/routes/vcroutes';
 import colorRouter from './src/routes/hourlyReportColors';
 import inventoryRouter from './src/routes/inventory';
+import kwikpayRouter from "./src/routes/KwikPay/macAddress"
 const paytmRouter=require("./src/routes/paytmRoutes")
 const customerRouter=require("./src/routes/customer");
 
@@ -40,6 +41,7 @@ app.use('/', paytmRouter);
 app.use('/colors',colorRouter);
 app.use('/inventory',inventoryRouter);
 app.use('/customers',customerRouter);
+app.use('/kwikpay',kwikpayRouter);
 app.get('/hbt', (req, res) => {
   const clientIP = req.ip.replace('::ffff:', '');
 
