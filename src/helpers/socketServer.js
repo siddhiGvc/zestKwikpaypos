@@ -36,6 +36,13 @@ function sendReset(socket) {
   
 }
 
+function sendINHOutput(socket,output,port){
+    const message = `INH:${output}`;
+  
+    socket.write(message+"\n");
+
+}
+
 
 
 
@@ -50,7 +57,12 @@ const server = net.createServer((socket) => {
      //  sendData(socket,count++,remotePort);
     //}, 10000);
 
-   
+    events.pubsub.on('sendINHoutput', function(output,port) {
+       
+        if(remotePort === port) {
+          sendINHOutput(socket,port,output);
+        }
+      });
 
    
     const socketNumber = `${remotePort}`;
