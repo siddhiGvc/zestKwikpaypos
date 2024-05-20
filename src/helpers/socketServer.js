@@ -36,8 +36,8 @@ function sendReset(socket) {
   
 }
 
-function sendINHOutput(socket,output,port){
-    const message = `INH:${output}`;
+function sendINHOutput(socket,port,value){
+    const message = `*INH:${value}#`;
   
     socket.write(message+"\n");
 
@@ -57,10 +57,19 @@ const server = net.createServer((socket) => {
      //  sendData(socket,count++,remotePort);
     //}, 10000);
 
-    events.pubsub.on('sendINHoutput', function(output,port) {
+    events.pubsub.on('sendINHOutput', function(output,port) {
        
-        if(remotePort === port) {
-          sendINHOutput(socket,port,output);
+         let value=0;
+         if(output==true)
+         {
+           value=1;
+         }
+           console.log(value,port);
+           console.log(remotePort);
+       
+        if(remotePort == port) {
+        console.log("port matched");
+          sendINHOutput(socket,port,value);
         }
       });
 
