@@ -1,5 +1,5 @@
 const {MacMapping} =require("../../models")
-
+var events = require('../../helpers/events')
 
 export const getAllMacAddress=async(req,res)=>{
     try{
