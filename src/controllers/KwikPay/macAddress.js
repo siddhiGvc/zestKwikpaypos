@@ -39,3 +39,21 @@ export const saveINHoutput=async(req,res)=>{
     }
 
 }
+
+export const sendFota=async(req,res)=>{
+    try{
+        console.log(req.body);
+        const output=req.body.outPutValue;
+        events.pubsub.emit('sendFota',output,req.body.socketNumber) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}

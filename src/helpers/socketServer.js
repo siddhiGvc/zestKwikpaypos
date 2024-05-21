@@ -73,6 +73,14 @@ const server = net.createServer((socket) => {
         }
       });
 
+      events.pubsub.on('sendFota', function(output,port) {
+      
+       if(remotePort == port) {
+
+         socket.write(`*FOTA#`);
+       }
+     });
+
    
     const socketNumber = `${remotePort}`;
     
