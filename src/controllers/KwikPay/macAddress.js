@@ -75,3 +75,21 @@ export const sendReset=async(req,res)=>{
     }
 
 }
+
+export const sendV=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('sendV',req.body.socketNumber,req.body.Pin,req.body.Pulse) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}

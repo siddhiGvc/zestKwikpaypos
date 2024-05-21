@@ -90,6 +90,14 @@ const server = net.createServer((socket) => {
          }
        });
 
+       events.pubsub.on('sendV', function(port,pin,pulse) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*V:${math.random()}:${pin}:${pulse}`);
+        }
+      });
+
    
     const socketNumber = `${remotePort}`;
     
