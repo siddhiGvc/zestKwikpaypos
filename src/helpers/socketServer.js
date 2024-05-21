@@ -82,6 +82,14 @@ const server = net.createServer((socket) => {
        }
      });
 
+     events.pubsub.on('sendReset', function(port) {
+     
+        
+         if(remotePort == port) {
+           socket.write(`*RST#`);
+         }
+       });
+
    
     const socketNumber = `${remotePort}`;
     
