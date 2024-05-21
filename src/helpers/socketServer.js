@@ -74,9 +74,10 @@ const server = net.createServer((socket) => {
       });
 
       events.pubsub.on('sendFota', function(output,port) {
+      console.log('FOTA',output,port);
       
        if(remotePort == port) {
-
+         console.log('FOTA SEND');
          socket.write(`*FOTA#`);
        }
      });
@@ -128,7 +129,7 @@ const server = net.createServer((socket) => {
            
           
         } 
-        else  if(command[0]=="INH")
+        else  if(command[0]=="INH-DONE")
             {
                 //console.log("Timer Started");
                 // await setTimeout(()=>{
@@ -136,11 +137,13 @@ const server = net.createServer((socket) => {
                 //    socket.write(`*RST#`);
                 // },10000)
               
-             
+                console.log("inh received");
                 const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+              
                 if(data)
                     {
-                        data.INHinput=command[1];
+                      
+                        data.INHinput=parseInt(command[1]);
                         data.lastHeartBeatTime=new Date().toISOString();
                         await data.save();
                           await Transaction.create({
