@@ -4,6 +4,7 @@ const {sequelize,MacMapping,Transaction}=require("../models");
 var events = require('../helpers/events')
 
 const port = 6666;
+const TID=10;
 
 function sendData(socket,count,socketNumber) {
     // Construct message
@@ -94,7 +95,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*V:${math.random()}:${pin}:${pulse}`);
+          socket.write(`*V:${TID++}:${pin}:${pulse}`);
         }
       });
 
