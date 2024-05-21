@@ -4,7 +4,7 @@ const {sequelize,MacMapping,Transaction}=require("../models");
 var events = require('../helpers/events')
 
 const port = 6666;
-const TID=10;
+let TID=10;
 
 function sendData(socket,count,socketNumber) {
     // Construct message
@@ -87,7 +87,7 @@ const server = net.createServer((socket) => {
      
         
          if(remotePort == port) {
-           socket.write(`*RST#`);
+           sendReset(socket);
          }
        });
 
@@ -146,13 +146,8 @@ const server = net.createServer((socket) => {
            
           
         } 
-        else  if(command[0]=="INH-DONE")
+        else  if(command[0]=="INH")
             {
-                //console.log("Timer Started");
-                // await setTimeout(()=>{
-                //    console.log("Resetting Connection");
-                //    socket.write(`*RST#`);
-                // },10000)
               
                 console.log("inh received");
                 const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
@@ -174,6 +169,75 @@ const server = net.createServer((socket) => {
                
               
             } 
+            else  if(command[0]=="RST-OK")
+                {
+                  
+                    
+                    const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                  
+                    if(data)
+                        {
+                          
+                            data.RstMessage=parseInt(command[0]);
+                            data.lastHeartBeatTime=new Date().toISOString();
+                            await data.save();
+                              await Transaction.create({
+                                  machine:data.UID,
+                                  command:command[0],
+                                  p1:command[1],
+                                  p2:command[2]
+                              })
+                               console.log("Saved In Transactions");
+                        }
+                   
+                  
+         } 
+         else  if(command[0]=="FOTA-OK")
+            {
+              
+                
+                const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+              
+                if(data)
+                    {
+                      
+                        data.FotaMessage=parseInt(command[1]);
+                        data.lastHeartBeatTime=new Date().toISOString();
+                        await data.save();
+                          await Transaction.create({
+                              machine:data.UID,
+                              command:command[0],
+                              p1:command[1],
+                              p2:command[2]
+                          })
+                           console.log("Saved In Transactions");
+                    }
+               
+              
+            } 
+            else  if(command[0]=="V-OK")
+                {
+                  
+                    
+                    const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                  
+                    if(data)
+                        {
+                          
+                            data.Voutput=parseInt(command[0]);
+                            data.lastHeartBeatTime=new Date().toISOString();
+                            await data.save();
+                              await Transaction.create({
+                                  machine:data.UID,
+                                  command:command[0],
+                                  p1:command[1],
+                                  p2:command[2]
+                              })
+                               console.log("Saved In Transactions");
+                        }
+                   
+                  
+                } 
         else{
 
 

@@ -80,6 +80,18 @@ module.exports = (sequelize, DataTypes) => {
           INHoutput:{
             type:DataTypes.INTEGER,
             allowNull:false
+          },
+          FotaMessage:{
+            type:DataTypes.STRING,
+            allowNull:false
+          },
+          RstMessage:{
+            type:DataTypes.STRING,
+            allowNull:false
+          },
+          Voutput:{
+            type:DataTypes.STRING,
+            allowNull:false
           }
          
 
