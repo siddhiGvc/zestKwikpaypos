@@ -91,6 +91,14 @@ const server = net.createServer((socket) => {
          }
        });
 
+       events.pubsub.on('sendTC', function(port) {
+     
+        
+        if(remotePort == port) {
+            socket.write(`*TC?#`);
+        }
+      });
+
        events.pubsub.on('sendV', function(port,pin,pulse) {
      
         
@@ -110,7 +118,7 @@ const server = net.createServer((socket) => {
         console.log(`Received: ${strData}`);
         if(strData.includes("*") || strData.includes("#"))
             {
-           
+             console.log(strData);
               //var cleaned = /^\**(.*?)\#*$/.exec(`**${strData}##`);
               const splitWithStar=strData.split('*');
               const splitWithHash=splitWithStar[1].split('#');
@@ -118,7 +126,7 @@ const server = net.createServer((socket) => {
               
     
         const command = cleaned.split(",");
-     
+        console.log(command[0]);
         
         if(command[0]=="MAC")
         {
@@ -129,7 +137,8 @@ const server = net.createServer((socket) => {
             // },10000)
             const address=command[1];
             console.log(`Mac Adress:${address}`);
-            const data=await MacMapping.findOne({where:{MacID:address}});
+            const data=await MacMapping.findOne({where:{MacID:command[1]}});
+           // console.log(data);
             if(data)
                 {
                     data.SocketNumber=remotePort;
@@ -146,7 +155,7 @@ const server = net.createServer((socket) => {
            
           
         } 
-        else  if(command[0]=="INH")
+        else  if(command[0].includes("INH"))
             {
               
                 console.log("inh received");
@@ -178,7 +187,7 @@ const server = net.createServer((socket) => {
                     if(data)
                         {
                           
-                            data.RstMessage=parseInt(command[0]);
+                            data.RstMessage=command[0];
                             data.lastHeartBeatTime=new Date().toISOString();
                             await data.save();
                               await Transaction.create({
@@ -192,7 +201,7 @@ const server = net.createServer((socket) => {
                    
                   
          } 
-         else  if(command[0]=="FOTA-OK")
+         else  if(command[0].includes("FOTA"))
             {
               
                 
@@ -201,7 +210,7 @@ const server = net.createServer((socket) => {
                 if(data)
                     {
                       
-                        data.FotaMessage=parseInt(command[1]);
+                        data.FotaMessage=command[0];
                         data.lastHeartBeatTime=new Date().toISOString();
                         await data.save();
                           await Transaction.create({
@@ -215,7 +224,7 @@ const server = net.createServer((socket) => {
                
               
             } 
-            else  if(command[0]=="V-OK")
+            else  if(command[0].includes("V"))
                 {
                   
                     
@@ -224,7 +233,7 @@ const server = net.createServer((socket) => {
                     if(data)
                         {
                           
-                            data.Voutput=parseInt(command[0]);
+                            data.Voutput=command[0];
                             data.lastHeartBeatTime=new Date().toISOString();
                             await data.save();
                               await Transaction.create({

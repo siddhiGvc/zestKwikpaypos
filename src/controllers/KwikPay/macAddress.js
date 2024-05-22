@@ -93,3 +93,21 @@ export const sendV=async(req,res)=>{
     }
 
 }
+
+export const sendTC=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('sendTC',req.body.socketNumber) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}

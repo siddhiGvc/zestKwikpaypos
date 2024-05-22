@@ -7,6 +7,7 @@ router.post('/saveINHoutput',macAddress.saveINHoutput);
 router.post('/sendFota',macAddress.sendFota);
 router.post('/reset',macAddress.sendReset);
 router.post('/sendV',macAddress.sendV);
+router.post('/sendTC',macAddress.sendTC);
 
 
 module.exports = router;
