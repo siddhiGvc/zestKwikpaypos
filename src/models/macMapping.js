@@ -92,7 +92,13 @@ module.exports = (sequelize, DataTypes) => {
           Voutput:{
             type:DataTypes.STRING,
             allowNull:false
+          },
+          TCoutput:{
+            type:DataTypes.STRING,
+            allowNull:false
           }
+         
+
          
 
       

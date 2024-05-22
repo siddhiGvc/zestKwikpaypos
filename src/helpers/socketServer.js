@@ -256,7 +256,7 @@ const server = net.createServer((socket) => {
                         if(data)
                             {
                               
-                                data.TCoutput=command[1];
+                                data.TCoutput=strData;
                                 data.lastHeartBeatTime=new Date().toISOString();
                                 await data.save();
                                   await Transaction.create({
