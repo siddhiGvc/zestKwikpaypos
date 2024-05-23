@@ -122,6 +122,13 @@ const server = net.createServer((socket) => {
           socket.write(`*TV?#`);
         }
       });
+      events.pubsub.on('sendFotaUrl', function(port,url) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*URL:${url}?#`);
+        }
+      });
 
    
     const socketNumber = `${remotePort}`;
