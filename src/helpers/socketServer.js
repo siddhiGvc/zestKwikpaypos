@@ -130,6 +130,13 @@ const server = net.createServer((socket) => {
           socket.write(`*URL:${url}#`);
         }
       });
+      events.pubsub.on('askUrl', function(port) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*URL?#`);
+        }
+      });
 
 
    
