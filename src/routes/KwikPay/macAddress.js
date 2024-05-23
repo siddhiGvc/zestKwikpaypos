@@ -12,6 +12,7 @@ router.post('/sendFW',macAddress.sendFW);
 router.post('/sendTV',macAddress.sendTV);
 router.post('/sendFotaUrl',macAddress.sendFotaUrl);
 router.post('/askUrl',macAddress.askUrl);
+router.post('/sendCC',macAddress.sendCC);
 
 
 module.exports = router;

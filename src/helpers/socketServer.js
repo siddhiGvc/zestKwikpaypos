@@ -138,6 +138,15 @@ const server = net.createServer((socket) => {
         }
       });
 
+      events.pubsub.on('sendCC', function(port) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*CC#`);
+        }
+      });
+
+
 
    
     const socketNumber = `${remotePort}`;
