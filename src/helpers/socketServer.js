@@ -112,7 +112,7 @@ const server = net.createServer((socket) => {
         
         if(remotePort == port) {
           console.log("FW sent");
-          socket.write(`*FOTA?#`);
+          socket.write(`*FW?#`);
         }
       });
       events.pubsub.on('sendTV', function(port) {
@@ -122,13 +122,15 @@ const server = net.createServer((socket) => {
           socket.write(`*TV?#`);
         }
       });
+
       events.pubsub.on('sendFotaUrl', function(port,url) {
      
         
         if(remotePort == port) {
-          socket.write(`*URL:${url}?#`);
+          socket.write(`*URL:${url}#`);
         }
       });
+
 
    
     const socketNumber = `${remotePort}`;
@@ -247,7 +249,7 @@ const server = net.createServer((socket) => {
                
               
             } 
-            else  if(command[0].includes("V"))
+            else  if(command[0].includes("V") && !command[0].includes("TV"))
                 {
                   
                     
@@ -294,12 +296,12 @@ const server = net.createServer((socket) => {
                       
                     }
                     
-                     else  if(command[0].includes("TV"))
+                  else  if(command[0].includes("TV"))
                     {
                       
-                        
+                       // console.log(remotePort);
                         const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
-                      
+                       // console.log(data);
                         if(data)
                             {
                               
@@ -317,8 +319,35 @@ const server = net.createServer((socket) => {
                        
                       
                     }
+                    else  if(command[0].includes("Kwikpay"))
+                    {
+                      
+                       // console.log(remotePort);
+                       
+                        const FWoutput=command[0].split('-');
+                        
+                       
+                        const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                       // console.log(data);
+                        if(data)
+                            {
+                              
+                                data.FWoutput=FWoutput[1];
+                                data.lastHeartBeatTime=new Date().toISOString();
+                                await data.save();
+                                  await Transaction.create({
+                                      machine:data.UID,
+                                      command:command[0],
+                                      p1:command[1],
+                                      p2:command[2]
+                                  })
+                                   console.log("Saved In Transactions");
+                            }
+                       
+                      
+                    }
                    
-        else{
+                else{
 
 
             const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
