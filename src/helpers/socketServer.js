@@ -107,6 +107,21 @@ const server = net.createServer((socket) => {
         }
       });
 
+      events.pubsub.on('sendFW', function(port) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*FOTA?#`);
+        }
+      });
+      events.pubsub.on('sendTV', function(port) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*TV?#`);
+        }
+      });
+
    
     const socketNumber = `${remotePort}`;
     
@@ -269,7 +284,8 @@ const server = net.createServer((socket) => {
                             }
                        
                       
-                    } 
+                    }
+                   
         else{
 
 

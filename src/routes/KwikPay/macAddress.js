@@ -8,6 +8,8 @@ router.post('/sendFota',macAddress.sendFota);
 router.post('/reset',macAddress.sendReset);
 router.post('/sendV',macAddress.sendV);
 router.post('/sendTC',macAddress.sendTC);
+router.post('/sendFW',macAddress.sendFW);
+router.post('/sendTV',macAddress.sendTV);
 
 
 module.exports = router;
