@@ -96,6 +96,14 @@ module.exports = (sequelize, DataTypes) => {
           TCoutput:{
             type:DataTypes.STRING,
             allowNull:false
+          },
+          FWoutput:{
+            type:DataTypes.STRING,
+            allowNull:false
+          },
+          TVoutput:{
+            type:DataTypes.STRING,
+            allowNull:false
           }
          
 

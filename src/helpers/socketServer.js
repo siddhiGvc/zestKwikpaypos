@@ -111,6 +111,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
+          console.log("FW sent");
           socket.write(`*FOTA?#`);
         }
       });
@@ -272,6 +273,30 @@ const server = net.createServer((socket) => {
                             {
                               
                                 data.TCoutput=strData;
+                                data.lastHeartBeatTime=new Date().toISOString();
+                                await data.save();
+                                  await Transaction.create({
+                                      machine:data.UID,
+                                      command:command[0],
+                                      p1:command[1],
+                                      p2:command[2]
+                                  })
+                                   console.log("Saved In Transactions");
+                            }
+                       
+                      
+                    }
+                    
+                     else  if(command[0].includes("TV"))
+                    {
+                      
+                        
+                        const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                      
+                        if(data)
+                            {
+                              
+                                data.TVoutput=strData;
                                 data.lastHeartBeatTime=new Date().toISOString();
                                 await data.save();
                                   await Transaction.create({
