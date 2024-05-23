@@ -150,7 +150,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*S:${light}:${postion}#`);
+          socket.write(`*SL:${light}:${postion}#`);
         }
       });
 
@@ -370,33 +370,115 @@ const server = net.createServer((socket) => {
                        
                       
                     }
-                    else  if(command[0].includes("Kwikpay"))
-                        {
-                          
-                           // console.log(remotePort);
-                           
-                            const FWoutput=command[0].split('-');
-                            
-                           
-                            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
-                           // console.log(data);
-                            if(data)
-                                {
-                                  
-                                    data.FWoutput=FWoutput[1];
-                                    data.lastHeartBeatTime=new Date().toISOString();
-                                    await data.save();
-                                      await Transaction.create({
-                                          machine:data.UID,
-                                          command:command[0],
-                                          p1:command[1],
-                                          p2:command[2]
-                                      })
-                                       console.log("Saved In Transactions");
-                                }
-                           
-                          
-                        }
+                     else  if(command[0]=="SL-OK")
+                    {
+                      
+                       // console.log(remotePort);
+                       
+                      
+                        
+                       
+                        const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                       // console.log(data);
+                        if(data)
+                            {
+                              
+                                data.Soutput=command[0];
+                                data.lastHeartBeatTime=new Date().toISOString();
+                                await data.save();
+                                  await Transaction.create({
+                                      machine:data.UID,
+                                      command:command[0],
+                                      p1:command[1],
+                                      p2:command[2]
+                                  })
+                                   console.log("Saved In Transactions");
+                            }
+                       
+                      
+                    }
+                      else  if(command[0]=="URL-OK")
+                    {
+                      
+                       // console.log(remotePort);
+                       
+                      
+                        
+                       
+                        const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                       // console.log(data);
+                        if(data)
+                            {
+                              
+                                data.FotaURLoutput=command[0];
+                                data.lastHeartBeatTime=new Date().toISOString();
+                                await data.save();
+                                  await Transaction.create({
+                                      machine:data.UID,
+                                      command:command[0],
+                                      p1:command[1],
+                                      p2:command[2]
+                                  })
+                                   console.log("Saved In Transactions");
+                            }
+                       
+                      
+                    }
+                      else  if(command[0].includes("URL"))
+                    {
+                      
+                       // console.log(remotePort);
+                       
+                      
+                        
+                       
+                        const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                       // console.log(data);
+                        if(data)
+                            {
+                              
+                                data.URLoutput=command[1];
+                                data.lastHeartBeatTime=new Date().toISOString();
+                                await data.save();
+                                  await Transaction.create({
+                                      machine:data.UID,
+                                      command:command[0],
+                                      p1:command[1],
+                                      p2:command[2]
+                                  })
+                                   console.log("Saved In Transactions");
+                            }
+                       
+                      
+                    }
+                        else  if(command[0]=="CC-OK")
+                    {
+                      
+                       // console.log(remotePort);
+                       
+                      
+                        
+                       
+                        const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                       console.log(data);
+                        if(data)
+                            {
+                              
+                                data.Coutput=command[0];
+                                data.lastHeartBeatTime=new Date().toISOString();
+                                await data.save();
+                                  await Transaction.create({
+                                      machine:data.UID,
+                                      command:command[0],
+                                      p1:command[1],
+                                      p2:command[2]
+                                  })
+                                   console.log("Saved In Transactions");
+                            }
+                       
+                      
+                    }
+                   
                    
                 else{
 
