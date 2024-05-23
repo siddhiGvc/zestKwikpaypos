@@ -146,6 +146,14 @@ const server = net.createServer((socket) => {
         }
       });
 
+      events.pubsub.on('sendLight', function(port,light,postion) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*S:${light}:${postion}#`);
+        }
+      });
+
 
 
    
@@ -362,6 +370,33 @@ const server = net.createServer((socket) => {
                        
                       
                     }
+                    else  if(command[0].includes("Kwikpay"))
+                        {
+                          
+                           // console.log(remotePort);
+                           
+                            const FWoutput=command[0].split('-');
+                            
+                           
+                            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                           // console.log(data);
+                            if(data)
+                                {
+                                  
+                                    data.FWoutput=FWoutput[1];
+                                    data.lastHeartBeatTime=new Date().toISOString();
+                                    await data.save();
+                                      await Transaction.create({
+                                          machine:data.UID,
+                                          command:command[0],
+                                          p1:command[1],
+                                          p2:command[2]
+                                      })
+                                       console.log("Saved In Transactions");
+                                }
+                           
+                          
+                        }
                    
                 else{
 

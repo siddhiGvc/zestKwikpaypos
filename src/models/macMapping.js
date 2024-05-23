@@ -104,7 +104,26 @@ module.exports = (sequelize, DataTypes) => {
           TVoutput:{
             type:DataTypes.STRING,
             allowNull:false
-          }
+          },
+          FotaURLoutput:{
+            type:DataTypes.STRING,
+            allowNull:false
+          },
+          URLoutput:{
+            type:DataTypes.STRING,
+            allowNull:false
+          },
+          Coutput:{
+            type:DataTypes.STRING,
+            allowNull:false
+          },
+          Soutput:{
+            type:DataTypes.STRING,
+            allowNull:false
+          },
+         
+         
+         
          
 
          
