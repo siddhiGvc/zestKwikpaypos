@@ -291,3 +291,39 @@ export const sendPWD=async(req,res)=>{
     }
 
 }
+
+export const sendSSID1=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('sendSSID1',req.body.socketNumber,req.body.SSID1) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}
+
+export const sendPWD1=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('sendPWD1',req.body.socketNumber,req.body.PWD1) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}

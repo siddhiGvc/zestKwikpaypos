@@ -18,6 +18,8 @@ router.post('/sendHBT',macAddress.sendHBT);
 router.post('/sendSIP',macAddress.sendSIP);
 router.post('/sendSSID',macAddress.sendSSID);
 router.post('/sendPWD',macAddress.sendPWD);
+router.post('/sendSSID1',macAddress.sendSSID1);
+router.post('/sendPWD1',macAddress.sendPWD1);
 
 
 module.exports = router;

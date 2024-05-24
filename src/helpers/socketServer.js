@@ -186,6 +186,22 @@ const server = net.createServer((socket) => {
         }
       });
 
+      events.pubsub.on('sendSSID1', function(port,ssid) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*SS1:${ssid}#`);
+        }
+      });
+
+      events.pubsub.on('sendPWD1', function(port,pwd) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*PWD1:${pwd}#`);
+        }
+      });
+
 
 
    
