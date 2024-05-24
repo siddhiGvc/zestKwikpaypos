@@ -566,7 +566,7 @@ const server = net.createServer((socket) => {
                             if(data)
                                 {
                                   
-                                    data.SSoutput=command[0];
+                                    data.SSIDoutput=command[0];
                                     data.lastHeartBeatTime=new Date().toISOString();
                                     await data.save();
                                       await Transaction.create({
@@ -593,7 +593,7 @@ const server = net.createServer((socket) => {
                               if(data)
                                   {
                                     
-                                      data.SS1output=command[0];
+                                      data.SSID1output=command[0];
                                       data.lastHeartBeatTime=new Date().toISOString();
                                       await data.save();
                                         await Transaction.create({

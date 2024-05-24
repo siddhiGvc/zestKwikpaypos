@@ -129,7 +129,7 @@ module.exports = (sequelize, DataTypes) => {
             type:DataTypes.STRING,
             allowNull:false
           },
-          SSoutput:{
+          SSIDoutput:{
             type:DataTypes.STRING,
             allowNull:false
           },
@@ -137,7 +137,7 @@ module.exports = (sequelize, DataTypes) => {
             type:DataTypes.STRING,
             allowNull:false
           },
-          SS1output:{
+          SSID1output:{
             type:DataTypes.STRING,
             allowNull:false
           },
