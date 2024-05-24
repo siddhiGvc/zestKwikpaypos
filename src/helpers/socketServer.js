@@ -676,6 +676,34 @@ const server = net.createServer((socket) => {
                              
                             
                           }
+                          else  if(command[0]=="CA-OK")
+                            {
+                              
+                               // console.log(remotePort);
+                               
+                              
+                                
+                               
+                                const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                               //console.log(data);
+                                if(data)
+                                    {
+                                      
+                                        data.CAoutput=strData;
+                                        data.CAmessage=strData;
+                                        data.lastHeartBeatTime=new Date().toISOString();
+                                        await data.save();
+                                          await Transaction.create({
+                                              machine:data.UID,
+                                              command:command[0],
+                                              p1:command[1],
+                                              p2:command[2]
+                                          })
+                                           console.log("Saved In Transactions");
+                                    }
+                               
+                              
+                            }
 
                    
                    

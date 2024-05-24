@@ -144,6 +144,14 @@ module.exports = (sequelize, DataTypes) => {
           PWD1output:{
             type:DataTypes.STRING,
             allowNull:false
+          },
+          CAoutput:{
+            type:DataTypes.STRING,
+            allowNull:false
+          },
+          CAmessage:{
+            type:DataTypes.STRING,
+            allowNull:false
           }
          
          
