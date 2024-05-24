@@ -182,7 +182,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*PWD:${pwd}#`);
+          socket.write(`*PW:${pwd}`);
         }
       });
 
@@ -198,7 +198,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*PWD1:${pwd}#`);
+          socket.write(`*PW1:${pwd}#`);
         }
       });
 
@@ -562,7 +562,7 @@ const server = net.createServer((socket) => {
                             
                            
                             const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
-                           console.log(data);
+                          // console.log(data);
                             if(data)
                                 {
                                   
@@ -589,11 +589,65 @@ const server = net.createServer((socket) => {
                               
                              
                               const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
-                             console.log(data);
+                             //console.log(data);
                               if(data)
                                   {
                                     
                                       data.SSID1output=command[0];
+                                      data.lastHeartBeatTime=new Date().toISOString();
+                                      await data.save();
+                                        await Transaction.create({
+                                            machine:data.UID,
+                                            command:command[0],
+                                            p1:command[1],
+                                            p2:command[2]
+                                        })
+                                         console.log("Saved In Transactions");
+                                  }
+                             
+                            
+                          }
+                           else  if(command[0]=="PW-OK")
+                          {
+                            
+                             // console.log(remotePort);
+                             
+                            
+                              
+                             
+                              const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                             //console.log(data);
+                              if(data)
+                                  {
+                                    
+                                      data.PWDoutput=command[0];
+                                      data.lastHeartBeatTime=new Date().toISOString();
+                                      await data.save();
+                                        await Transaction.create({
+                                            machine:data.UID,
+                                            command:command[0],
+                                            p1:command[1],
+                                            p2:command[2]
+                                        })
+                                         console.log("Saved In Transactions");
+                                  }
+                             
+                            
+                          }
+                           else  if(command[0]=="PW1-OK")
+                          {
+                            
+                             // console.log(remotePort);
+                             
+                            
+                              
+                             
+                              const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                             //console.log(data);
+                              if(data)
+                                  {
+                                    
+                                      data.PWD1output=command[0];
                                       data.lastHeartBeatTime=new Date().toISOString();
                                       await data.save();
                                         await Transaction.create({
