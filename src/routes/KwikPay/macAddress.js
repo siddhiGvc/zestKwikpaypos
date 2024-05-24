@@ -16,6 +16,8 @@ router.post('/sendCC',macAddress.sendCC);
 router.post('/sendLight',macAddress.sendLight);
 router.post('/sendHBT',macAddress.sendHBT);
 router.post('/sendSIP',macAddress.sendSIP);
+router.post('/sendSSID',macAddress.sendSSID);
+router.post('/sendPWD',macAddress.sendPWD);
 
 
 module.exports = router;
