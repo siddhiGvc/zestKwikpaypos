@@ -508,7 +508,7 @@ const server = net.createServer((socket) => {
                         
                        
                         const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
-                       console.log(data);
+                      // console.log(data);
                         if(data)
                             {
                               
@@ -526,6 +526,87 @@ const server = net.createServer((socket) => {
                        
                       
                     }
+                    else  if(command[0]=="SIP-OK")
+                      {
+                        
+                         // console.log(remotePort);
+                         
+                        
+                          
+                         
+                          const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                        // console.log(data);
+                          if(data)
+                              {
+                                
+                                  data.SIPoutput=command[0];
+                                  data.lastHeartBeatTime=new Date().toISOString();
+                                  await data.save();
+                                    await Transaction.create({
+                                        machine:data.UID,
+                                        command:command[0],
+                                        p1:command[1],
+                                        p2:command[2]
+                                    })
+                                     console.log("Saved In Transactions");
+                              }
+                         
+                        
+                      }
+                      else  if(command[0]=="SS-OK")
+                        {
+                          
+                           // console.log(remotePort);
+                           
+                          
+                            
+                           
+                            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                           console.log(data);
+                            if(data)
+                                {
+                                  
+                                    data.SSoutput=command[0];
+                                    data.lastHeartBeatTime=new Date().toISOString();
+                                    await data.save();
+                                      await Transaction.create({
+                                          machine:data.UID,
+                                          command:command[0],
+                                          p1:command[1],
+                                          p2:command[2]
+                                      })
+                                       console.log("Saved In Transactions");
+                                }
+                           
+                          
+                        }
+                        else  if(command[0]=="SS1-OK")
+                          {
+                            
+                             // console.log(remotePort);
+                             
+                            
+                              
+                             
+                              const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                             console.log(data);
+                              if(data)
+                                  {
+                                    
+                                      data.SS1output=command[0];
+                                      data.lastHeartBeatTime=new Date().toISOString();
+                                      await data.save();
+                                        await Transaction.create({
+                                            machine:data.UID,
+                                            command:command[0],
+                                            p1:command[1],
+                                            p2:command[2]
+                                        })
+                                         console.log("Saved In Transactions");
+                                  }
+                             
+                            
+                          }
                    
                    
                 else{

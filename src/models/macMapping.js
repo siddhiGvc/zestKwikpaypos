@@ -121,6 +121,30 @@ module.exports = (sequelize, DataTypes) => {
             type:DataTypes.STRING,
             allowNull:false
           },
+          HBToutput:{
+            type:DataTypes.STRING,
+            allowNull:false
+          },
+          SIPoutput:{
+            type:DataTypes.STRING,
+            allowNull:false
+          },
+          SSoutput:{
+            type:DataTypes.STRING,
+            allowNull:false
+          },
+          PWDoutput:{
+            type:DataTypes.STRING,
+            allowNull:false
+          },
+          SS1output:{
+            type:DataTypes.STRING,
+            allowNull:false
+          },
+          PWD1output:{
+            type:DataTypes.STRING,
+            allowNull:false
+          }
          
          
          
