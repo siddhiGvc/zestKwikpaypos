@@ -453,6 +453,12 @@ const server = net.createServer((socket) => {
                                 data.FWoutput=FWoutput[1];
                                 data.lastHeartBeatTime=new Date().toISOString();
                                 await data.save();
+                                setTimeout(()=>{
+                                  data.FWoutput='';
+                                
+                                 data.save();
+    
+                                },3000)
                                   await Transaction.create({
                                       machine:data.UID,
                                       command:command[0],
@@ -460,12 +466,7 @@ const server = net.createServer((socket) => {
                                       p2:command[2]
                                   })
                                    console.log("Saved In Transactions");
-                                   setTimeout(()=>{
-                                    data.FWoutput='';
-                                  
-                                   data.save();
-      
-                                  },3000)
+                                 
                             }
                        
                       
@@ -486,6 +487,12 @@ const server = net.createServer((socket) => {
                                 data.Soutput=command[0];
                                 data.lastHeartBeatTime=new Date().toISOString();
                                 await data.save();
+                                setTimeout(()=>{
+                                  data.SIPoutput='';
+                                
+                                 data.save();
+    
+                                },3000)
                                   await Transaction.create({
                                       machine:data.UID,
                                       command:command[0],
@@ -493,12 +500,7 @@ const server = net.createServer((socket) => {
                                       p2:command[2]
                                   })
                                    console.log("Saved In Transactions");
-                                   setTimeout(()=>{
-                                    data.SIPoutput='';
                                   
-                                   data.save();
-      
-                                  },3000)
                             }
                        
                       
@@ -519,6 +521,12 @@ const server = net.createServer((socket) => {
                                 data.FotaURLoutput=command[0];
                                 data.lastHeartBeatTime=new Date().toISOString();
                                 await data.save();
+                                setTimeout(()=>{
+                                  data.FotaURLoutput='';
+                                
+                                 data.save();
+    
+                                },3000)
                                   await Transaction.create({
                                       machine:data.UID,
                                       command:command[0],
@@ -526,12 +534,7 @@ const server = net.createServer((socket) => {
                                       p2:command[2]
                                   })
                                    console.log("Saved In Transactions");
-                                   setTimeout(()=>{
-                                    data.FotaURLoutput='';
-                                  
-                                   data.save();
-      
-                                  },3000)
+                                 
                             }
                        
                       
@@ -585,6 +588,12 @@ const server = net.createServer((socket) => {
                                 data.Coutput=command[0];
                                 data.lastHeartBeatTime=new Date().toISOString();
                                 await data.save();
+                                setTimeout(()=>{
+                                  data.Coutput='';
+                                
+                                 data.save();
+    
+                                },3000)
                                   await Transaction.create({
                                       machine:data.UID,
                                       command:command[0],
@@ -592,12 +601,7 @@ const server = net.createServer((socket) => {
                                       p2:command[2]
                                   })
                                    console.log("Saved In Transactions");
-                                   setTimeout(()=>{
-                                    data.Coutput='';
-                                  
-                                   data.save();
-      
-                                  },3000)
+                                 
                             }
                        
                       
@@ -618,6 +622,12 @@ const server = net.createServer((socket) => {
                                   data.SIPoutput=command[0];
                                   data.lastHeartBeatTime=new Date().toISOString();
                                   await data.save();
+                                  setTimeout(()=>{
+                                    data.SIPoutput='';
+                                  
+                                   data.save();
+      
+                                  },3000)
                                     await Transaction.create({
                                         machine:data.UID,
                                         command:command[0],
@@ -625,12 +635,7 @@ const server = net.createServer((socket) => {
                                         p2:command[2]
                                     })
                                      console.log("Saved In Transactions");
-                                     setTimeout(()=>{
-                                      data.SIPoutput='';
-                                    
-                                     data.save();
-        
-                                    },3000)
+                                   
                               }
                          
                         
@@ -651,6 +656,12 @@ const server = net.createServer((socket) => {
                                     data.SSIDoutput=command[0];
                                     data.lastHeartBeatTime=new Date().toISOString();
                                     await data.save();
+                                    setTimeout(()=>{
+                                      data.SSIDoutput='';
+                                    
+                                     data.save();
+        
+                                    },3000)
                                       await Transaction.create({
                                           machine:data.UID,
                                           command:command[0],
@@ -658,12 +669,7 @@ const server = net.createServer((socket) => {
                                           p2:command[2]
                                       })
                                        console.log("Saved In Transactions");
-                                       setTimeout(()=>{
-                                        data.SSIDoutput='';
-                                      
-                                       data.save();
-          
-                                      },3000)
+                                   
                                 }
                            
                           
@@ -684,6 +690,12 @@ const server = net.createServer((socket) => {
                                       data.SSID1output=command[0];
                                       data.lastHeartBeatTime=new Date().toISOString();
                                       await data.save();
+                                      setTimeout(()=>{
+                                        data.SSID1output='';
+                                      
+                                       data.save();
+          
+                                      },3000)
                                         await Transaction.create({
                                             machine:data.UID,
                                             command:command[0],
@@ -691,12 +703,7 @@ const server = net.createServer((socket) => {
                                             p2:command[2]
                                         })
                                          console.log("Saved In Transactions");
-                                         setTimeout(()=>{
-                                          data.SSID1output='';
                                         
-                                         data.save();
-            
-                                        },3000)
                                   }
                              
                             
@@ -717,6 +724,12 @@ const server = net.createServer((socket) => {
                                       data.PWDoutput=command[0];
                                       data.lastHeartBeatTime=new Date().toISOString();
                                       await data.save();
+                                      setTimeout(()=>{
+                                        data.PWDoutput='';
+                                      
+                                       data.save();
+          
+                                      },3000)
                                         await Transaction.create({
                                             machine:data.UID,
                                             command:command[0],
@@ -724,12 +737,7 @@ const server = net.createServer((socket) => {
                                             p2:command[2]
                                         })
                                          console.log("Saved In Transactions");
-                                         setTimeout(()=>{
-                                          data.PWDoutput='';
-                                        
-                                         data.save();
-            
-                                        },3000)
+                                      
                                   }
                              
                             
@@ -750,6 +758,12 @@ const server = net.createServer((socket) => {
                                       data.PWD1output=command[0];
                                       data.lastHeartBeatTime=new Date().toISOString();
                                       await data.save();
+                                      setTimeout(()=>{
+                                        data.PWD1output='';
+                                      
+                                       data.save();
+          
+                                      },3000)
                                         await Transaction.create({
                                             machine:data.UID,
                                             command:command[0],
@@ -757,12 +771,7 @@ const server = net.createServer((socket) => {
                                             p2:command[2]
                                         })
                                          console.log("Saved In Transactions");
-                                         setTimeout(()=>{
-                                          data.PWD1output='';
-                                        
-                                         data.save();
-            
-                                        },3000)
+                                       
                                   }
                              
                             
@@ -784,6 +793,12 @@ const server = net.createServer((socket) => {
                                         data.CAmessage=strData;
                                         data.lastHeartBeatTime=new Date().toISOString();
                                         await data.save();
+                                        setTimeout(()=>{
+                                          data.CAoutput='';
+                                          data.CAmessage='';
+                                         data.save();
+            
+                                        },3000)
                                           await Transaction.create({
                                               machine:data.UID,
                                               command:command[0],
@@ -791,12 +806,7 @@ const server = net.createServer((socket) => {
                                               p2:command[2]
                                           })
                                            console.log("Saved In Transactions");
-                                           setTimeout(()=>{
-                                            data.CAoutput='';
-                                          
-                                           data.save();
-              
-                                          },3000)
+                                         
                                     }
                                
                               
