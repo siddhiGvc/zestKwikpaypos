@@ -238,6 +238,42 @@ export const sendHBT=async(req,res)=>{
 
 }
 
+export const sendCA=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('sendCA',req.body.socketNumber,req.body.numValue,req.body.polarity) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}
+
+export const askCA=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('askCA',req.body.socketNumber) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}
+
 export const sendSIP=async(req,res)=>{
     try{
         

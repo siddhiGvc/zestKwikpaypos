@@ -201,6 +201,21 @@ const server = net.createServer((socket) => {
           socket.write(`*PW1:${pwd}#`);
         }
       });
+      events.pubsub.on('sendCA', function(port,num,polarity) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*CA:${num}:${polarity}#`);
+        }
+      });
+
+      events.pubsub.on('askCA', function(port) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*CA?#`);
+        }
+      });
 
 
 
@@ -661,6 +676,7 @@ const server = net.createServer((socket) => {
                              
                             
                           }
+
                    
                    
                 else{
