@@ -488,7 +488,7 @@ const server = net.createServer((socket) => {
                                 data.lastHeartBeatTime=new Date().toISOString();
                                 await data.save();
                                 setTimeout(()=>{
-                                  data.SIPoutput='';
+                                  data.Soutput='';
                                 
                                  data.save();
     
