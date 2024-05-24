@@ -219,3 +219,39 @@ export const sendLight=async(req,res)=>{
     }
 
 }
+
+export const sendHBT=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('sendHBT',req.body.socketNumber,req.body.value) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}
+
+export const sendSIP=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('sendSIP',req.body.socketNumber,req.body.Ip,req.body.Pin) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}

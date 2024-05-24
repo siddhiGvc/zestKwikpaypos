@@ -14,6 +14,8 @@ router.post('/sendFotaUrl',macAddress.sendFotaUrl);
 router.post('/askUrl',macAddress.askUrl);
 router.post('/sendCC',macAddress.sendCC);
 router.post('/sendLight',macAddress.sendLight);
+router.post('/sendHBT',macAddress.sendHBT);
+router.post('/sendSIP',macAddress.sendSIP);
 
 
 module.exports = router;

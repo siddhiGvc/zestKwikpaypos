@@ -154,6 +154,22 @@ const server = net.createServer((socket) => {
         }
       });
 
+      events.pubsub.on('sendHBT', function(port,value) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*HBT:${value}#`);
+        }
+      });
+
+      events.pubsub.on('sendSIP', function(port,ip,pin) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*SIP:${ip}:${pin}#`);
+        }
+      });
+
 
 
    
