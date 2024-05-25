@@ -30,15 +30,15 @@ function sendData(socket,count,socketNumber) {
   
 }
 
-function sendVend(socket,tid) {
+async function sendVend(socket,tid) {
   // Construct message
   const message = `*V:${tid}:${y}:${y}#`;
    console.log(message)
   // Send message
-  socket.write(message+"\n");
+  await socket.write(message+"\n");
   //socket.write("*RST#");
-  socket.write("*TV?#\n");
-   socket.write("*TC?#\n");
+  await socket.write("*TV?#\n");
+   await socket.write("*TC?#\n");
   
  
   // const success=socket.write('Hello, server!');
@@ -54,13 +54,13 @@ function sendVend(socket,tid) {
 
 }
 
-function sendClear(socket) {
+async function sendClear(socket) {
   // Construct message
   const message = `*CC#`;
  
-  socket.write(message+"\n");
-  socket.write("*TV?#\n")
-  socket.write("*TC?#\n");
+  await socket.write(message+"\n");
+  await socket.write("*TV?#\n")
+  await socket.write("*TC?#\n");
    
   // const success=socket.write('Hello, server!');
  
