@@ -5,8 +5,8 @@ var events = require('../helpers/events');
 const { sendV } = require("../controllers/KwikPay/macAddress");
 
 const port = 6666;
-let TID=10;
-let x=1;
+let TID=Math.floor(Math.random() * 100000) + 1;
+let y=1;
 
 
 function sendData(socket,count,socketNumber) {
@@ -29,14 +29,17 @@ function sendData(socket,count,socketNumber) {
   
 }
 
-function sendVend(socket,tid,y) {
+function sendVend(socket,tid) {
   // Construct message
-  const message = `V:${tid}:${y}:${y}`;
-  // console.log(message)
+  const message = `*V:${tid}:${y}:${y}#`;
+   console.log(message)
   // Send message
   socket.write(message+"\n");
   socket.write("*RST#");
-  socket.write("*TV?#");
+  setTimeout(()=>{
+   socket.write("*TV?#");
+  },2000);
+   socket.write("*TV?#")
   // const success=socket.write('Hello, server!');
  
   // Increment count
@@ -246,9 +249,9 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          sendVend(socket,TID++,x);
+          sendVend(socket,TID++);
           setInterval(()=>{
-            sendVend(socket,TID++,x);
+            sendVend(socket,TID++);
           },10000)
          
         }
