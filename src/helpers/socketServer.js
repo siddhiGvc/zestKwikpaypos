@@ -38,10 +38,9 @@ async function sendVend(socket,tid) {
   await socket.write(message+"\n");
   //socket.write("*RST#");
   
-   setTimeout(()=>{
-    socket.write("*TC?#");
-    socket.write("*TV?#\n");
-   },2000)
+  
+   await socket.write("*TV?#\n");
+   
   
  
   // const success=socket.write('Hello, server!');
@@ -59,14 +58,12 @@ async function sendVend(socket,tid) {
 
 async function sendClear(socket) {
   // Construct message
-  const message = `*CC#`;
+  const message = `*TC?#`;
  
   await socket.write(message+"\n");
    
-  setTimeout(()=>{
-    socket.write("*TC?#");
-    socket.write("*TV?#\n")
-   },2000)
+  //  await socket.write("*TV?#\n")
+  
   // const success=socket.write('Hello, server!');
  
   // Increment count
