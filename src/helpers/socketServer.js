@@ -37,9 +37,10 @@ async function sendVend(socket,tid) {
   // Send message
   await socket.write(message+"\n");
   //socket.write("*RST#");
-  await socket.write("*TV?#\n");
+  
    setTimeout(()=>{
     socket.write("*TC?#");
+    socket.write("*TV?#\n");
    },2000)
   
  
@@ -61,9 +62,10 @@ async function sendClear(socket) {
   const message = `*CC#`;
  
   await socket.write(message+"\n");
-  await socket.write("*TV?#\n")
+   
   setTimeout(()=>{
     socket.write("*TC?#");
+    socket.write("*TV?#\n")
    },2000)
   // const success=socket.write('Hello, server!');
  
