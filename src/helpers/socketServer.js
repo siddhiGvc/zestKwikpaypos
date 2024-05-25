@@ -29,9 +29,9 @@ function sendData(socket,count,socketNumber) {
   
 }
 
-function sendV(socket) {
+function sendVend(socket,tid,y) {
   // Construct message
-  const message = `V:${TID++}:${x}:${x}`;
+  const message = `V:${tid}:${y}:${y}`;
   // console.log(message)
   // Send message
   socket.write(message+"\n");
@@ -40,10 +40,10 @@ function sendV(socket) {
   // const success=socket.write('Hello, server!');
  
   // Increment count
-   x++;
-  if(x>7)
+   y++;
+  if(y>7)
   {
-      x=1;
+      y=1;
   }
 
   // Reset count to 0 if it reaches 1000
@@ -246,9 +246,9 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          sendV(socket);
+          sendVend(socket,TID++,x);
           setInterval(()=>{
-            sendV(socket);
+            sendVend(socket,TID++,x);
           },10000)
          
         }
