@@ -37,8 +37,8 @@ function sendVend(socket,tid) {
   socket.write(message+"\n");
   //socket.write("*RST#");
  
-   socket.write("*TC?#");
-   socket.write("*TV?#");
+   socket.write("*TC?#"+"\n");
+   socket.write("*TV?#"*"\n");
  
   // const success=socket.write('Hello, server!');
  
@@ -57,9 +57,9 @@ function sendClear(socket) {
   // Construct message
   const message = `*CC#`;
  
-  socket.write(message);
-  socket.write("*TC?#");
-   socket.write("*TV?#")
+  socket.write(message+"\n");
+  socket.write("*TC?#"+"\n");
+   socket.write("*TV?#"+"\n")
   // const success=socket.write('Hello, server!');
  
   // Increment count
