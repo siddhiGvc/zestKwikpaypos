@@ -7,7 +7,8 @@ const { sendV } = require("../controllers/KwikPay/macAddress");
 const port = 6666;
 let TID=Math.floor(Math.random() * 100000) + 1;
 let y=1;
-
+let interval1;
+let interval2;
 
 function sendData(socket,count,socketNumber) {
     // Construct message
@@ -36,9 +37,9 @@ function sendVend(socket,tid) {
   // Send message
   socket.write(message+"\n");
   //socket.write("*RST#");
- 
+  socket.write("*TV?#\n");
    socket.write("*TC?#\n");
-   socket.write("*TV?#\n");
+  
  
   // const success=socket.write('Hello, server!');
  
@@ -58,8 +59,9 @@ function sendClear(socket) {
   const message = `*CC#`;
  
   socket.write(message+"\n");
+  socket.write("*TV?#\n")
   socket.write("*TC?#\n");
-   socket.write("*TV?#\n")
+   
   // const success=socket.write('Hello, server!');
  
   // Increment count
@@ -261,22 +263,22 @@ const server = net.createServer((socket) => {
       });
 
       events.pubsub.on('modeTest1', function(port) {
-     
+        clearInterval(interval2);
         
         if(remotePort == port) {
           sendVend(socket,TID++);
-          setInterval(()=>{
+         interval1= setInterval(()=>{
             sendVend(socket,TID++);
           },10000)
          
         }
       });
       events.pubsub.on('modeTest2', function(port) {
-     
+        clearInterval(interval1);
         
         if(remotePort == port) {
           sendClear(socket);
-          setInterval(()=>{
+          interval2=setInterval(()=>{
             sendClear(socket);
           },10000)
          
