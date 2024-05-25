@@ -35,11 +35,11 @@ function sendVend(socket,tid) {
    console.log(message)
   // Send message
   socket.write(message+"\n");
-  socket.write("*RST#");
-  setTimeout(()=>{
+  //socket.write("*RST#");
+ 
    socket.write("*TC?#");
-  },2000);
-   socket.write("*TV?#")
+   socket.write("*TV?#");
+ 
   // const success=socket.write('Hello, server!');
  
   // Increment count
