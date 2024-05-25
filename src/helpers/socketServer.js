@@ -37,7 +37,7 @@ function sendVend(socket,tid) {
   socket.write(message+"\n");
   socket.write("*RST#");
   setTimeout(()=>{
-   socket.write("*TV?#");
+   socket.write("*TC?#");
   },2000);
    socket.write("*TV?#")
   // const success=socket.write('Hello, server!');
@@ -53,7 +53,7 @@ function sendVend(socket,tid) {
 
 }
 
-function sendVend(socket) {
+function sendClear(socket) {
   // Construct message
   const message = `*CC#`;
  
