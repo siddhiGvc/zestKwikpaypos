@@ -22,6 +22,7 @@ router.post('/sendSSID1',macAddress.sendSSID1);
 router.post('/sendPWD1',macAddress.sendPWD1);
 router.post('/sendCA',macAddress.sendCA);
 router.post('/askCA',macAddress.askCA);
+router.post('/modeTest1',macAddress.modeTest1);
 
 
 module.exports = router;
