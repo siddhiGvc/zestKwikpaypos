@@ -53,6 +53,21 @@ function sendVend(socket,tid) {
 
 }
 
+function sendVend(socket) {
+  // Construct message
+  const message = `*CC#`;
+ 
+  socket.write(message);
+  socket.write("*TC?#");
+   socket.write("*TV?#")
+  // const success=socket.write('Hello, server!');
+ 
+  // Increment count
+  
+  // Reset count to 0 if it reaches 1000
+
+}
+
 function sendReset(socket) {
     // Construct message
     const message = `*RST#`;
@@ -252,6 +267,17 @@ const server = net.createServer((socket) => {
           sendVend(socket,TID++);
           setInterval(()=>{
             sendVend(socket,TID++);
+          },10000)
+         
+        }
+      });
+      events.pubsub.on('modeTest2', function(port) {
+     
+        
+        if(remotePort == port) {
+          sendClear(socket);
+          setInterval(()=>{
+            sendClear(socket);
           },10000)
          
         }
