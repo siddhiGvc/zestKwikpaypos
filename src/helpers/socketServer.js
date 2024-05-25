@@ -294,12 +294,7 @@ const server = net.createServer((socket) => {
         if(remotePort == port) {
           clearInterval(interval1);
           clearInterval(interval2);
-        
-          sendClear(socket);
-          interval2=setInterval(()=>{
-            sendClear(socket);
-          },10000)
-         
+       
         }
       });
 
