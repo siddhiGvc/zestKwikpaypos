@@ -399,3 +399,21 @@ export const modeTest2=async(req,res)=>{
     }
 
 }
+
+export const modeNone=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('modeNone',req.body.socketNumber) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}

@@ -24,6 +24,7 @@ router.post('/sendCA',macAddress.sendCA);
 router.post('/askCA',macAddress.askCA);
 router.post('/modeTest1',macAddress.modeTest1);
 router.post('/modeTest2',macAddress.modeTest2);
+router.post('/modeNone',macAddress.modeNone);
 
 
 module.exports = router;

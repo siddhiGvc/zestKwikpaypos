@@ -268,9 +268,10 @@ const server = net.createServer((socket) => {
       });
 
       events.pubsub.on('modeTest1', function(port) {
-        clearInterval(interval2);
+        
         
         if(remotePort == port) {
+          clearInterval(interval2);
           sendVend(socket,TID++);
          interval1= setInterval(()=>{
             sendVend(socket,TID++);
@@ -279,9 +280,24 @@ const server = net.createServer((socket) => {
         }
       });
       events.pubsub.on('modeTest2', function(port) {
-        clearInterval(interval1);
+       
         
         if(remotePort == port) {
+          clearInterval(interval1);
+          sendClear(socket);
+          interval2=setInterval(()=>{
+            sendClear(socket);
+          },10000)
+         
+        }
+      });
+
+      events.pubsub.on('modeNone', function(port) {
+      
+        if(remotePort == port) {
+          clearInterval(interval1);
+          clearInterval(interval2);
+        
           sendClear(socket);
           interval2=setInterval(()=>{
             sendClear(socket);
