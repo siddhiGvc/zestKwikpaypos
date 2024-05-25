@@ -1,10 +1,13 @@
 const net = require("net");
 const moment=require("moment");
 const {sequelize,MacMapping,Transaction}=require("../models");
-var events = require('../helpers/events')
+var events = require('../helpers/events');
+const { sendV } = require("../controllers/KwikPay/macAddress");
 
 const port = 6666;
 let TID=10;
+let x=1;
+
 
 function sendData(socket,count,socketNumber) {
     // Construct message
@@ -12,6 +15,7 @@ function sendData(socket,count,socketNumber) {
     // console.log(message)
     // Send message
     socket.write(message+"\n");
+   
     // const success=socket.write('Hello, server!');
    
     // Increment count
@@ -23,6 +27,27 @@ function sendData(socket,count,socketNumber) {
 
     // Reset count to 0 if it reaches 1000
   
+}
+
+function sendV(socket) {
+  // Construct message
+  const message = `V:${TID++}:${x}:${x}`;
+  // console.log(message)
+  // Send message
+  socket.write(message+"\n");
+  socket.write("*RST#");
+  socket.write("*TV?#");
+  // const success=socket.write('Hello, server!');
+ 
+  // Increment count
+   x++;
+  if(x>7)
+  {
+      x=1;
+  }
+
+  // Reset count to 0 if it reaches 1000
+
 }
 
 function sendReset(socket) {
@@ -214,6 +239,18 @@ const server = net.createServer((socket) => {
         
         if(remotePort == port) {
           socket.write(`*CA?#`);
+        }
+      });
+
+      events.pubsub.on('modeTest1', function(port) {
+     
+        
+        if(remotePort == port) {
+          sendV(socket);
+          setInterval(()=>{
+            sendV(socket);
+          },10000)
+         
         }
       });
 
