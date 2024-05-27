@@ -22,7 +22,7 @@ export const saveINHoutput=async(req,res)=>{
     try{
         console.log(req.body);
         const output=req.body.outPutValue;
-        events.pubsub.emit('sendINHOutput',output,req.body.socketNumber) ;
+        events.pubsub.emit('sendINHOutput',output,req.body.socketNumber,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
         if(obj)
             {
@@ -44,7 +44,7 @@ export const sendFota=async(req,res)=>{
     try{
         console.log(req.body);
         const output=req.body.outPutValue;
-        events.pubsub.emit('sendFota',output,req.body.socketNumber) ;
+        events.pubsub.emit('sendFota',output,req.body.socketNumber,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -62,7 +62,7 @@ export const sendReset=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('sendReset',req.body.socketNumber) ;
+        events.pubsub.emit('sendReset',req.body.socketNumber,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -80,7 +80,7 @@ export const sendV=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('sendV',req.body.socketNumber,req.body.Pin,req.body.Pulse) ;
+        events.pubsub.emit('sendV',req.body.socketNumber,req.body.Pin,req.body.Pulse,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -98,7 +98,7 @@ export const sendTC=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('sendTC',req.body.socketNumber) ;
+        events.pubsub.emit('sendTC',req.body.socketNumber,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -116,7 +116,7 @@ export const sendFW=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('sendFW',req.body.socketNumber) ;
+        events.pubsub.emit('sendFW',req.body.socketNumber,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -134,7 +134,7 @@ export const sendTV=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('sendTV',req.body.socketNumber) ;
+        events.pubsub.emit('sendTV',req.body.socketNumber,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -152,7 +152,7 @@ export const sendFotaUrl=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('sendFotaUrl',req.body.socketNumber,req.body.Url) ;
+        events.pubsub.emit('sendFotaUrl',req.body.socketNumber,req.body.Url,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -170,7 +170,7 @@ export const askUrl=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('askUrl',req.body.socketNumber) ;
+        events.pubsub.emit('askUrl',req.body.socketNumber,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -188,7 +188,7 @@ export const sendCC=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('sendCC',req.body.socketNumber) ;
+        events.pubsub.emit('sendCC',req.body.socketNumber,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -224,7 +224,7 @@ export const sendHBT=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('sendHBT',req.body.socketNumber,req.body.value) ;
+        events.pubsub.emit('sendHBT',req.body.socketNumber,req.body.value,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -242,7 +242,7 @@ export const sendCA=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('sendCA',req.body.socketNumber,req.body.numValue,req.body.polarity) ;
+        events.pubsub.emit('sendCA',req.body.socketNumber,req.body.numValue,req.body.polarity,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -260,7 +260,7 @@ export const askCA=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('askCA',req.body.socketNumber) ;
+        events.pubsub.emit('askCA',req.body.socketNumber,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -278,7 +278,7 @@ export const sendSIP=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('sendSIP',req.body.socketNumber,req.body.Ip,req.body.Pin) ;
+        events.pubsub.emit('sendSIP',req.body.socketNumber,req.body.Ip,req.body.Pin,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -296,7 +296,7 @@ export const sendSSID=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('sendSSID',req.body.socketNumber,req.body.SSID) ;
+        events.pubsub.emit('sendSSID',req.body.socketNumber,req.body.SSID,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -314,7 +314,7 @@ export const sendPWD=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('sendPWD',req.body.socketNumber,req.body.PWD) ;
+        events.pubsub.emit('sendPWD',req.body.socketNumber,req.body.PWD,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -332,7 +332,7 @@ export const sendSSID1=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('sendSSID1',req.body.socketNumber,req.body.SSID1) ;
+        events.pubsub.emit('sendSSID1',req.body.socketNumber,req.body.SSID1,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -350,7 +350,7 @@ export const sendPWD1=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('sendPWD1',req.body.socketNumber,req.body.PWD1) ;
+        events.pubsub.emit('sendPWD1',req.body.socketNumber,req.body.PWD1,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -368,7 +368,7 @@ export const modeTest1=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('modeTest1',req.body.socketNumber) ;
+        events.pubsub.emit('modeTest1',req.body.socketNumber,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -386,7 +386,7 @@ export const modeTest2=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('modeTest2',req.body.socketNumber) ;
+        events.pubsub.emit('modeTest2',req.body.socketNumber,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
@@ -404,7 +404,7 @@ export const modeNone=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('modeNone',req.body.socketNumber) ;
+        events.pubsub.emit('modeNone',req.body.socketNumber,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})

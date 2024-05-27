@@ -30,16 +30,16 @@ function sendData(socket,count,socketNumber) {
   
 }
 
-async function sendVend(socket,tid) {
+async function sendVend(socket,tid,name) {
   // Construct message
-  const message = `*V:${tid}:${y}:${y}#`;
+  const message = `*V:${new Date().toISOString()}:${name}:${tid}:${y}:${y}#`;
    console.log(message)
   // Send message
   await socket.write(message+"\n");
   //socket.write("*RST#");
   
   
-   await socket.write("*TV?#\n");
+   await socket.write(`*TV:${new Date().toISOString()}:${name}?#\n`);
    
   
  
@@ -56,9 +56,9 @@ async function sendVend(socket,tid) {
 
 }
 
-async function sendClear(socket) {
+async function sendClear(socket,name) {
   // Construct message
-  const message = `*TC?#`;
+  const message = `*TC:${new Date().toISOString()}:${name}?#`;
  
   await socket.write(message+"\n");
    
@@ -72,9 +72,9 @@ async function sendClear(socket) {
 
 }
 
-function sendReset(socket) {
+function sendReset(socket,name) {
     // Construct message
-    const message = `*RST#`;
+    const message = `*RST:${new Date().toISOString()}:${name}#`;
     console.log("Resetting connection")
     // Send message
     socket.write(message+"\n");
@@ -84,8 +84,8 @@ function sendReset(socket) {
   
 }
 
-function sendINHOutput(socket,port,value){
-    const message = `*INH:${value}#`;
+function sendINHOutput(socket,port,value,name){
+    const message = `*INH:${new Date().toISOString()}:${name}:${value}#`;
   
     socket.write(message+"\n");
 
@@ -105,7 +105,7 @@ const server = net.createServer((socket) => {
      //  sendData(socket,count++,remotePort);
     //}, 10000);
 
-    events.pubsub.on('sendINHOutput', function(output,port) {
+    events.pubsub.on('sendINHOutput', function(output,port,name) {
        
          let value=0;
          if(output==true)
@@ -117,79 +117,79 @@ const server = net.createServer((socket) => {
        
         if(remotePort == port) {
         console.log("port matched");
-          sendINHOutput(socket,port,value);
+          sendINHOutput(socket,port,value,name);
         }
       });
 
-      events.pubsub.on('sendFota', function(output,port) {
+      events.pubsub.on('sendFota', function(output,port,name) {
       console.log('FOTA',output,port);
       
        if(remotePort == port) {
          console.log('FOTA SEND');
-         socket.write(`*FOTA#`);
+         socket.write(`*FOTA:${new Date().toISOString()}:${name}#`);
        }
      });
 
-     events.pubsub.on('sendReset', function(port) {
+     events.pubsub.on('sendReset', function(port,name) {
      
         
          if(remotePort == port) {
-           sendReset(socket);
+           sendReset(socket,name);
          }
        });
 
-       events.pubsub.on('sendTC', function(port) {
+       events.pubsub.on('sendTC', function(port,name) {
      
         
         if(remotePort == port) {
-            socket.write(`*TC?#`);
+            socket.write(`*TC:${new Date().toISOString()}:${name}?#`);
         }
       });
 
-       events.pubsub.on('sendV', function(port,pin,pulse) {
+       events.pubsub.on('sendV', function(port,pin,pulse,name) {
      
         
         if(remotePort == port) {
-          socket.write(`*V:${TID++}:${pin}:${pulse}`);
+          socket.write(`*V:${new Date().toISOString()}:${name}:${TID++}:${pin}:${pulse}`);
         }
       });
 
-      events.pubsub.on('sendFW', function(port) {
+      events.pubsub.on('sendFW', function(port,name) {
      
         
         if(remotePort == port) {
           console.log("FW sent");
-          socket.write(`*FW?#`);
+          socket.write(`*FW:${new Date().toISOString()}:${name}?#`);
         }
       });
-      events.pubsub.on('sendTV', function(port) {
+      events.pubsub.on('sendTV', function(port,name) {
      
         
         if(remotePort == port) {
-          socket.write(`*TV?#`);
-        }
-      });
-
-      events.pubsub.on('sendFotaUrl', function(port,url) {
-     
-        
-        if(remotePort == port) {
-          socket.write(`*URL:${url}#`);
-        }
-      });
-      events.pubsub.on('askUrl', function(port) {
-     
-        
-        if(remotePort == port) {
-          socket.write(`*URL?#`);
+          socket.write(`*TV:${new Date().toISOString()}:${name}?#`);
         }
       });
 
-      events.pubsub.on('sendCC', function(port) {
+      events.pubsub.on('sendFotaUrl', function(port,url,name) {
      
         
         if(remotePort == port) {
-          socket.write(`*CC#`);
+          socket.write(`*URL:${new Date().toISOString()}:${name}:${url}#`);
+        }
+      });
+      events.pubsub.on('askUrl', function(port,name) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*URL:${new Date().toISOString()}:${name}?#`);
+        }
+      });
+
+      events.pubsub.on('sendCC', function(port,name) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*CC:${new Date().toISOString()}:${name}#`);
         }
       });
 
@@ -201,95 +201,95 @@ const server = net.createServer((socket) => {
         }
       });
 
-      events.pubsub.on('sendHBT', function(port,value) {
+      events.pubsub.on('sendHBT', function(port,value,name) {
      
         
         if(remotePort == port) {
-          socket.write(`*HBT:${value}#`);
+          socket.write(`*HBT:${new Date().toISOString()}:${name}:${value}#`);
         }
       });
 
-      events.pubsub.on('sendSIP', function(port,ip,pin) {
+      events.pubsub.on('sendSIP', function(port,ip,pin,name) {
      
         
         if(remotePort == port) {
-          socket.write(`*SIP:${ip}:${pin}#`);
+          socket.write(`*SIP:${new Date().toISOString()}:${name}:${ip}:${pin}#`);
         }
       });
 
-      events.pubsub.on('sendSSID', function(port,ssid) {
+      events.pubsub.on('sendSSID', function(port,ssid,name) {
      
         
         if(remotePort == port) {
-          socket.write(`*SS:${ssid}#`);
+          socket.write(`*SS:${new Date().toISOString()}:${name}:${ssid}#`);
         }
       });
 
-      events.pubsub.on('sendPWD', function(port,pwd) {
+      events.pubsub.on('sendPWD', function(port,pwd,name) {
      
         
         if(remotePort == port) {
-          socket.write(`*PW:${pwd}`);
+          socket.write(`*PW:${new Date().toISOString()}:${name}:${pwd}`);
         }
       });
 
-      events.pubsub.on('sendSSID1', function(port,ssid) {
+      events.pubsub.on('sendSSID1', function(port,ssid,name) {
      
         
         if(remotePort == port) {
-          socket.write(`*SS1:${ssid}#`);
+          socket.write(`*SS1:${new Date().toISOString()}:${name}:${ssid}#`);
         }
       });
 
-      events.pubsub.on('sendPWD1', function(port,pwd) {
+      events.pubsub.on('sendPWD1', function(port,pwd,name) {
      
         
         if(remotePort == port) {
-          socket.write(`*PW1:${pwd}#`);
+          socket.write(`*PW1:${new Date().toISOString()}:${name}:${pwd}#`);
         }
       });
-      events.pubsub.on('sendCA', function(port,num,polarity) {
+      events.pubsub.on('sendCA', function(port,num,polarity,name) {
      
         
         if(remotePort == port) {
-          socket.write(`*CA:${num}:${polarity}#`);
-        }
-      });
-
-      events.pubsub.on('askCA', function(port) {
-     
-        
-        if(remotePort == port) {
-          socket.write(`*CA?#`);
+          socket.write(`*CA:${new Date().toISOString()}:${name}:${num}:${polarity}#`);
         }
       });
 
-      events.pubsub.on('modeTest1', function(port) {
+      events.pubsub.on('askCA', function(port,name) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*CA:${new Date().toISOString()}:${name}?#`);
+        }
+      });
+
+      events.pubsub.on('modeTest1', function(port,name) {
         
         
         if(remotePort == port) {
           clearInterval(interval2);
           sendVend(socket,TID++);
          interval1= setInterval(()=>{
-            sendVend(socket,TID++);
+            sendVend(socket,TID++,name);
           },10000)
          
         }
       });
-      events.pubsub.on('modeTest2', function(port) {
+      events.pubsub.on('modeTest2', function(port,name) {
        
         
         if(remotePort == port) {
           clearInterval(interval1);
           sendClear(socket);
           interval2=setInterval(()=>{
-            sendClear(socket);
+            sendClear(socket,name);
           },10000)
          
         }
       });
 
-      events.pubsub.on('modeNone', function(port) {
+      events.pubsub.on('modeNone', function(port,name) {
       
         if(remotePort == port) {
           clearInterval(interval1);
@@ -341,7 +341,9 @@ const server = net.createServer((socket) => {
                           machine:data.UID,
                           command:command[0],
                           p1:command[1],
-                          p2:command[2]
+                          p2:command[2],
+                          p3:command[3],
+                          p4:command[4]
                       })
                        console.log("Saved In Transactions");
                 }
@@ -364,7 +366,9 @@ const server = net.createServer((socket) => {
                               machine:data.UID,
                               command:command[0],
                               p1:command[1],
-                              p2:command[2]
+                              p2:command[2],
+                              p3:command[3],
+                              p4:command[4]
                           })
                            console.log("Saved In Transactions");
                     }
@@ -388,7 +392,9 @@ const server = net.createServer((socket) => {
                                   machine:data.UID,
                                   command:command[0],
                                   p1:command[1],
-                                  p2:command[2]
+                                  p2:command[2],
+                                  p3:command[3],
+                                  p4:command[4]
                               })
                                console.log("Saved In Transactions");
                                setTimeout(()=>{
@@ -417,7 +423,9 @@ const server = net.createServer((socket) => {
                               machine:data.UID,
                               command:command[0],
                               p1:command[1],
-                              p2:command[2]
+                              p2:command[2],
+                              p3:command[3],
+                              p4:command[4]
                           })
                            console.log("Saved In Transactions");
                            setTimeout(()=>{
@@ -446,7 +454,9 @@ const server = net.createServer((socket) => {
                                   machine:data.UID,
                                   command:command[0],
                                   p1:command[1],
-                                  p2:command[2]
+                                  p2:command[2],
+                                  p3:command[3],
+                                  p4:command[4]
                               })
                                console.log("Saved In Transactions");
                                setTimeout(()=>{
@@ -475,7 +485,9 @@ const server = net.createServer((socket) => {
                                       machine:data.UID,
                                       command:command[0],
                                       p1:command[1],
-                                      p2:command[2]
+                                      p2:command[2],
+                                      p3:command[3],
+                                      p4:command[4]
                                   })
                                    console.log("Saved In Transactions");
                                    setTimeout(()=>{
@@ -505,7 +517,9 @@ const server = net.createServer((socket) => {
                                       machine:data.UID,
                                       command:command[0],
                                       p1:command[1],
-                                      p2:command[2]
+                                      p2:command[2],
+                                      p3:command[3],
+                                      p4:command[4]
                                   })
                                    console.log("Saved In Transactions");
                                    setTimeout(()=>{
@@ -544,7 +558,9 @@ const server = net.createServer((socket) => {
                                       machine:data.UID,
                                       command:command[0],
                                       p1:command[1],
-                                      p2:command[2]
+                                      p2:command[2],
+                                      p3:command[3],
+                                      p4:command[4]
                                   })
                                    console.log("Saved In Transactions");
                                  
@@ -614,7 +630,9 @@ const server = net.createServer((socket) => {
                                       machine:data.UID,
                                       command:command[0],
                                       p1:command[1],
-                                      p2:command[2]
+                                      p2:command[2],
+                                      p3:command[3],
+                                      p4:command[4]
                                   })
                                    console.log("Saved In Transactions");
                                  
@@ -642,7 +660,9 @@ const server = net.createServer((socket) => {
                                       machine:data.UID,
                                       command:command[0],
                                       p1:command[1],
-                                      p2:command[2]
+                                      p2:command[2],
+                                      p3:command[3],
+                                      p4:command[4]
                                   })
                                    console.log("Saved In Transactions");
                                    setTimeout(()=>{
@@ -681,7 +701,9 @@ const server = net.createServer((socket) => {
                                       machine:data.UID,
                                       command:command[0],
                                       p1:command[1],
-                                      p2:command[2]
+                                      p2:command[2],
+                                      p3:command[3],
+                                      p4:command[4]
                                   })
                                    console.log("Saved In Transactions");
                                  
@@ -715,7 +737,9 @@ const server = net.createServer((socket) => {
                                         machine:data.UID,
                                         command:command[0],
                                         p1:command[1],
-                                        p2:command[2]
+                                        p2:command[2],
+                                        p3:command[3],
+                                        p4:command[4]
                                     })
                                      console.log("Saved In Transactions");
                                    
@@ -749,7 +773,9 @@ const server = net.createServer((socket) => {
                                           machine:data.UID,
                                           command:command[0],
                                           p1:command[1],
-                                          p2:command[2]
+                                          p2:command[2],
+                                          p3:command[3],
+                                          p4:command[4]
                                       })
                                        console.log("Saved In Transactions");
                                    
@@ -783,7 +809,9 @@ const server = net.createServer((socket) => {
                                             machine:data.UID,
                                             command:command[0],
                                             p1:command[1],
-                                            p2:command[2]
+                                            p2:command[2],
+                                            p3:command[3],
+                                            p4:command[4]
                                         })
                                          console.log("Saved In Transactions");
                                         
@@ -817,7 +845,9 @@ const server = net.createServer((socket) => {
                                             machine:data.UID,
                                             command:command[0],
                                             p1:command[1],
-                                            p2:command[2]
+                                            p2:command[2],
+                                            p3:command[3],
+                                            p4:command[4]
                                         })
                                          console.log("Saved In Transactions");
                                       
@@ -851,7 +881,9 @@ const server = net.createServer((socket) => {
                                             machine:data.UID,
                                             command:command[0],
                                             p1:command[1],
-                                            p2:command[2]
+                                            p2:command[2],
+                                            p3:command[3],
+                                            p4:command[4]
                                         })
                                          console.log("Saved In Transactions");
                                        
@@ -886,7 +918,9 @@ const server = net.createServer((socket) => {
                                               machine:data.UID,
                                               command:command[0],
                                               p1:command[1],
-                                              p2:command[2]
+                                              p2:command[2],
+                                              p3:command[3],
+                                              p4:command[4]
                                           })
                                            console.log("Saved In Transactions");
                                          
@@ -910,7 +944,9 @@ const server = net.createServer((socket) => {
                 machine:data.UID,
                 command:command[0],
                 p1:command[1],
-                p2:command[2]
+                p2:command[2],
+                p3:command[3],
+                p4:command[4]
             })
              console.log("Saved In Transactions");
             }
