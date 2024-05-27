@@ -206,7 +206,7 @@ export const sendLight=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('sendLight',req.body.socketNumber,req.body.light,req.body.position) ;
+        events.pubsub.emit('sendLight',req.body.socketNumber,req.body.light,req.body.position,req.body.UserName) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})

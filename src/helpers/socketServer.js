@@ -193,11 +193,11 @@ const server = net.createServer((socket) => {
         }
       });
 
-      events.pubsub.on('sendLight', function(port,light,postion) {
+      events.pubsub.on('sendLight', function(port,light,postion,name) {
      
         
         if(remotePort == port) {
-          socket.write(`*SL:${light}:${postion}#`);
+          socket.write(`*SL:${new Date().toISOString()}:${name}:${light}:${postion}#`);
         }
       });
 
@@ -552,7 +552,7 @@ const server = net.createServer((socket) => {
                        
                       
                     }
-                     else  if(command[0]=="SL-OK")
+                     else  if(command[0].includes("SL"))
                     {
                       
                        // console.log(remotePort);
@@ -578,7 +578,9 @@ const server = net.createServer((socket) => {
                                       machine:data.UID,
                                       command:command[0],
                                       p1:command[1],
-                                      p2:command[2]
+                                      p2:command[2],
+                                      p3:command[3],
+                                      p4:command[4]
                                   })
                                    console.log("Saved In Transactions");
                                   
