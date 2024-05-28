@@ -56,14 +56,14 @@ function sendData(socket,count,socketNumber) {
 
 async function sendVend(socket,tid,name) {
   // Construct message
-  const message = `*V:${getDateTime()}:${name}:${tid}:${y}:${y}#`;
+  const message = `*V:${tid}:${y}:${y}#`;
    console.log(message)
   // Send message
   await socket.write(message+"\n");
   //socket.write("*RST#");
   
   
-   await socket.write(`*TV?:${getDateTime()}:${name}#\n`);
+   await socket.write(`*TV?#\n`);
    
   
  
@@ -82,7 +82,7 @@ async function sendVend(socket,tid,name) {
 
 async function sendClear(socket,name) {
   // Construct message
-  const message = `*TC?:${getDateTime()}:${name}#`;
+  const message = `*TC?#`;
  
   await socket.write(message+"\n");
    
@@ -166,7 +166,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-            socket.write(`*TC?:${getDateTime()}:${name}#`);
+            socket.write(`*TC?#`);
         }
       });
 
@@ -174,7 +174,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*V:${getDateTime()}:${name}:${TID++}:${pin}:${pulse}`);
+          socket.write(`*V:${TID++}:${pin}:${pulse}`);
         }
       });
 
@@ -183,14 +183,14 @@ const server = net.createServer((socket) => {
         
         if(remotePort == port) {
           console.log("FW sent");
-          socket.write(`*FW?:${getDateTime()}:${name}#`);
+          socket.write(`*FW?#`);
         }
       });
       events.pubsub.on('sendTV', function(port,name) {
      
         
         if(remotePort == port) {
-          socket.write(`*TV?:${getDateTime()}:${name}#`);
+          socket.write(`*TV?#`);
         }
       });
 
@@ -205,7 +205,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*URL?:${getDateTime()}:${name}#`);
+          socket.write(`*URL?#`);
         }
       });
 
@@ -229,7 +229,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*HBT:${getDateTime()}:${name}:${value}#`);
+          socket.write(`*HBT:${value}#`);
         }
       });
 
@@ -284,7 +284,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*CA?:${getDateTime()}:${name}#`);
+          socket.write(`*CA?#`);
         }
       });
 
