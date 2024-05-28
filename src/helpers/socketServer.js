@@ -10,6 +10,30 @@ let y=1;
 let interval1;
 let interval2;
 
+function getDateTime(){
+
+  const date = new Date();
+
+const day = String(date.getDate()).padStart(2, '0');
+const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+const year = date.getFullYear();
+
+const hours = String(date.getHours()).padStart(2, '0');
+const minutes = String(date.getMinutes()).padStart(2, '0');
+const seconds = String(date.getSeconds()).padStart(2, '0');
+
+const formattedDate = `${day}-${month}-${year}`;
+const formattedTime = `${hours}-${minutes}-${seconds}`;
+
+const formattedDateTime = `${formattedDate} ${formattedTime}`;
+
+ return formattedDateTime;
+
+
+}
+
+//console.log(getDateTime());
+
 function sendData(socket,count,socketNumber) {
     // Construct message
     const message = `Count:${count}-${socketNumber}`;
@@ -32,14 +56,14 @@ function sendData(socket,count,socketNumber) {
 
 async function sendVend(socket,tid,name) {
   // Construct message
-  const message = `*V:${new Date().toISOString()}:${name}:${tid}:${y}:${y}#`;
+  const message = `*V:${getDateTime()}:${name}:${tid}:${y}:${y}#`;
    console.log(message)
   // Send message
   await socket.write(message+"\n");
   //socket.write("*RST#");
   
   
-   await socket.write(`*TV:${new Date().toISOString()}:${name}?#\n`);
+   await socket.write(`*TV?:${getDateTime()}:${name}#\n`);
    
   
  
@@ -58,7 +82,7 @@ async function sendVend(socket,tid,name) {
 
 async function sendClear(socket,name) {
   // Construct message
-  const message = `*TC:${new Date().toISOString()}:${name}?#`;
+  const message = `*TC?:${getDateTime()}:${name}#`;
  
   await socket.write(message+"\n");
    
@@ -74,7 +98,7 @@ async function sendClear(socket,name) {
 
 function sendReset(socket,name) {
     // Construct message
-    const message = `*RST:${new Date().toISOString()}:${name}#`;
+    const message = `*RST:${getDateTime()}:${name}#`;
     console.log("Resetting connection")
     // Send message
     socket.write(message+"\n");
@@ -85,7 +109,7 @@ function sendReset(socket,name) {
 }
 
 function sendINHOutput(socket,port,value,name){
-    const message = `*INH:${new Date().toISOString()}:${name}:${value}#`;
+    const message = `*INH:${getDateTime()}:${name}:${value}#`;
   
     socket.write(message+"\n");
 
@@ -126,7 +150,7 @@ const server = net.createServer((socket) => {
       
        if(remotePort == port) {
          console.log('FOTA SEND');
-         socket.write(`*FOTA:${new Date().toISOString()}:${name}#`);
+         socket.write(`*FOTA:${getDateTime()}:${name}#`);
        }
      });
 
@@ -142,7 +166,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-            socket.write(`*TC:${new Date().toISOString()}:${name}?#`);
+            socket.write(`*TC?:${getDateTime()}:${name}#`);
         }
       });
 
@@ -150,7 +174,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*V:${new Date().toISOString()}:${name}:${TID++}:${pin}:${pulse}`);
+          socket.write(`*V:${getDateTime()}:${name}:${TID++}:${pin}:${pulse}`);
         }
       });
 
@@ -159,14 +183,14 @@ const server = net.createServer((socket) => {
         
         if(remotePort == port) {
           console.log("FW sent");
-          socket.write(`*FW:${new Date().toISOString()}:${name}?#`);
+          socket.write(`*FW?:${getDateTime()}:${name}#`);
         }
       });
       events.pubsub.on('sendTV', function(port,name) {
      
         
         if(remotePort == port) {
-          socket.write(`*TV:${new Date().toISOString()}:${name}?#`);
+          socket.write(`*TV?:${getDateTime()}:${name}#`);
         }
       });
 
@@ -174,14 +198,14 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*URL:${new Date().toISOString()}:${name}:${url}#`);
+          socket.write(`*URL:${getDateTime()}:${name}:${url}#`);
         }
       });
       events.pubsub.on('askUrl', function(port,name) {
      
         
         if(remotePort == port) {
-          socket.write(`*URL:${new Date().toISOString()}:${name}?#`);
+          socket.write(`*URL?:${getDateTime()}:${name}#`);
         }
       });
 
@@ -189,7 +213,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*CC:${new Date().toISOString()}:${name}#`);
+          socket.write(`*CC:${getDateTime()}:${name}#`);
         }
       });
 
@@ -197,7 +221,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*SL:${new Date().toISOString()}:${name}:${light}:${postion}#`);
+          socket.write(`*SL:${getDateTime()}:${name}:${light}:${postion}#`);
         }
       });
 
@@ -205,7 +229,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*HBT:${new Date().toISOString()}:${name}:${value}#`);
+          socket.write(`*HBT:${getDateTime()}:${name}:${value}#`);
         }
       });
 
@@ -213,7 +237,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*SIP:${new Date().toISOString()}:${name}:${ip}:${pin}#`);
+          socket.write(`*SIP:${getDateTime()}:${name}:${ip}:${pin}#`);
         }
       });
 
@@ -221,7 +245,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*SS:${new Date().toISOString()}:${name}:${ssid}#`);
+          socket.write(`*SS:${getDateTime()}:${name}:${ssid}#`);
         }
       });
 
@@ -229,7 +253,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*PW:${new Date().toISOString()}:${name}:${pwd}`);
+          socket.write(`*PW:${getDateTime()}:${name}:${pwd}`);
         }
       });
 
@@ -237,7 +261,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*SS1:${new Date().toISOString()}:${name}:${ssid}#`);
+          socket.write(`*SS1:${getDateTime()}:${name}:${ssid}#`);
         }
       });
 
@@ -245,14 +269,14 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*PW1:${new Date().toISOString()}:${name}:${pwd}#`);
+          socket.write(`*PW1:${getDateTime()}:${name}:${pwd}#`);
         }
       });
       events.pubsub.on('sendCA', function(port,num,polarity,name) {
      
         
         if(remotePort == port) {
-          socket.write(`*CA:${new Date().toISOString()}:${name}:${num}:${polarity}#`);
+          socket.write(`*CA:${getDateTime()}:${name}:${num}:${polarity}#`);
         }
       });
 
@@ -260,7 +284,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*CA:${new Date().toISOString()}:${name}?#`);
+          socket.write(`*CA?:${getDateTime()}:${name}#`);
         }
       });
 
@@ -335,7 +359,7 @@ const server = net.createServer((socket) => {
             if(data)
                 {
                     data.SocketNumber=remotePort;
-                    data.lastHeartBeatTime=new Date().toISOString();
+                    data.lastHeartBeatTime=getDateTime();
                     await data.save();
                       await Transaction.create({
                           machine:data.UID,
@@ -360,7 +384,7 @@ const server = net.createServer((socket) => {
                     {
                       
                         data.INHinput=parseInt(command[1]);
-                        data.lastHeartBeatTime=new Date().toISOString();
+                        data.lastHeartBeatTime=getDateTime();
                         await data.save();
                           await Transaction.create({
                               machine:data.UID,
@@ -385,7 +409,7 @@ const server = net.createServer((socket) => {
                         {
                           
                             data.RstMessage=command[0];
-                            data.lastHeartBeatTime=new Date().toISOString();
+                            data.lastHeartBeatTime=getDateTime();
                             await data.save();
                           
                               await Transaction.create({
@@ -417,7 +441,7 @@ const server = net.createServer((socket) => {
                     {
                       
                         data.FotaMessage=command[0];
-                        data.lastHeartBeatTime=new Date().toISOString();
+                        data.lastHeartBeatTime=getDateTime();
                         await data.save();
                           await Transaction.create({
                               machine:data.UID,
@@ -448,7 +472,7 @@ const server = net.createServer((socket) => {
                         {
                           
                             data.Voutput=command[0];
-                            data.lastHeartBeatTime=new Date().toISOString();
+                            data.lastHeartBeatTime=getDateTime();
                             await data.save();
                               await Transaction.create({
                                   machine:data.UID,
@@ -479,7 +503,7 @@ const server = net.createServer((socket) => {
                             {
                               
                                 data.TCoutput=strData;
-                                data.lastHeartBeatTime=new Date().toISOString();
+                                data.lastHeartBeatTime=getDateTime();
                                 await data.save();
                                   await Transaction.create({
                                       machine:data.UID,
@@ -511,7 +535,7 @@ const server = net.createServer((socket) => {
                             {
                               
                                 data.TVoutput=strData;
-                                data.lastHeartBeatTime=new Date().toISOString();
+                                data.lastHeartBeatTime=getDateTime();
                                 await data.save();
                                   await Transaction.create({
                                       machine:data.UID,
@@ -546,7 +570,7 @@ const server = net.createServer((socket) => {
                             {
                               
                                 data.FWoutput=FWoutput[1];
-                                data.lastHeartBeatTime=new Date().toISOString();
+                                data.lastHeartBeatTime=getDateTime();
                                 await data.save();
                                 setTimeout(()=>{
                                   data.FWoutput='';
@@ -582,7 +606,7 @@ const server = net.createServer((socket) => {
                             {
                               
                                 data.Soutput=command[0];
-                                data.lastHeartBeatTime=new Date().toISOString();
+                                data.lastHeartBeatTime=getDateTime();
                                 await data.save();
                                 setTimeout(()=>{
                                   data.Soutput='';
@@ -618,7 +642,7 @@ const server = net.createServer((socket) => {
                             {
                               
                                 data.FotaURLoutput=command[0];
-                                data.lastHeartBeatTime=new Date().toISOString();
+                                data.lastHeartBeatTime=getDateTime();
                                 await data.save();
                                 setTimeout(()=>{
                                   data.FotaURLoutput='';
@@ -654,7 +678,7 @@ const server = net.createServer((socket) => {
                             {
                               
                                 data.URLoutput=command[1];
-                                data.lastHeartBeatTime=new Date().toISOString();
+                                data.lastHeartBeatTime=getDateTime();
                                 await data.save();
                                   await Transaction.create({
                                       machine:data.UID,
@@ -689,7 +713,7 @@ const server = net.createServer((socket) => {
                             {
                               
                                 data.Coutput=command[0];
-                                data.lastHeartBeatTime=new Date().toISOString();
+                                data.lastHeartBeatTime=getDateTime();
                                 await data.save();
                                 setTimeout(()=>{
                                   data.Coutput='';
@@ -725,7 +749,7 @@ const server = net.createServer((socket) => {
                               {
                                 
                                   data.SIPoutput=command[0];
-                                  data.lastHeartBeatTime=new Date().toISOString();
+                                  data.lastHeartBeatTime=getDateTime();
                                   await data.save();
                                   setTimeout(()=>{
                                     data.SIPoutput='';
@@ -761,7 +785,7 @@ const server = net.createServer((socket) => {
                                 {
                                   
                                     data.SSIDoutput=command[0];
-                                    data.lastHeartBeatTime=new Date().toISOString();
+                                    data.lastHeartBeatTime=getDateTime();
                                     await data.save();
                                     setTimeout(()=>{
                                       data.SSIDoutput='';
@@ -797,7 +821,7 @@ const server = net.createServer((socket) => {
                                   {
                                     
                                       data.SSID1output=command[0];
-                                      data.lastHeartBeatTime=new Date().toISOString();
+                                      data.lastHeartBeatTime=getDateTime();
                                       await data.save();
                                       setTimeout(()=>{
                                         data.SSID1output='';
@@ -833,7 +857,7 @@ const server = net.createServer((socket) => {
                                   {
                                     
                                       data.PWDoutput=command[0];
-                                      data.lastHeartBeatTime=new Date().toISOString();
+                                      data.lastHeartBeatTime=getDateTime();
                                       await data.save();
                                       setTimeout(()=>{
                                         data.PWDoutput='';
@@ -869,7 +893,7 @@ const server = net.createServer((socket) => {
                                   {
                                     
                                       data.PWD1output=command[0];
-                                      data.lastHeartBeatTime=new Date().toISOString();
+                                      data.lastHeartBeatTime=getDateTime();
                                       await data.save();
                                       setTimeout(()=>{
                                         data.PWD1output='';
@@ -906,7 +930,7 @@ const server = net.createServer((socket) => {
                                       
                                         data.CAoutput=strData;
                                         data.CAmessage=strData;
-                                        data.lastHeartBeatTime=new Date().toISOString();
+                                        data.lastHeartBeatTime=getDateTime();
                                         await data.save();
                                         setTimeout(()=>{
                                           data.CAoutput='';
