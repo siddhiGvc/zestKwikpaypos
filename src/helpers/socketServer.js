@@ -205,8 +205,8 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*URL:${url}#`);
-          console.log(`*URL:${url}# sent`)
+          socket.write(`*URL:${name}:${getDateTime()}:${url}#`);
+          console.log(`*URL:${name}:${getDateTime()}:${url}# sent`)
         }
       });
       events.pubsub.on('askUrl', function(port,name) {
