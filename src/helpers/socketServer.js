@@ -98,7 +98,7 @@ async function sendClear(socket,name) {
 
 function sendReset(socket,name) {
     // Construct message
-    const message = `*RST:${getDateTime()}:${name}#`;
+    const message = `*RST:${name}:${getDateTime()}#`;
     console.log("Resetting connection")
     // Send message
     socket.write(message+"\n");
@@ -109,7 +109,7 @@ function sendReset(socket,name) {
 }
 
 function sendINHOutput(socket,port,value,name){
-    const message = `*INH:${getDateTime()}:${name}:${value}#`;
+    const message = `*INH:${name}:${getDateTime()}:${value}#`;
   
     socket.write(message+"\n");
 
@@ -150,7 +150,7 @@ const server = net.createServer((socket) => {
       
        if(remotePort == port) {
          console.log('FOTA SEND');
-         socket.write(`*FOTA:${getDateTime()}:${name}#`);
+         socket.write(`*FOTA:${name}:${getDateTime()}#`);
        }
      });
 
@@ -198,7 +198,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*URL:${getDateTime()}:${name}:${url}#`);
+          socket.write(`*URL:${name}:${getDateTime()}:${url}#`);
         }
       });
       events.pubsub.on('askUrl', function(port,name) {
@@ -213,7 +213,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*CC:${getDateTime()}:${name}#`);
+          socket.write(`*CC:${name}:${getDateTime()}#`);
         }
       });
 
@@ -221,7 +221,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*SL:${getDateTime()}:${name}:${light}:${postion}#`);
+          socket.write(`*SL:${name}:${getDateTime()}:${light}:${postion}#`);
         }
       });
 
@@ -237,7 +237,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*SIP:${getDateTime()}:${name}:${ip}:${pin}#`);
+          socket.write(`*SIP:${name}:${getDateTime()}:${ip}:${pin}#`);
         }
       });
 
@@ -245,7 +245,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*SS:${getDateTime()}:${name}:${ssid}#`);
+          socket.write(`*SS:${name}:${getDateTime()}:${ssid}#`);
         }
       });
 
@@ -253,7 +253,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*PW:${getDateTime()}:${name}:${pwd}`);
+          socket.write(`*PW:${name}:${getDateTime()}:${pwd}`);
         }
       });
 
@@ -261,7 +261,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*SS1:${getDateTime()}:${name}:${ssid}#`);
+          socket.write(`*SS1:${name}:${getDateTime()}:${ssid}#`);
         }
       });
 
@@ -269,14 +269,14 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*PW1:${getDateTime()}:${name}:${pwd}#`);
+          socket.write(`*PW1:${name}:${getDateTime()}:${pwd}#`);
         }
       });
       events.pubsub.on('sendCA', function(port,num,polarity,name) {
      
         
         if(remotePort == port) {
-          socket.write(`*CA:${getDateTime()}:${name}:${num}:${polarity}#`);
+          socket.write(`*CA:${name}:${getDateTime()}:${num}:${polarity}#`);
         }
       });
 
