@@ -44,7 +44,7 @@ export const sendFota=async(req,res)=>{
     try{
         console.log(req.body);
         const output=req.body.outPutValue;
-        events.pubsub.emit('sendFota',output,req.body.socketNumber,req.body.UserName) ;
+        events.pubsub.emit('sendFota',output,req.body.socketNumber,req.body.UserName,req.body.type) ;
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})

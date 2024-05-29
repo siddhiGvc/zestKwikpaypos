@@ -145,12 +145,19 @@ const server = net.createServer((socket) => {
         }
       });
 
-      events.pubsub.on('sendFota', function(output,port,name) {
+      events.pubsub.on('sendFota', function(output,port,name,type) {
       console.log('FOTA',output,port);
       
        if(remotePort == port) {
          console.log('FOTA SEND');
-         socket.write(`*FOTA:${name}:${getDateTime()}#`);
+         if(type=="old")
+          {
+            socket.write(`*FOTA#`);
+          }
+          else{
+            socket.write(`*FOTA:${name}:${getDateTime()}#`);
+          }
+        
        }
      });
 
