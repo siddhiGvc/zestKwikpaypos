@@ -309,14 +309,18 @@ const server = net.createServer((socket) => {
         
         if(remotePort == port) {
       
-          await socket.write(`*CC:${name}:${getDateTime()}#`);
+          await setTimeout(()=>{
+
+            socket.write(`*CC:${name}:${getDateTime()}#`);
+
+          },500)
           await setTimeout(()=>{
             socket.write(`*TC?#`);
             socket.write(`*TV?#`);
              setIntervalAndStore(() => {
               sendClear(socket,name);
-             },7000)
-          },3000)
+             },5000)
+          },2000)
        
         
          
@@ -326,15 +330,19 @@ const server = net.createServer((socket) => {
        
         
         if(remotePort == port) {
+          await setTimeout(()=>{
+
+            socket.write(`*CC:${name}:${getDateTime()}#`);
+
+          },500)
         
-          await socket.write(`*CC:${name}:${getDateTime()}#`);
           await setTimeout(()=>{
             socket.write(`*TC?#`);
             socket.write(`*TV?#`);
              setIntervalAndStore(() => {
               sendVend(socket,TID++,name);
-            },5000)
-          },3000)
+            },3000)
+          },2000)
       
          
          
