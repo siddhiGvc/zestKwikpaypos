@@ -313,11 +313,12 @@ const server = net.createServer((socket) => {
           await setTimeout(()=>{
             socket.write(`*TC?#`);
             socket.write(`*TV?#`);
+             setIntervalAndStore(() => {
+              sendClear(socket,name);
+             },7000)
           },3000)
        
-          await setIntervalAndStore(() => {
-           sendClear(socket,name);
-          },7000)
+        
          
         }
       });
@@ -330,11 +331,12 @@ const server = net.createServer((socket) => {
           await setTimeout(()=>{
             socket.write(`*TC?#`);
             socket.write(`*TV?#`);
+             setIntervalAndStore(() => {
+              sendVend(socket,TID++,name);
+            },5000)
           },3000)
       
-          await setIntervalAndStore(() => {
-            sendVend(socket,TID++,name);
-          },5000)
+         
          
         }
       });
