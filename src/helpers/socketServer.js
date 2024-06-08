@@ -301,10 +301,16 @@ const server = net.createServer((socket) => {
         
         if(remotePort == port) {
           clearInterval(interval2);
-          sendVend(socket,TID++);
+          socket.write(`*CC:${name}:${getDateTime()}#`);
+          setTimeout(()=>{
+            sendClear(socket,name);
+          },3000)
+          setTimeout(()=>{
+            socket.write(`*TV?#`);
+          },3000)
          interval1= setInterval(()=>{
-            sendVend(socket,TID++,name);
-          },10000)
+           sendClear(socket,name);
+          },7000)
          
         }
       });
@@ -313,10 +319,18 @@ const server = net.createServer((socket) => {
         
         if(remotePort == port) {
           clearInterval(interval1);
-          sendClear(socket);
-          interval2=setInterval(()=>{
+          socket.write(`*CC:${name}:${getDateTime()}#`);
+          setTimeout(()=>{
             sendClear(socket,name);
-          },10000)
+          },3000)
+
+          setTimeout(()=>{
+            socket.write(`*TV?#`);
+          },3000)
+      
+          interval2=setInterval(()=>{
+            sendVend(socket,TID++,name);
+          },5000)
          
         }
       });
