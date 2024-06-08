@@ -39,6 +39,7 @@ function sendData(socket,count,socketNumber) {
     // console.log(message)
     // Send message
     socket.write(message+"\n");
+  
    
     // const success=socket.write('Hello, server!');
    
@@ -56,14 +57,11 @@ function sendData(socket,count,socketNumber) {
 async function sendVend(socket,tid,name) {
   // Construct message
   const message = `*V:${tid}:${y}:${y}#`;
-   console.log(message)
-  // Send message
+
   await socket.write(message+"\n");
+  socket.write(message+"\n");
   //socket.write("*RST#");
   
-  
-   await socket.write(`*TV?#\n`);
-   
   
  
   // const success=socket.write('Hello, server!');
