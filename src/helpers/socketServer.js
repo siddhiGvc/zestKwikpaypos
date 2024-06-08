@@ -7,8 +7,7 @@ const { sendV } = require("../controllers/KwikPay/macAddress");
 const port = 6666;
 let TID=Math.floor(Math.random() * 100000) + 1;
 let y=1;
-let interval1;
-let interval2;
+let intervals = [];
 
 function getDateTime(){
 
@@ -114,6 +113,17 @@ function sendINHOutput(socket,port,value,name){
     socket.write(message+"\n");
 
 }
+
+const setIntervalAndStore = (callback, interval) => {
+  const intervalId = setInterval(callback, interval);
+  intervals.push(intervalId);
+  return intervalId;
+};
+
+const clearAllIntervals = () => {
+  intervals.forEach(intervalId => clearInterval(intervalId));
+  intervals = [];
+};
 
 
 
@@ -300,7 +310,7 @@ const server = net.createServer((socket) => {
         
         
         if(remotePort == port) {
-          clearInterval(interval2);
+          clearAllIntervals();
           socket.write(`*CC:${name}:${getDateTime()}#`);
           setTimeout(()=>{
             sendClear(socket,name);
@@ -308,7 +318,7 @@ const server = net.createServer((socket) => {
           setTimeout(()=>{
             socket.write(`*TV?#`);
           },3000)
-         interval1= setInterval(()=>{
+          setIntervalAndStore(() => {
            sendClear(socket,name);
           },7000)
          
@@ -318,7 +328,7 @@ const server = net.createServer((socket) => {
        
         
         if(remotePort == port) {
-          clearInterval(interval1);
+          clearAllIntervals();
           socket.write(`*CC:${name}:${getDateTime()}#`);
           setTimeout(()=>{
             sendClear(socket,name);
@@ -328,7 +338,7 @@ const server = net.createServer((socket) => {
             socket.write(`*TV?#`);
           },3000)
       
-          interval2=setInterval(()=>{
+          setIntervalAndStore(() => {
             sendVend(socket,TID++,name);
           },5000)
          
@@ -338,8 +348,7 @@ const server = net.createServer((socket) => {
       events.pubsub.on('modeNone', function(port,name) {
       
         if(remotePort == port) {
-          clearInterval(interval1);
-          clearInterval(interval2);
+          clearAllIntervals();
        
         }
       });
