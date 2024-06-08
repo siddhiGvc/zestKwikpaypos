@@ -306,39 +306,35 @@ const server = net.createServer((socket) => {
         }
       });
 
-      events.pubsub.on('modeTest1', function(port,name) {
+      events.pubsub.on('modeTest1', async function(port,name) {
         
         
         if(remotePort == port) {
-          clearAllIntervals();
-          socket.write(`*CC:${name}:${getDateTime()}#`);
-          setTimeout(()=>{
-            sendClear(socket,name);
-          },3000)
-          setTimeout(()=>{
+          await clearAllIntervals();
+          await socket.write(`*CC:${name}:${getDateTime()}#`);
+          await setTimeout(()=>{
+            socket.write(`*TC?#`);
             socket.write(`*TV?#`);
           },3000)
-          setIntervalAndStore(() => {
+       
+          await setIntervalAndStore(() => {
            sendClear(socket,name);
           },7000)
          
         }
       });
-      events.pubsub.on('modeTest2', function(port,name) {
+      events.pubsub.on('modeTest2',async function(port,name) {
        
         
         if(remotePort == port) {
-          clearAllIntervals();
-          socket.write(`*CC:${name}:${getDateTime()}#`);
-          setTimeout(()=>{
-            sendClear(socket,name);
-          },3000)
-
-          setTimeout(()=>{
+          await clearAllIntervals();
+          await socket.write(`*CC:${name}:${getDateTime()}#`);
+          await setTimeout(()=>{
+            socket.write(`*TC?#`);
             socket.write(`*TV?#`);
           },3000)
       
-          setIntervalAndStore(() => {
+          await setIntervalAndStore(() => {
             sendVend(socket,TID++,name);
           },5000)
          
