@@ -308,7 +308,7 @@ const server = net.createServer((socket) => {
         
         
         if(remotePort == port) {
-          await clearAllIntervals();
+      
           await socket.write(`*CC:${name}:${getDateTime()}#`);
           await setTimeout(()=>{
             socket.write(`*TC?#`);
@@ -326,7 +326,7 @@ const server = net.createServer((socket) => {
        
         
         if(remotePort == port) {
-          await clearAllIntervals();
+        
           await socket.write(`*CC:${name}:${getDateTime()}#`);
           await setTimeout(()=>{
             socket.write(`*TC?#`);
