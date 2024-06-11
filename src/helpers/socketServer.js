@@ -319,7 +319,7 @@ const server = net.createServer((socket) => {
             socket.write(`*TV?#`);
              setIntervalAndStore(() => {
               sendClear(socket,name);
-             },5000)
+             },7000)
           },2000)
        
         
@@ -341,7 +341,7 @@ const server = net.createServer((socket) => {
             socket.write(`*TV?#`);
              setIntervalAndStore(() => {
               sendVend(socket,TID++,name);
-            },3000)
+            },4000)
           },2000)
       
          
