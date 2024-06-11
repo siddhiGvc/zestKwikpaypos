@@ -6,7 +6,7 @@ const { sendV } = require("../controllers/KwikPay/macAddress");
 
 const port = 6666;
 let TID=Math.floor(Math.random() * 100000) + 1;
-let y=0;
+let y=1;
 let intervals = [];
 
 function getDateTime(){
@@ -319,7 +319,7 @@ const server = net.createServer((socket) => {
             socket.write(`*TV?#`);
              setIntervalAndStore(() => {
               sendClear(socket,name);
-             },7000)
+             },6000)
           },2000)
        
         
@@ -341,7 +341,7 @@ const server = net.createServer((socket) => {
             socket.write(`*TV?#`);
              setIntervalAndStore(() => {
               sendVend(socket,TID++,name);
-            },4000)
+            },5000)
           },2000)
       
          
