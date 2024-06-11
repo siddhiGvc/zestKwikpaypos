@@ -497,7 +497,7 @@ const server = net.createServer((socket) => {
                
               
             } 
-            else  if(command[0].includes("V") && !command[0].includes("TV"))
+            else  if((command[0].includes("V") || command[0].includes("DUP")) && !command[0].includes("TV"))
                 {
                   
                     
