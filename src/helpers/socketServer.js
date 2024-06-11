@@ -6,7 +6,7 @@ const { sendV } = require("../controllers/KwikPay/macAddress");
 
 const port = 6666;
 let TID=Math.floor(Math.random() * 100000) + 1;
-let y=1;
+let y=0;
 let intervals = [];
 
 function getDateTime(){
