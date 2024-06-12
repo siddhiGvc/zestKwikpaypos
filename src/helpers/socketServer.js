@@ -70,7 +70,7 @@ async function sendVend(socket,tid,name,remotePort) {
 
     await socket.write(message+"\n");
 
-  },200)
+  },500)
  
 
    y++;
@@ -98,7 +98,7 @@ async function sendClear(socket,name,remotePort) {
   await socket.write(message+"\n");
 
 
- },200)
+ },500)
 
    
   //  await socket.write("*TV?#\n")

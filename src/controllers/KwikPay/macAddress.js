@@ -1,3 +1,5 @@
+import { where } from "sequelize";
+
 const {MacMapping} =require("../../models")
 var events = require('../../helpers/events')
 
@@ -408,6 +410,40 @@ export const modeNone=async(req,res)=>{
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}
+
+export const getTestMode=async(req,res)=>{
+    try{
+        
+        const obj = await TestMode.findAll();
+       
+        res.status(200).json({data:obj[0]})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}
+
+export const setTestMode=async(req,res)=>{
+    try{
+        
+        const obj = await TestMode.findOne({where:{id:1}});
+
+        obj.testMode=!obj.testMode;
+       
+        res.status(200).json()
   
     }
     catch(err)
