@@ -324,21 +324,22 @@ const server = net.createServer((socket) => {
         if(remotePort == port) {
       
           await setTimeout(async()=>{
+
+            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+            // console.log(data);
+             if(data)
+             {
+                 data.Color="warning";
+                 await data.save();
+             }
            
 
             socket.write(`*CC:${name}:${getDateTime()}#`);
-            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
-            // console.log(data);
-             if(data)
-             {
-                 data.Color="warning";
-                 await data.save();
-             }
+         
 
           },500)
           await setTimeout(async()=>{
-           
-            socket.write(`*TC?#`);
+
             const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
             // console.log(data);
              if(data)
@@ -346,7 +347,10 @@ const server = net.createServer((socket) => {
                  data.Color="warning";
                  await data.save();
              }
-            socket.write(`*TV?#`);
+           
+            socket.write(`*TC?#`);
+            
+          
              setIntervalAndStore(async() => {
              
               await sendClear(socket,name,remotePort);
@@ -375,15 +379,7 @@ const server = net.createServer((socket) => {
           },500)
         
           await setTimeout(async()=>{
-            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
-            // console.log(data);
-             if(data)
-             {
-                 data.Color="warning";
-                 await data.save();
-             }
-            socket.write(`*TC?#`);
-            socket.write(`*TV?#`);
+           
              setIntervalAndStore(async() => {
              
               await sendVend(socket,TID++,name,remotePort);
