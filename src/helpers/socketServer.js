@@ -991,7 +991,7 @@ const server = net.createServer((socket) => {
                             else  if(command[0].includes=="RP")
                               {
                                 
-                                 // console.log(remotePort);
+                                 console.log("RP Received");
                                  
                                 
                                   
