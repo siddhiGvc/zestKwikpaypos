@@ -988,7 +988,7 @@ const server = net.createServer((socket) => {
                               
                             }
 
-                            else  if(command[0].includes=="RP")
+                            else  if(command[0].includes("RP"))
                               {
                                 
                                  console.log("RP Received");
