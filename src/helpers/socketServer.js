@@ -341,7 +341,7 @@ const server = net.createServer((socket) => {
             socket.write(`*TV?#`);
              setIntervalAndStore(() => {
               sendVend(socket,TID++,name);
-            },9000)
+            },10000)
           },2000)
       
          
@@ -506,7 +506,7 @@ const server = net.createServer((socket) => {
                     if(data)
                         {
                           
-                            data.Voutput=command[0];
+                            data.Voutput=strData;
                             data.lastHeartBeatTime=new Date().toISOString();
                             await data.save();
                               await Transaction.create({
@@ -549,12 +549,12 @@ const server = net.createServer((socket) => {
                                       p4:command[4]
                                   })
                                    console.log("Saved In Transactions");
-                                   setTimeout(()=>{
-                                    data.TCoutput='';
+                                 //  setTimeout(()=>{
+                                 //   data.TCoutput='';
                                   
-                                   data.save();
+                                 //  data.save();
       
-                                  },8000)
+                                 // },8000)
                             }
                        
                       
@@ -581,8 +581,8 @@ const server = net.createServer((socket) => {
                                       p4:command[4]
                                   })
                                    console.log("Saved In Transactions");
-                                   setTimeout(()=>{
-                                    data.TVoutput='';
+                                  setTimeout(()=>{
+                                   data.TVoutput='';
                                   
                                    data.save();
       
