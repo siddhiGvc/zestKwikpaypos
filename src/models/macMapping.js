@@ -156,16 +156,15 @@ module.exports = (sequelize, DataTypes) => {
           RPoutput:{
             type:DataTypes.STRING,
             allowNull:false
+          },
+          Color:{
+            type:DataTypes.STRING,
+            allowNull:false
           }
          
          
          
          
-         
-
-         
-
-      
       },
       {
         tableName: 'MacMapping'
