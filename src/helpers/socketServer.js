@@ -65,15 +65,14 @@ async function sendVend(socket,tid,name,remotePort) {
    }
   const message = `*V:${tid}:${y}:${y}#`;
 
-  await socket.write(message+"\n");
-  socket.write(message+"\n");
-  //socket.write("*RST#");
-  
-  
+
+  await setTimeout(async()=>{
+
+    await socket.write(message+"\n");
+
+  },200)
  
-  // const success=socket.write('Hello, server!');
- 
-  // Increment count
+
    y++;
   if(y>7)
   {
@@ -87,8 +86,7 @@ async function sendVend(socket,tid,name,remotePort) {
 async function sendClear(socket,name,remotePort) {
   // Construct message
   const message = `*TC?#`;
- 
-  await socket.write(message+"\n");
+
   const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
   // console.log(data);
    if(data)
@@ -96,6 +94,12 @@ async function sendClear(socket,name,remotePort) {
        data.Color="warning";
        await data.save();
    }
+  await setTimeout(async()=>{
+  await socket.write(message+"\n");
+
+
+ },200)
+
    
   //  await socket.write("*TV?#\n")
   
