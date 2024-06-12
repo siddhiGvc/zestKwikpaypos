@@ -1,6 +1,6 @@
 import { where } from "sequelize";
 
-const {MacMapping} =require("../../models")
+const {MacMapping,TestMode} =require("../../models")
 var events = require('../../helpers/events')
 
 export const getAllMacAddress=async(req,res)=>{
