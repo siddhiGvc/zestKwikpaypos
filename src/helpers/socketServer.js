@@ -319,7 +319,7 @@ const server = net.createServer((socket) => {
             socket.write(`*TV?#`);
              setIntervalAndStore(() => {
               sendClear(socket,name);
-             },6000)
+             },12000)
           },2000)
        
         
@@ -461,7 +461,7 @@ const server = net.createServer((socket) => {
                               
                                data.save();
   
-                              },3000)
+                              },8000)
                         }
                    
                   
@@ -492,7 +492,7 @@ const server = net.createServer((socket) => {
                           
                            data.save();
 
-                          },3000)
+                          },8000)
                     }
                
               
@@ -523,7 +523,7 @@ const server = net.createServer((socket) => {
                               
                                data.save();
   
-                              },3000)
+                              },8000)
                         }
                    
                   
@@ -554,7 +554,7 @@ const server = net.createServer((socket) => {
                                   
                                    data.save();
       
-                                  },3000)
+                                  },8000)
                             }
                        
                       
@@ -586,7 +586,7 @@ const server = net.createServer((socket) => {
                                   
                                    data.save();
       
-                                  },3000)
+                                  },8000)
                             }
                        
                       
@@ -612,7 +612,7 @@ const server = net.createServer((socket) => {
                                 
                                  data.save();
     
-                                },3000)
+                                },8000)
                                   await Transaction.create({
                                       machine:data.UID,
                                       command:command[0],
@@ -648,7 +648,7 @@ const server = net.createServer((socket) => {
                                 
                                  data.save();
     
-                                },3000)
+                                },8000)
                                   await Transaction.create({
                                       machine:data.UID,
                                       command:command[0],
@@ -684,7 +684,7 @@ const server = net.createServer((socket) => {
                                 
                                  data.save();
     
-                                },3000)
+                                },8000)
                                   await Transaction.create({
                                       machine:data.UID,
                                       command:command[0],
@@ -729,7 +729,7 @@ const server = net.createServer((socket) => {
                                   
                                    data.save();
       
-                                  },3000)
+                                  },8000)
                             }
                        
                       
@@ -755,7 +755,7 @@ const server = net.createServer((socket) => {
                                 
                                  data.save();
     
-                                },3000)
+                                },8000)
                                   await Transaction.create({
                                       machine:data.UID,
                                       command:command[0],
@@ -791,7 +791,7 @@ const server = net.createServer((socket) => {
                                   
                                    data.save();
       
-                                  },3000)
+                                  },8000)
                                     await Transaction.create({
                                         machine:data.UID,
                                         command:command[0],
@@ -827,7 +827,7 @@ const server = net.createServer((socket) => {
                                     
                                      data.save();
         
-                                    },3000)
+                                    },8000)
                                       await Transaction.create({
                                           machine:data.UID,
                                           command:command[0],
@@ -863,7 +863,7 @@ const server = net.createServer((socket) => {
                                       
                                        data.save();
           
-                                      },3000)
+                                      },8000)
                                         await Transaction.create({
                                             machine:data.UID,
                                             command:command[0],
@@ -899,7 +899,7 @@ const server = net.createServer((socket) => {
                                       
                                        data.save();
           
-                                      },3000)
+                                      },8000)
                                         await Transaction.create({
                                             machine:data.UID,
                                             command:command[0],
@@ -935,7 +935,7 @@ const server = net.createServer((socket) => {
                                       
                                        data.save();
           
-                                      },3000)
+                                      },8000)
                                         await Transaction.create({
                                             machine:data.UID,
                                             command:command[0],
@@ -972,7 +972,7 @@ const server = net.createServer((socket) => {
                                           data.CAmessage='';
                                          data.save();
             
-                                        },3000)
+                                        },8000)
                                           await Transaction.create({
                                               machine:data.UID,
                                               command:command[0],
@@ -1009,7 +1009,7 @@ const server = net.createServer((socket) => {
                                             data.RPoutput='';
                                            data.save();
               
-                                          },3000)
+                                          },8000)
                                             await Transaction.create({
                                                 machine:data.UID,
                                                 command:command[0],
