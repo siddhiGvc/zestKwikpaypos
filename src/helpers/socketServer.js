@@ -453,6 +453,12 @@ const server = net.createServer((socket) => {
                       })
                        console.log("Saved In Transactions");
                 }
+                else{
+                  await MacMapping.create({
+                    MacID:command[1]
+
+                  })
+                }
            
           
         } 

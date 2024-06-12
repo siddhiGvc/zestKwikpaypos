@@ -442,6 +442,8 @@ export const setTestMode=async(req,res)=>{
         const obj = await TestMode.findOne({where:{id:1}});
 
         obj.testMode=!obj.testMode;
+
+        obj.save();
        
         res.status(200).json()
   
