@@ -152,7 +152,12 @@ module.exports = (sequelize, DataTypes) => {
           CAmessage:{
             type:DataTypes.STRING,
             allowNull:false
+          },
+          RPoutput:{
+            type:DataTypes.STRING,
+            allowNull:false
           }
+         
          
          
          
