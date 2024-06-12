@@ -54,8 +54,15 @@ function sendData(socket,count,socketNumber) {
   
 }
 
-async function sendVend(socket,tid,name) {
+async function sendVend(socket,tid,name,remotePort) {
   // Construct message
+  const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+  // console.log(data);
+   if(data)
+   {
+       data.Color="warning";
+       await data.save();
+   }
   const message = `*V:${tid}:${y}:${y}#`;
 
   await socket.write(message+"\n");
@@ -375,14 +382,8 @@ const server = net.createServer((socket) => {
             socket.write(`*TC?#`);
             socket.write(`*TV?#`);
              setIntervalAndStore(async() => {
-              const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
-              // console.log(data);
-               if(data)
-               {
-                   data.Color="warning";
-                   await data.save();
-               }
-              await sendVend(socket,TID++,name);
+             
+              await sendVend(socket,TID++,name,remotePort);
 
             },10000)
           },2000)
