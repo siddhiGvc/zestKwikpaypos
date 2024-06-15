@@ -83,83 +83,83 @@ module.exports = (sequelize, DataTypes) => {
           },
           FotaMessage:{
             type:DataTypes.STRING,
-            allowNull:false
+           
           },
           RstMessage:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           },
           Voutput:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           },
           TCoutput:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           },
           FWoutput:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           },
           TVoutput:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           },
           FotaURLoutput:{
             type:DataTypes.STRING,
-            allowNull:false
+          
           },
           URLoutput:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           },
           Coutput:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           },
           Soutput:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           },
           HBToutput:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           },
           SIPoutput:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           },
           SSIDoutput:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           },
           PWDoutput:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           },
           SSID1output:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           },
           PWD1output:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           },
           CAoutput:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           },
           CAmessage:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           },
           RPoutput:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           },
           Color:{
             type:DataTypes.STRING,
-            allowNull:false
+            
           }
          
          
