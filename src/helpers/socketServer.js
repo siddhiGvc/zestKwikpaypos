@@ -499,6 +499,33 @@ const server = net.createServer((socket) => {
                
               
             } 
+            else  if(command[0]=="HBT")
+              {
+                
+                  
+                  const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                
+                  if(data)
+                      {
+                        
+                        
+                          data.lastHeartBeatTime=new Date().toISOString();
+                          await data.save();
+                        
+                            await Transaction.create({
+                                machine:data.UID,
+                                command:command[0],
+                                p1:command[1],
+                                p2:command[2],
+                                p3:command[3],
+                                p4:command[4]
+                            })
+                             console.log("Saved In Transactions");
+                          
+                      }
+                 
+                
+           } 
             else  if(command[0]=="RST-OK")
                 {
                   
