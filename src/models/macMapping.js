@@ -160,6 +160,10 @@ module.exports = (sequelize, DataTypes) => {
           Color:{
             type:DataTypes.STRING,
             
+          },
+          SIPmessage:{
+            type:DataTypes.STRING,
+            
           }
          
          

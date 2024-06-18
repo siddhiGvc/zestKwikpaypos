@@ -275,6 +275,14 @@ const server = net.createServer((socket) => {
         }
       });
 
+      events.pubsub.on('askSIP', function(port) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*SIP?#`);
+        }
+      });
+
       events.pubsub.on('sendSSID', function(port,ssid,name) {
      
         
@@ -884,6 +892,42 @@ const server = net.createServer((socket) => {
                          
                         
                       }
+                      else  if(command[0]=="SIP")
+                        {
+                          
+                           // console.log(remotePort);
+                           
+                          
+                            
+                           
+                            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                          // console.log(data);
+                            if(data)
+                                {
+                                  
+                                    data.SIPmessage=command[1]+""+command[2]+""+command[3];
+                                    data.lastHeartBeatTime=new Date().toISOString();
+                                    await data.save();
+                                    setTimeout(()=>{
+                                      data.SIPmessage='';
+                                    
+                                     data.save();
+        
+                                    },8000)
+                                      await Transaction.create({
+                                          machine:data.UID,
+                                          command:command[0],
+                                          p1:command[1],
+                                          p2:command[2],
+                                          p3:command[3],
+                                          p4:command[4]
+                                      })
+                                       console.log("Saved In Transactions");
+                                     
+                                }
+                           
+                          
+                        }
                       else  if(command[0]=="SS-OK")
                         {
                           
