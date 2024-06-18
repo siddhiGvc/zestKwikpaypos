@@ -430,9 +430,10 @@ const server = net.createServer((socket) => {
               const splitWithStar=strData.split('*');
               const splitWithHash=splitWithStar[1].split('#');
               const cleaned=splitWithHash[0];
-              
-    
+      
         const command = cleaned.split(",");
+        
+     
         console.log(command[0]);
         
         if(command[0]=="MAC")
@@ -503,7 +504,7 @@ const server = net.createServer((socket) => {
               {
                 
                   
-                  const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                  const data=await MacMapping.findOne({where:{MacID:command[1]}});
                 
                   if(data)
                       {
