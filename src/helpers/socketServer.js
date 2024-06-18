@@ -508,7 +508,7 @@ const server = net.createServer((socket) => {
                   if(data)
                       {
                         
-                          data.HBToutput=command[1],
+                        
                           data.lastHeartBeatTime=new Date().toISOString();
                           await data.save();
                         
@@ -521,12 +521,7 @@ const server = net.createServer((socket) => {
                                 p4:command[4]
                             })
                              console.log("Saved In Transactions");
-                             setTimeout(()=>{
-                              data.HBToutput='';
-                            
-                             data.save();
-
-                            },8000)
+                           
                           
                       }
                  
