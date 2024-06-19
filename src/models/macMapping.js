@@ -133,6 +133,10 @@ module.exports = (sequelize, DataTypes) => {
             type:DataTypes.STRING,
             
           },
+          SSIDmessage:{
+            type:DataTypes.STRING,
+            
+          },
           PWDoutput:{
             type:DataTypes.STRING,
             
