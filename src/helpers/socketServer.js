@@ -54,7 +54,7 @@ function sendData(socket,count,socketNumber) {
   
 }
 
-async function sendVend(socket,tid,name,remotePort) {
+async function sendVend(socket,tid,name,remotePort,command) {
   // Construct message
   const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
   // console.log(data);
@@ -68,7 +68,7 @@ async function sendVend(socket,tid,name,remotePort) {
 
   await setTimeout(async()=>{
 
-    await socket.write(message+"\n");
+    await socket.write(command+"\n");
 
   },500)
  
@@ -402,11 +402,15 @@ const server = net.createServer((socket) => {
           await setTimeout(async()=>{
            const data=await Testing.findAll({where:{device_number:1}});
            console.log(data[0].device_number);
-             setTimeout(async() => {
+           for(var i=0;i<data.length;i++)
+            {
+              setTimeout(async() => {
              
-              await sendVend(socket,TID++,name,remotePort);
-
-            },10000)
+                await sendVend(socket,TID++,name,remotePort,data[i].command);
+  
+              },10000)
+            }
+         
           },2000)
       
          
