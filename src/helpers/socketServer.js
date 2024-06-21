@@ -1,6 +1,6 @@
 const net = require("net");
 const moment=require("moment");
-const {sequelize,MacMapping,Transaction}=require("../models");
+const {sequelize,MacMapping,Transaction,Testing}=require("../models");
 var events = require('../helpers/events');
 const { sendV } = require("../controllers/KwikPay/macAddress");
 
@@ -385,6 +385,7 @@ const server = net.createServer((socket) => {
        
         
         if(remotePort == port) {
+
           await setTimeout(async()=>{
             const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
             // console.log(data);
@@ -394,13 +395,14 @@ const server = net.createServer((socket) => {
                  await data.save();
              }
 
-            socket.write(`*CC:${name}:${getDateTime()}#`);
+           
 
           },500)
         
           await setTimeout(async()=>{
-           
-             setIntervalAndStore(async() => {
+           const data=await Testing.findAll({where:{device_number:1}});
+           console.log(data[0].device_number);
+             setTimeout(async() => {
              
               await sendVend(socket,TID++,name,remotePort);
 
