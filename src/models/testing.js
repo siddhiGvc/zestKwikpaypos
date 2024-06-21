@@ -1,6 +1,6 @@
 'use strict';
-module.exports = (DataTypes, DataTypes) => {
-  const Testing = DataTypes.define('Testing', {
+module.exports = (sequelize, DataTypes) => {
+  const Testing =sequelize.define('Testing', {
     device_number: {
        
         type: DataTypes.INTEGER,
