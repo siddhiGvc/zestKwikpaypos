@@ -401,14 +401,15 @@ const server = net.createServer((socket) => {
         
           await setTimeout(async()=>{
            const data=await Testing.findAll({where:{device_number:1}});
-           console.log(data[0].device_number);
-           for(var i=0;i<data.length;i++)
-            {
-              setTimeout(async() => {
+           console.log("Testing length",data[0].command);
+         for(var i=0;i<data.length;i++)
+           {
+             setTimeout(async() => {
              
-                await sendVend(socket,TID++,name,remotePort,data[i].command);
+               await sendVend(socket,TID++,name,remotePort,data[0].command);
+             
   
-              },10000)
+             },10000)
             }
          
           },2000)
