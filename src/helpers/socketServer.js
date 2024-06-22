@@ -54,40 +54,52 @@ function sendData(socket,count,socketNumber) {
   
 }
 
-async function sendVend(socket,tid,name,remotePort,Data) {
-  // Construct message
-  const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
-  // console.log(data);
-   if(data)
-   {
-       data.Color="warning";
-       await data.save();
-   }
-  const message = `*V:${tid}:${y}:${y}#`;
-  const output =  `*V-OK:${tid}:${y}:${y}#`;
-  
-   Data.command=message;
-   Data.expected_output=output;
-   await Data.save();
+async function sendVend(socket, tid, name, remotePort, Data) {
+  try {
+    // Find data based on remotePort
+    const data = await MacMapping.findOne({ where: { SocketNumber: remotePort } });
+    if (data) {
+      data.Color = "warning";
+      await data.save();
+    }
 
+    // Construct messages
+    const message = `*V:${tid}:${y}:${y}#`;
+    const output = `*V-OK,${tid},${y},${y}#`;
 
-  await setTimeout(async()=>{
+    Data.command = message;
+    Data.expected_output = output;
+    await Data.save();
 
-    await socket.write(Data.command+"\n");
-    await events.pubsub.emit('ReciveData',Data.expected_output,Data,0) ;
+    // Send message over socket after a delay
+    setTimeout(async () => {
+      try {
+        await socket.write(Data.command + "\n");
+          events.pubsub.emit('Receive', Data.expected_output, Data, 0);
+      } catch (err) {
+        console.error("Error sending command over socket:", err);
+      }
+    }, 500);
 
-  },500)
- 
-
-   y++;
-  if(y>7)
-  {
-      y=1;
+    // Increment `y` and reset if necessary
+    y++;
+    if (y > 7) {
+      y = 1;
+    }
+  } catch (err) {
+    console.error("Error in sendVend function:", err);
   }
-
-  // Reset count to 0 if it reaches 1000
-
 }
+
+// Event listener for 'Receive' event
+  events.pubsub.on('Receive', (output, Data, i) => {
+  console.log("Event called***************");
+  // Additional logic for handling the received event can go here
+});
+
+
+
+   
 
 async function sendClear(socket,name,remotePort) {
   // Construct message
@@ -408,15 +420,14 @@ const server = net.createServer((socket) => {
           await setTimeout(async()=>{
            const data=await Testing.findAll({where:{device_number:1}});
            console.log("Testing length",data[0].command);
-         for(var i=0;i<data.length;i++)
-           {
-             setTimeout(async() => {
-             
-               await sendVend(socket,TID++,name,remotePort,data[i]);
-             
-  
-             },10000)
+           for (let i = 0; i < data.length; i++) {
+              setTimeout(async () => {
+                console.log("index", i);
+                await sendVend(socket, TID++, name, remotePort, data[i]);
+              }, 100000 * i);  // 100000 milliseconds = 100 seconds
             }
+
+
          
           },2000)
       
@@ -432,37 +443,63 @@ const server = net.createServer((socket) => {
        
         }
       });
-
-
-
-   
-    const socketNumber = `${remotePort}`;
+      
+      
+      
+       const socketNumber = `${remotePort}`;
     
-    console.log(remoteAddress,remotePort);
+       console.log(remoteAddress,remotePort);
+       
+       
+       
+       
+       events.pubsub.on('Receive', function(output,Data,i) {
+
+         console.log("event called***************")
+           
+       
+         let interval; // Declare interval variable
+
+        // Start interval check
+        interval = setInterval(async () => {
+          console.log(`Interval check ${i}`);
+          i++;
+          if (i >= 5) {
+            clearInterval(interval);
+            socket.removeAllListeners('data'); // Remove all listeners for 'data' to prevent memory leaks
+            Data.result = "Error";
+            await Data.save();
+            console.log("Timeout reached. Exiting function.");
+          }
+        }, 2000);
+      
+        // Listen for data events
+        socket.once("data", async (data) => { // Use once to ensure it's only handled once
+          const strData = data.toString();
+          console.log(`Received data: ${strData}`);
+          console.log(`Expected output: ${output}`);
+      
+          if (strData === output) {
+            console.log("Desired output received. Updating Data.", strData, output);
+            clearInterval(interval);
+            Data.result = strData;
+            await Data.save();
+            socket.removeAllListeners('data'); // Remove all listeners for 'data' to prevent memory leaks
+            console.log("Interval cleared and socket listeners removed.");
+          }
+        });
+          
+
+        })
+    
+       
+   
 
     socket.on("data",async (data) => {
        
         const strData = data.toString();
         console.log(`Received: ${strData}`);
-        events.pubsub.on('ReceiveData', function(output,Data,i) {
-
-          const interval=setInterval(async()=>{
-            if(strData==output)
-              {
-                clearInterval(interval);
-                Data.result=strData;
-                await Data.save();
-              }
-            i++;
-            if(i==5)
-              {
-                clearInterval(interval);
-                Data.result="Error";
-                await Data.save();
-              }
-          },1000)
-
-        })
+       
         if(strData.includes("*") || strData.includes("#"))
             {
              console.log(strData);
