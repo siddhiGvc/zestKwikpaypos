@@ -54,7 +54,7 @@ function sendData(socket,count,socketNumber) {
   
 }
 
-async function sendVend(socket,tid,name,remotePort,command) {
+async function sendVend(socket,tid,name,remotePort,Data) {
   // Construct message
   const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
   // console.log(data);
@@ -64,11 +64,17 @@ async function sendVend(socket,tid,name,remotePort,command) {
        await data.save();
    }
   const message = `*V:${tid}:${y}:${y}#`;
+  const output =  `*V-OK:${tid}:${y}:${y}#`;
+  
+   Data.command=message;
+   Data.expected_output=output;
+   await Data.save();
 
 
   await setTimeout(async()=>{
 
-    await socket.write(command+"\n");
+    await socket.write(Data.command+"\n");
+    await events.pubsub.emit('ReciveData',Data.expected_output,Data,0) ;
 
   },500)
  
@@ -406,7 +412,7 @@ const server = net.createServer((socket) => {
            {
              setTimeout(async() => {
              
-               await sendVend(socket,TID++,name,remotePort,data[0].command);
+               await sendVend(socket,TID++,name,remotePort,data[i]);
              
   
              },10000)
@@ -438,6 +444,25 @@ const server = net.createServer((socket) => {
        
         const strData = data.toString();
         console.log(`Received: ${strData}`);
+        events.pubsub.on('ReceiveData', function(output,Data,i) {
+
+          const interval=setInterval(async()=>{
+            if(strData==output)
+              {
+                clearInterval(interval);
+                Data.result=strData;
+                await Data.save();
+              }
+            i++;
+            if(i==5)
+              {
+                clearInterval(interval);
+                Data.result="Error";
+                await Data.save();
+              }
+          },1000)
+
+        })
         if(strData.includes("*") || strData.includes("#"))
             {
              console.log(strData);
@@ -447,6 +472,8 @@ const server = net.createServer((socket) => {
               const cleaned=splitWithHash[0];
       
         const command = cleaned.split(",");
+
+      
         
      
         console.log(command[0]);
