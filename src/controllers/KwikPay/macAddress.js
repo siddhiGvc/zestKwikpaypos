@@ -20,6 +20,68 @@ export const getAllMacAddress=async(req,res)=>{
 }
 
 
+export const getData=async(req,res)=>{
+    try {
+      var replObjG = {};
+      if (req.query.city) replObjG['city'] = req.query.city.split(',');
+    //   if (req.query.zone) replObjG['zone'] = req.query.zone.split(',');
+    //   if (req.query.ward) replObjG['ward'] = req.query.ward.split(',');
+    //   if (req.query.beat) replObjG['beat'] = req.query.beat.split(',');
+    //   if (req.query.status) replObjG['machine_status'] = req.query.status.split(',');
+    //   if (req.query.voltage) replObjG['Voltage'] = req.query.voltage.split(',');
+    //   if (req.query.current) replObjG['Current'] = req.query.current.split(',');
+    //   if (req.query.temperature) replObjG['Temperature'] = req.query.temperature.split(',');
+    //   if(req.query.voltage){
+    //     console.log(req.query.voltage);
+    //   }
+      // if (!req.user.isAdmin && replObjG['city'] && req.user.city)
+      //   replObjG['city'] = replObjG['city'].filter(q => req.user.city.split(',').indexOf(q) >= 0);
+      // else if (!req.user.isAdmin && !replObjG['city'] && req.user.city)
+      //   replObjG['city'] = req.user.city.split(',');
+      // if (!req.user.isAdmin && replObjG['zone'] && req.user.zone)
+      //   replObjG['zone'] = replObjG['zone'].filter(q => req.user.zone.split(',').indexOf(q) >= 0);
+      // else if (!req.user.isAdmin && !replObjG['zone'] && req.user.zone)
+      //   replObjG['zone'] = req.user.zone.split(',');
+      // if (!req.user.isAdmin && replObjG['ward'] && req.user.ward)
+      //   replObjG['ward'] = replObjG['ward'].filter(q => req.user.ward.split(',').indexOf(q) >= 0);
+      // else if (!req.user.isAdmin && !replObjG['ward'] && req.user.ward)
+      //   replObjG['ward'] = req.user.ward.split(',');
+      // if (!req.user.isAdmin && replObjG['beat'] && req.user.beat)
+      //   replObjG['beat'] = replObjG['beat'].filter(q => req.user.beat.split(',').indexOf(q) >= 0);
+      // else if (!req.user.isAdmin && !replObjG['beat'] && req.user.beat)
+      //   replObjG['beat'] = req.user.beat.split(',');
+  
+      var replObj = {
+         city: req.query.city.split(',') ,
+        //  zone: req.query.zone.split(',') ,
+        //  ward: req.query.ward.split(',') ,
+        //  beat: req.query.beat.split(',') ,
+        //  machine_status:req.query.status.split(','),
+        //  Voltage:req.query.voltage.split(','),
+        //  Current:req.query.current.split(','),
+        //  Temperature:req.query.temperature.split(',')
+  
+        };
+      // if (req.query.stock_status) replObj['stock_status'] = req.query.stock_status.split(',');
+      // if (req.query.burn_status) replObj['burn_status'] = req.query.burn_status.split(',');
+      const [obj, _metadata] = await sequelize.query(
+        `
+        select * FROM MacMapping
+        ${replObjG.city ? 'whrere city in (:city)' : ''}
+        `,
+        { replacements: { city: replObjG.city } }
+      );
+      
+    
+      return successResponse(req, res, { data: obj});
+    } catch (error) {
+      console.log(error)
+      return errorResponse(req, res, error.message);
+    }
+  
+  }
+
+
 export const saveINHoutput=async(req,res)=>{
     try{
         console.log(req.body);

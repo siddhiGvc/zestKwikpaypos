@@ -3,6 +3,7 @@ import * as macAddress from '../../controllers/KwikPay/macAddress';
 
 const router = express.Router();
 router.get('/getMacAddress',macAddress.getAllMacAddress);
+router.get('/getData',macAddress.getData);
 router.post('/saveINHoutput',macAddress.saveINHoutput);
 router.post('/sendFota',macAddress.sendFota);
 router.post('/reset',macAddress.sendReset);
