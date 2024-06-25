@@ -363,7 +363,58 @@ const server = net.createServer((socket) => {
         }
       });
 
-      events.pubsub.on('modeTest1', async function(port,name) {
+     
+      events.pubsub.on('modeTest1',async function(port,name) {
+       
+        
+        if(remotePort == port) {
+
+          await setTimeout(async()=>{
+            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+            // console.log(data);
+             if(data)
+             {
+                 data.Color="warning";
+                 await data.save();
+             }
+
+           
+
+          },500)
+        
+          await setTimeout(async()=>{
+           const data=await Testing.findAll({where:{device_number:1}});
+           console.log("Testing length",data[0].command);
+           let i = 0;
+              setIntervalAndStore(async () => {
+               
+               if(i<data.length)
+               {
+                console.log("Board1 index", i);
+                if(data[i].command.includes("*V:"))
+                {
+                await sendVend(socket, TID++, name, remotePort, data[i]);
+                }
+                else{
+                 await socket.write(data[i].command);
+                 events.pubsub.emit('Receive', data[i].expected_output, data[i], 0,port);
+                }
+                }
+                
+                i++;
+               
+              },10000);  // 100000 milliseconds = 100 seconds
+            
+
+
+         
+          },2000)
+      
+         
+         
+        }
+      });
+      events.pubsub.on('modeTest2', async function(port,name) {
              
          
         if(remotePort == port) {
@@ -413,7 +464,8 @@ const server = net.createServer((socket) => {
         
        
       });
-      events.pubsub.on('modeTest2',async function(port,name) {
+      
+      events.pubsub.on('modeTest3',async function(port,name) {
        
         
         if(remotePort == port) {
@@ -432,14 +484,14 @@ const server = net.createServer((socket) => {
           },500)
         
           await setTimeout(async()=>{
-           const data=await Testing.findAll({where:{device_number:1}});
+           const data=await Testing.findAll({where:{device_number:3}});
            console.log("Testing length",data[0].command);
            let i = 0;
               setIntervalAndStore(async () => {
                
                if(i<data.length)
                {
-                console.log("Board1 index", i);
+                console.log("Board3 index", i);
                 if(data[i].command.includes("*V:"))
                 {
                 await sendVend(socket, TID++, name, remotePort, data[i]);
