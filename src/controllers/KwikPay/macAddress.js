@@ -65,10 +65,12 @@ export const getData=async(req,res)=>{
         };
       // if (req.query.stock_status) replObj['stock_status'] = req.query.stock_status.split(',');
       // if (req.query.burn_status) replObj['burn_status'] = req.query.burn_status.split(',');
+
+    //   const obj=await MacMapping.findAll({where:{city:}})
       const [obj, _metadata] = await sequelize.query(
         `
         select * FROM MacMapping
-        ${replObjG.city ? 'whrere city in (:city)' : ''}
+        ${replObjG.city ? 'whrere City in (:city)' : ''}
         `,
         { replacements: { city: replObjG.city } }
       );

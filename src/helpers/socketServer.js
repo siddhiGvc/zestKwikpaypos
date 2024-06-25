@@ -6,7 +6,7 @@ const { sendV } = require("../controllers/KwikPay/macAddress");
 
 const port = 6666;
 let TID=Math.floor(Math.random() * 100000) + 1;
-let y=1;
+
 let intervals = [];
 
 function getDateTime(){
@@ -62,40 +62,46 @@ async function sendVend(socket, tid, name, remotePort, Data) {
       data.Color = "warning";
       await data.save();
     }
-
-    // Construct messages
-    const message = `*V:${tid}:${y}:${y}#`;
-    const output = `*V-OK,${tid},${y},${y}#`;
-
-    Data.command = message;
-    Data.expected_output = output;
+    
+      const splitWithStar=Data.command.split('*');
+      const splitWithHash=splitWithStar[1].split('#');
+      const cleaned=splitWithHash[0];
+      
+      const command = cleaned.split(":");
+      command[1]=`${tid}`;
+      const message = command.join(":");
+      
+     const result= cleaned.split(":");
+     result[0]="V-OK";
+     result[1]=`${tid}`;
+     const output = result.join(",");
+      
+   
+   
+    
+    
+    Data.command = `*${message}#`;
+    Data.expected_output = `*${output}#`;
     await Data.save();
 
     // Send message over socket after a delay
     setTimeout(async () => {
       try {
         await socket.write(Data.command + "\n");
-          events.pubsub.emit('Receive', Data.expected_output, Data, 0);
+          events.pubsub.emit('Receive', Data.expected_output, Data, 0,remotePort);
       } catch (err) {
         console.error("Error sending command over socket:", err);
       }
     }, 500);
 
-    // Increment `y` and reset if necessary
-    y++;
-    if (y > 7) {
-      y = 1;
-    }
+  
+  
   } catch (err) {
     console.error("Error in sendVend function:", err);
   }
 }
 
-// Event listener for 'Receive' event
-  events.pubsub.on('Receive', (output, Data, i) => {
-  console.log("Event called***************");
-  // Additional logic for handling the received event can go here
-});
+
 
 
 
@@ -168,6 +174,7 @@ const server = net.createServer((socket) => {
      
      let count=0;
      socket.write(`Connectecd From Client:${remotePort}`); 
+     startSocketListeners();
   // setInterval(() => {
         
      //  sendData(socket,count++,remotePort);
@@ -357,12 +364,11 @@ const server = net.createServer((socket) => {
       });
 
       events.pubsub.on('modeTest1', async function(port,name) {
-        
-        
+             
+         
         if(remotePort == port) {
-      
-          await setTimeout(async()=>{
 
+          await setTimeout(async()=>{
             const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
             // console.log(data);
              if(data)
@@ -370,34 +376,42 @@ const server = net.createServer((socket) => {
                  data.Color="warning";
                  await data.save();
              }
-           
 
-            socket.write(`*CC:${name}:${getDateTime()}#`);
-         
+           
 
           },500)
-          await setTimeout(async()=>{
-
-            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
-            // console.log(data);
-             if(data)
-             {
-                 data.Color="warning";
-                 await data.save();
-             }
-           
-            socket.write(`*TC?#`);
-            
-          
-             setIntervalAndStore(async() => {
-             
-              await sendClear(socket,name,remotePort);
-             },11000)
-          },2000)
-       
         
+          await setTimeout(async()=>{
+           const data=await Testing.findAll({where:{device_number:2}});
+           console.log("Testing length",data[0].command);
+             let i = 0;
+             setIntervalAndStore(async () => {
+               if(i<data.length)
+               {
+                console.log("Board2 index", i);
+                if(data[i].command.includes("*V:"))
+                {
+                await sendVend(socket, TID++, name, remotePort, data[i]);
+                }
+                else{
+                 await socket.write(data[i].command);
+                 events.pubsub.emit('Receive', data[i].expected_output, data[i], 0,port);
+                }
+                }
+                i++;
+              
+              }, 14000);  // 100000 milliseconds = 100 seconds
+            
+
+
+         
+          },2000)
+      
+         
          
         }
+        
+       
       });
       events.pubsub.on('modeTest2',async function(port,name) {
        
@@ -420,12 +434,26 @@ const server = net.createServer((socket) => {
           await setTimeout(async()=>{
            const data=await Testing.findAll({where:{device_number:1}});
            console.log("Testing length",data[0].command);
-           for (let i = 0; i < data.length; i++) {
-              setTimeout(async () => {
-                console.log("index", i);
+           let i = 0;
+              setIntervalAndStore(async () => {
+               
+               if(i<data.length)
+               {
+                console.log("Board1 index", i);
+                if(data[i].command.includes("*V:"))
+                {
                 await sendVend(socket, TID++, name, remotePort, data[i]);
-              }, 100000 * i);  // 100000 milliseconds = 100 seconds
-            }
+                }
+                else{
+                 await socket.write(data[i].command);
+                 events.pubsub.emit('Receive', data[i].expected_output, data[i], 0,port);
+                }
+                }
+                
+                i++;
+               
+              },10000);  // 100000 milliseconds = 100 seconds
+            
 
 
          
@@ -436,13 +464,24 @@ const server = net.createServer((socket) => {
         }
       });
 
-      events.pubsub.on('modeNone', function(port,name) {
-      
-        if(remotePort == port) {
-          clearAllIntervals();
-       
-        }
-      });
+     events.pubsub.on('modeNone', async function(port, name) {
+          if (remotePort == port) {
+              clearAllIntervals();
+              startSocketListeners();
+               try {
+                  const data = await Testing.findAll();
+                  for (let i = 0; i < data.length; i++) {
+                      data[i].result = '';
+                      data[i].actual_outtput = '';
+                      await data[i].save();
+                  }
+              } catch (error) {
+                  console.error('Error updating data:', error);
+              }
+             
+          }
+     });
+
       
       
       
@@ -453,7 +492,7 @@ const server = net.createServer((socket) => {
        
        
        
-       events.pubsub.on('Receive', function(output,Data,i) {
+       events.pubsub.on('Receive', function(output,Data,i,port) {
 
          console.log("event called***************")
            
@@ -462,31 +501,50 @@ const server = net.createServer((socket) => {
 
         // Start interval check
         interval = setInterval(async () => {
+         if(port==socketNumber)
+         {
           console.log(`Interval check ${i}`);
           i++;
-          if (i >= 5) {
+          if(Data.result==output){
+            clearInterval(interval);
+           socket.removeAllListeners('data');
+          
+          }
+          
+          if (i >= 4) {
             clearInterval(interval);
             socket.removeAllListeners('data'); // Remove all listeners for 'data' to prevent memory leaks
             Data.result = "Error";
             await Data.save();
-            console.log("Timeout reached. Exiting function.");
+            console.log("Output Doesn't Matched.");
+          }
           }
         }, 2000);
       
         // Listen for data events
         socket.once("data", async (data) => { // Use once to ensure it's only handled once
           const strData = data.toString();
-          console.log(`Received data: ${strData}`);
-          console.log(`Expected output: ${output}`);
+         
+           console.log(`Received data: ${strData}`);
+            console.log(`Expected output: ${output}`);
       
-          if (strData === output) {
+          if (strData === output && port==socketNumber ) {
+            console.log(`Received data: ${strData}`);
+            console.log(`Expected output: ${output}`);
             console.log("Desired output received. Updating Data.", strData, output);
             clearInterval(interval);
             Data.result = strData;
+            Data.actual_outtput = strData;
             await Data.save();
-            socket.removeAllListeners('data'); // Remove all listeners for 'data' to prevent memory leaks
+           // socket.removeAllListeners('data'); // Remove all listeners for 'data' to prevent memory leaks
             console.log("Interval cleared and socket listeners removed.");
           }
+          else if(port==socketNumber){
+            Data.actual_outtput = strData;
+             await Data.save();
+          }
+          
+          
         });
           
 
@@ -494,7 +552,7 @@ const server = net.createServer((socket) => {
     
        
    
-
+   function startSocketListeners() {
     socket.on("data",async (data) => {
        
         const strData = data.toString();
@@ -1324,6 +1382,7 @@ const server = net.createServer((socket) => {
 
        await socket.write(`RemotePort From Server:${remotePort}`);
     });
+    }
 
     socket.on("end", () => {
         console.log("Client disconnected");
