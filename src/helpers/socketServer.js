@@ -921,12 +921,12 @@ const server = net.createServer((socket) => {
                        
                       
                     }
-                    else  if(command[0].includes("Kwikpay"))
+                    else  if(command[0].includes("Kwikpay") || command[0].includes("GVC"))
                     {
                       
                        // console.log(remotePort);
                        
-                        const FWoutput=command[0].split('-');
+                       
                         
                        
                         const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
@@ -934,7 +934,7 @@ const server = net.createServer((socket) => {
                         if(data)
                             {
                               
-                                data.FWoutput=FWoutput[1];
+                                data.FWoutput=command[0];
                                 data.lastHeartBeatTime=new Date().toISOString();
                                 await data.save();
                                 setTimeout(()=>{
