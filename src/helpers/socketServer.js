@@ -813,7 +813,7 @@ const server = net.createServer((socket) => {
                
               
             } 
-            else  if((command[0].includes("V")) && !command[0].includes("TV"))
+            else  if((command[0].includes("V")) && !command[0].includes("TV") && !command[0].includes("GVC"))
                 {
                   
                     
@@ -1042,12 +1042,12 @@ const server = net.createServer((socket) => {
                         if(data)
                             {
                               
-                                data.URLoutput=command[1];
+                                data.URLoutput=command[3];
                                 data.lastHeartBeatTime=new Date().toISOString();
                                 await data.save();
                                   await Transaction.create({
                                       machine:data.UID,
-                                      command:command[0],
+                                      command:command[3],
                                       p1:command[1],
                                       p2:command[2],
                                       p3:command[3],
