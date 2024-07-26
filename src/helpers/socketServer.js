@@ -829,44 +829,7 @@ const server = net.createServer((socket) => {
                
               
             } 
-            else  if((command[0].includes("V")) && !command[0].includes("TV") && !command[0].includes("GVC"))
-                {
-                  
-                    
-                    const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
-                  
-                    if(data)
-                        {
-                          const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
-                              // console.log(data);
-                               if(data)
-                               {
-                                   data.Color="";
-                                   await data.save();
-                               }
-                          
-                            data.Voutput=strData;
-                            data.lastHeartBeatTime=new Date().toISOString();
-                            await data.save();
-                              await Transaction.create({
-                                  machine:data.UID,
-                                  command:command[0],
-                                  p1:command[1],
-                                  p2:command[2],
-                                  p3:command[3],
-                                  p4:command[4]
-                              })
-                               console.log("Saved In Transactions");
-                               setTimeout(()=>{
-                                data.Voutput='';
-                              
-                               data.save();
-  
-                              },8000)
-                        }
-                   
-                  
-                }
+            
                 else  if(command[0].includes("TC"))
                     {
                       
@@ -937,7 +900,7 @@ const server = net.createServer((socket) => {
                        
                       
                     }
-                    else  if(command[0].includes("Kwikpay") || command[0].includes("GVC") || command[0].includes("Kwikpay"))
+                    else  if(command[0].includes("Kwikpay") || command[0].includes("GVC") )
                     {
                       
                        // console.log(remotePort);
@@ -973,6 +936,44 @@ const server = net.createServer((socket) => {
                        
                       
                     }
+                    else  if((command[0].includes("V")) && !command[0].includes("TV") && !command[0].includes("GVC") && !command[0].includes("Kwikpay"))
+                      {
+                        
+                          
+                          const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                        
+                          if(data)
+                              {
+                                const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                                    // console.log(data);
+                                     if(data)
+                                     {
+                                         data.Color="";
+                                         await data.save();
+                                     }
+                                
+                                  data.Voutput=strData;
+                                  data.lastHeartBeatTime=new Date().toISOString();
+                                  await data.save();
+                                    await Transaction.create({
+                                        machine:data.UID,
+                                        command:command[0],
+                                        p1:command[1],
+                                        p2:command[2],
+                                        p3:command[3],
+                                        p4:command[4]
+                                    })
+                                     console.log("Saved In Transactions");
+                                     setTimeout(()=>{
+                                      data.Voutput='';
+                                    
+                                     data.save();
+        
+                                    },8000)
+                              }
+                         
+                        
+                      }
                      else  if(command[0].includes("SL"))
                     {
                       
