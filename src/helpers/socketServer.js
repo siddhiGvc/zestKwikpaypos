@@ -937,7 +937,7 @@ const server = net.createServer((socket) => {
                        
                       
                     }
-                    else  if(command[0].includes("Kwikpay") || command[0].includes("GVC"))
+                    else  if(command[0].includes("Kwikpay") || command[0].includes("GVC") || command[0].includes("Kwikpay"))
                     {
                       
                        // console.log(remotePort);
