@@ -1245,7 +1245,7 @@ const server = net.createServer((socket) => {
                                 if(data)
                                     {
                                       
-                                        data.SNmessage=command[0];
+                                        data.SNmessage=command[3];
                                         data.lastHeartBeatTime=new Date().toISOString();
                                         await data.save();
                                         setTimeout(()=>{
