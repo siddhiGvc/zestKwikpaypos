@@ -157,6 +157,14 @@ module.exports = (sequelize, DataTypes) => {
             type:DataTypes.STRING,
             
           },
+          SNoutput:{
+            type:DataTypes.STRING,
+            
+          },
+          SNmessage:{
+            type:DataTypes.STRING,
+            
+          },
           RPoutput:{
             type:DataTypes.STRING,
             

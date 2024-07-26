@@ -251,6 +251,42 @@ export const askUrl=async(req,res)=>{
 
 }
 
+export const setSN=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('setSN',req.body.socketNumber,req.body.UserName,req.body.SerialNumber) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}
+
+export const checkSN=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('checkSN',req.body.socketNumber) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}
+
 export const sendCC=async(req,res)=>{
     try{
         

@@ -363,6 +363,22 @@ const server = net.createServer((socket) => {
         }
       });
 
+      events.pubsub.on('setSN', function(port,name,sn) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*SN:${name}:${getDateTime()}:${sn}#`);
+        }
+      });
+
+      events.pubsub.on('checkSN', function(port,name) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*SN?#`);
+        }
+      });
+
      
       events.pubsub.on('modeTest1',async function(port,name) {
        
@@ -624,7 +640,7 @@ const server = net.createServer((socket) => {
         
      
         console.log(command[0]);
-         if(strData.includes("SIP:"))
+         if(strData.includes("SIP,"))
           {
             
              // console.log(remotePort);
@@ -1180,6 +1196,78 @@ const server = net.createServer((socket) => {
                            
                           
                         }
+                        else  if(command[0]=="SN-OK")
+                          {
+                            
+                             // console.log(remotePort);
+                             
+                            
+                              
+                             
+                              const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                            // console.log(data);
+                              if(data)
+                                  {
+                                    
+                                      data.SNoutput=command[0];
+                                      data.lastHeartBeatTime=new Date().toISOString();
+                                      await data.save();
+                                      setTimeout(()=>{
+                                        data.SNoutput='';
+                                      
+                                       data.save();
+          
+                                      },8000)
+                                        await Transaction.create({
+                                            machine:data.UID,
+                                            command:command[0],
+                                            p1:command[1],
+                                            p2:command[2],
+                                            p3:command[3],
+                                            p4:command[4]
+                                        })
+                                         console.log("Saved In Transactions");
+                                     
+                                  }
+                             
+                            
+                          }
+                          else  if(command[0]=="SN")
+                            {
+                              
+                               // console.log(remotePort);
+                               
+                              
+                                
+                               
+                                const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                              // console.log(data);
+                                if(data)
+                                    {
+                                      
+                                        data.SNmessage=command[0];
+                                        data.lastHeartBeatTime=new Date().toISOString();
+                                        await data.save();
+                                        setTimeout(()=>{
+                                          data.SNmessage='';
+                                        
+                                         data.save();
+            
+                                        },8000)
+                                          await Transaction.create({
+                                              machine:data.UID,
+                                              command:command[0],
+                                              p1:command[1],
+                                              p2:command[2],
+                                              p3:command[3],
+                                              p4:command[4]
+                                          })
+                                           console.log("Saved In Transactions");
+                                       
+                                    }
+                               
+                              
+                            }
                         else  if(command[0]=="SSID")
                           {
                             
