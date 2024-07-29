@@ -19,6 +19,7 @@ import kwikpayRouter from "./src/routes/KwikPay/macAddress";
 import kwikpayTestingRouter from "./src/routes/KwikPay/testing";
 const paytmRouter=require("./src/routes/paytmRoutes")
 const customerRouter=require("./src/routes/customer");
+const trafficRouter =require("./src/routes/TrafficLights/route")
 
 dotenv.config();
 require('./src/config/sequelize');
@@ -44,6 +45,7 @@ app.use('/inventory',inventoryRouter);
 app.use('/customers',customerRouter);
 app.use('/kwikpay',kwikpayRouter);
 app.use('/kwikpayTesting',kwikpayTestingRouter);
+app.use('/trafficLights',trafficRouter);
 app.get('/hbt', (req, res) => {
   const clientIP = req.ip.replace('::ffff:', '');
 
