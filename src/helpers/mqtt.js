@@ -1,4 +1,5 @@
 import { Transaction, MachineData, Machine, RejectedRecord, sequelize } from '../models';
+// import { sendQueryPowerBackup} from '../controllers/TrafficLights/setLights';
 var events = require('./events');
 //a
 const num = a => {
@@ -19,6 +20,14 @@ module.exports.parse = (payload, mqttClient,topic) => {
     })
 }
 
+const sendQueryPowerBackup=()=>{
+   
+    mqttClient.sendMessage('GVC/TRA/',obj.Junction,obj );
+  }
+
+
+
+
 const parseInternal = (payload, mqttClient,topic) => {
     // 'Parsing message - ' + payload
     try {
@@ -28,7 +37,24 @@ const parseInternal = (payload, mqttClient,topic) => {
         //if (!/^\d+$/.test(parts[0])) return;
 
         // 211023 added code for detecting machine packets ie *SSN,12345# sent to GVC/VM/#
-        if (parts[0] == 'SSN'){
+
+        if(parts[0] == "Q")
+        {
+            
+                const obj={
+                    Junction:'J01',
+                    ACV:"230",
+                    ACI:"1.2",
+                    DCV:"12.3",
+                    DCI:"+2.5"
+                
+                }
+                const message=`*${obj.ACV},${obj.ACI},${obj.DCV},${obj.DCI}#`
+
+                mqttClient.publish('GVC/TRA/' + obj.Junction,message )
+           
+        }
+        else if (parts[0] == 'SSN'){
             var from = topic.replace('GVC/VM/','');
             console.log('From -',from,'  To -',parts[1]); 
             Transaction.create({
