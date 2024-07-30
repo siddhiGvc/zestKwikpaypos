@@ -51,7 +51,7 @@ const parseInternal = (payload, mqttClient,topic) => {
                 }
                 const message=`*${obj.ACV},${obj.ACI},${obj.DCV},${obj.DCI}#`
 
-                mqttClient.publish('GVC/TRA/' + obj.Junction,message )
+                mqttClient.publish('GVC/VM/' + obj.Junction,message )
            
         }
         else if (parts[0] == 'SSN'){

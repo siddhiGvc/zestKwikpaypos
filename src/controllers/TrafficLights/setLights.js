@@ -8,7 +8,7 @@ export const SetLights = async (req, res) => {
       console.log(data);
       const juction=req.body.Junction;
       var message="*"+req.body.R1+","+req.body.R2+","+req.body.R3+","+req.body.R4+"#";
-      mqttClient.sendMessage('GVC/TRA/' + juction,message);
+      mqttClient.sendMessage('GVC/VM/' + juction,message);
       res.status(200).json("Okay");
     } catch (error) {
       console.log(error);
@@ -23,7 +23,7 @@ export const SetLights = async (req, res) => {
       console.log(data);
       const juction=req.body.Junction;
       var message="*"+req.body.DateTime+"#";
-      mqttClient.sendMessage('GVC/TRA/' + juction,message);
+      mqttClient.sendMessage('GVC/VM/' + juction,message);
       res.status(200).json("Okay");
     } catch (error) {
       console.log(error);
