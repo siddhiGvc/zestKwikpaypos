@@ -54,10 +54,10 @@ export const SetLights = async (req, res) => {
 
       const Interval=setTimeout(()=>{
           res.status(500).json("Machine Is Offline");
-      },10000);
+      },60000);
       
       events.pubsub.on('sendPowerBackup',function(parts){
-         clearInterval(Interval);
+         clearTimeout(Interval);
          const obj={
           ACV:parts[1],
           ACI:parts[2],

@@ -41,6 +41,7 @@ const parseInternal = (payload, mqttClient,topic) => {
 
         events.pubsub.on('acceptQueryMessage', function(junction) {
             // msg = JSON.parse(msg);
+            console.log(1);
             console.log(parts);
             if(parts[0] === junction) {
                 events.pubsub.emit('sendPowerBackup',parts) ;
