@@ -4,7 +4,7 @@ const path = require('path')
 const moment = require('moment')
 const mqttHelper = require('./src/helpers/mqtt')
 const heartbeat = require('./health_check')
-
+var events = require('./src/helpers/events');
 
 class MqttHandler {
     constructor(){
@@ -58,6 +58,7 @@ class MqttHandler {
        if (this.clientmqtt) {
            console.log(topic, message);
            this.clientmqtt.publish(topic, message);
+           events.pubsub.emit('acceptQueryMessage',juction) ;
        } else {
            console.error('Error: MQTT client is not initialized.');
        }

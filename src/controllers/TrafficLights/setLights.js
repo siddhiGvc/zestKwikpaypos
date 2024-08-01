@@ -50,7 +50,7 @@ export const SetLights = async (req, res) => {
     
       const message= "*QINV?#"
       mqttClient.sendMessage('GVC/TRA/' + juction,message);
-      events.pubsub.emit('acceptQueryMessage',juction) ;
+    
 
       const Interval=setTimeout(()=>{
           res.status(500).json("Machine Is Offline");
