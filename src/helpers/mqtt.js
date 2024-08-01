@@ -34,7 +34,7 @@ const parseInternal = (payload, mqttClient,topic) => {
         //if (!/^\d+$/.test(parts[0])) return;
 
         // 211023 added code for detecting machine packets ie *SSN,12345# sent to GVC/VM/#
-        console.log(parts[0]);
+        console.log(parts);
 
         if(parts[0]=="QPB")
         {
