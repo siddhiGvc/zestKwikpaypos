@@ -58,7 +58,7 @@ export const SetLights = async (req, res) => {
       
       events.pubsub.on('sendPowerBackup',function(parts){
         console.log(1);
-        HTMLFormControlsCollection.log(parts);
+        console.log(parts);
         if(parts[1]==juction)
         {
          clearTimeout(Interval);
