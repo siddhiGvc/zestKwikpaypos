@@ -4,7 +4,7 @@ const path = require('path')
 const moment = require('moment')
 const mqttHelper = require('./src/helpers/mqtt')
 const heartbeat = require('./health_check')
-var events = require('./src/helpers/events');
+
 
 class MqttHandler {
     constructor(){
@@ -43,11 +43,12 @@ class MqttHandler {
       
    
        this.clientmqtt.on('message',async(topic, payload)=> {
-        //    console.log(payload.toString());
-            fs.appendFile(logPath, `[${moment().format()}]\n${payload}\n\n`, err => {
-               // console.log(err)
-            });
-            mqttHelper.parse(payload.toString(), this.clientmqtt);
+        console.log(payload.toString());
+       
+        fs.appendFile(logPath, `[${moment().format()}]\n${payload}\n\n`, err => {
+            // console.log(err)
+         });
+         mqttHelper.parse(payload, this.clientmqtt,topic);
         });
     
         heartbeat(this.clientmqtt);

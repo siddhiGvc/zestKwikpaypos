@@ -9,15 +9,17 @@ const num = a => {
 }
 //q
 module.exports.parse = (payload, mqttClient,topic) => {
-    if (!/.*?(\*[0-9A-Za-z\,]*\#)+?.*?/gm.test(payload)) return;
-    var commands = [...payload.toString().matchAll(/.*?(\*[0-9A-Za-z\,]*\#)+?.*?/gm)].map(q => q[0]);
-    commands.forEach(cmd => {
-        try {
-            parseInternal(cmd, mqttClient,topic);
-        } catch (ex) {
-            console.log('Exception in MQTT:', ex);
-        }
-    })
+    console.log("Payload1",payload.toString());
+     parseInternal(payload.toString(), mqttClient,topic);
+    // if (!/.*?(\*[0-9A-Za-z\,]*\#)+?.*?/gm.test(payload.toString())) return;
+    // var commands = [...payload.toString().matchAll(/.*?(\*[0-9A-Za-z\,]*\#)+?.*?/gm)].map(q => q[0]);
+    // commands.forEach(cmd => {
+    //     try {
+    //         parseInternal(cmd, mqttClient,topic);
+    //     } catch (ex) {
+    //         console.log('Exception in MQTT:', ex);
+    //     }
+    // })
 }
 
 
@@ -28,6 +30,7 @@ module.exports.parse = (payload, mqttClient,topic) => {
 const parseInternal = (payload, mqttClient,topic) => {
     // 'Parsing message - ' + payload
     try {
+        console.log("Payload2",payload)
         var cleaned = /^\**(.*?)\#*$/.exec(payload)[1];
         var parts = cleaned.split(',');
         // 211023 - ignore test with numeric number, allow commands in parts[0] 
