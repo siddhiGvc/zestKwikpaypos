@@ -41,29 +41,13 @@ const parseInternal = (payload, mqttClient,topic) => {
 
         events.pubsub.on('acceptQueryMessage', function(junction) {
             // msg = JSON.parse(msg);
-            //console.log(msg);
+            console.log(parts);
             if(parts[0] === junction) {
                 events.pubsub.emit('sendPowerBackup',parts) ;
             }
           });
 
-        if(parts[0] == "Q")
-        {
-            
-                const obj={
-                    Junction:'J01',
-                    ACV:"230",
-                    ACI:"1.2",
-                    DCV:"12.3",
-                    DCI:"+2.5"
-                
-                }
-                const message=`*${obj.ACV},${obj.ACI},${obj.DCV},${obj.DCI}#`
-
-                mqttClient.publish('GVC/VM/' + obj.Junction,message )
-           
-        }
-        else if (parts[0] == 'SSN'){
+        if (parts[0] == 'SSN'){
             var from = topic.replace('GVC/VM/','');
             console.log('From -',from,'  To -',parts[1]); 
             Transaction.create({
