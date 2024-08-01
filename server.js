@@ -113,7 +113,7 @@ const setupServer = (isClusterRequired) => {
     setUpExpress();
   }
 //  mqtt();
-  // mqttClient.connect();  
+    mqttClient.connect();  
   // daily_schedule();
 };
 
