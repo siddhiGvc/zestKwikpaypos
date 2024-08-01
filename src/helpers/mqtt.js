@@ -39,16 +39,12 @@ const parseInternal = (payload, mqttClient,topic) => {
         // 211023 added code for detecting machine packets ie *SSN,12345# sent to GVC/VM/#
 
 
-        events.pubsub.on('QueryMessage', function(junction) {
-            // msg = JSON.parse(msg);
-            console.log(1);
-            console.log(parts);
-            if(parts[0] === junction) {
-                events.pubsub.emit('sendPowerBackup',parts) ;
-            }
-          });
+        if(parts[0]=="QPB")
+        {
+            events.pubsub.emit('sendPowerBackup',parts);
+        }
 
-        if (parts[0] == 'SSN'){
+        else if (parts[0] == 'SSN'){
             var from = topic.replace('GVC/VM/','');
             console.log('From -',from,'  To -',parts[1]); 
             Transaction.create({

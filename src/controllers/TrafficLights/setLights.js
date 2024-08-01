@@ -57,15 +57,18 @@ export const SetLights = async (req, res) => {
       },60000);
       
       events.pubsub.on('sendPowerBackup',function(parts){
+        if(parts[1]==juction)
+        {
          clearTimeout(Interval);
          const obj={
-          ACV:parts[1],
-          ACI:parts[2],
-          DCV:parts[3],
-          DCI:parts[4]
+          ACV:parts[2],
+          ACI:parts[3],
+          DCV:parts[4],
+          DCI:parts[5]
 
          }
          res.status(200).json(obj);
+        }
       })
 
 
