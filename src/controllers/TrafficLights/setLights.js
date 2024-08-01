@@ -49,7 +49,7 @@ export const SetLights = async (req, res) => {
       const juction=req.body.Junction;
     
       const message= "*QINV?#"
-      mqttClient.sendMessage('GVC/TRA/' + juction,message);
+      mqttClient.sendMessage('GVC/VM/' + juction,message);
     
 
       const Interval=setTimeout(()=>{
