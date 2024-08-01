@@ -1,7 +1,7 @@
 const mqttHandler=require('../../../mqtt');
 var mqttClient = new mqttHandler();
 var events = require('../../helpers/events');
-import {InverterStatus} from '../../models';
+import {InverterStaus} from '../../models';
 
 
 export const SetLights = async (req, res) => {
@@ -56,26 +56,26 @@ export const SetLights = async (req, res) => {
           res.status(500).json("Machine Is Offline");
       },60000);
       
-      events.pubsub.on('sendPowerBackup',function(parts){
+      events.pubsub.on('sendPowerBackup',async function(parts){
         console.log(1);
         console.log(parts);
         if(parts[1]==juction)
         {
           clearInterval(Interval);
          const obj={
-          ACV:parts[2]+"V",
-          ACI:parts[3]+"AMP",
-          DCV:parts[4]+"V",
-          DCI:parts[5]+"AMP"
+          ACV:parts[2]+" V",
+          ACI:parts[3]+" AMP",
+          DCV:parts[4]+" V",
+          DCI:parts[5]+" AMP"
 
          }
 
-         InverterStatus.create({
+         await InverterStaus.create({
             Junction:parts[1],
-            ACV:parts[2]+"V",
-            ACI:parts[3]+"AMP",
-            DCV:parts[4]+"V",
-            DCI:parts[5]+"AMP"
+            ACV:parts[2]+" V",
+            ACI:parts[3]+" AMP",
+            DCV:parts[4]+" V",
+            DCI:parts[5]+" AMP"
 
          })
 

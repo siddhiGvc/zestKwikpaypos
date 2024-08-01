@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const InverterStaus = sequelize.define('InverterStatus', {
+  const InverterStaus = sequelize.define('InverterStaus', {
     Junction:DataTypes.STRING,
     ACV:DataTypes.STRING,
     ACI:DataTypes.STRING,
@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 
    
   }, {
-    tableName: 'InverterStatus'
+    tableName: 'InverterStaus'
   });
   InverterStaus.associate = function(models) {
     // associations can be defined here
