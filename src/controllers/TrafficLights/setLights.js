@@ -1,7 +1,7 @@
 const mqttHandler=require('../../../mqtt');
 var mqttClient = new mqttHandler();
 var events = require('../../helpers/events');
-
+import {InverterStatus} from '../../models';
 
 
 export const SetLights = async (req, res) => {
@@ -63,12 +63,22 @@ export const SetLights = async (req, res) => {
         {
           clearInterval(Interval);
          const obj={
-          ACV:parts[2],
-          ACI:parts[3],
-          DCV:parts[4],
-          DCI:parts[5]
+          ACV:parts[2]+"V",
+          ACI:parts[3]+"AMP",
+          DCV:parts[4]+"V",
+          DCI:parts[5]+"AMP"
 
          }
+
+         InverterStatus.create({
+            Junction:parts[1],
+            ACV:parts[2]+"V",
+            ACI:parts[3]+"AMP",
+            DCV:parts[4]+"V",
+            DCI:parts[5]+"AMP"
+
+         })
+
          res.status(200).json(obj);
         }
       })

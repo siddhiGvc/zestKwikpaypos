@@ -37,15 +37,13 @@ const parseInternal = (payload, mqttClient,topic) => {
         //if (!/^\d+$/.test(parts[0])) return;
 
         // 211023 added code for detecting machine packets ie *SSN,12345# sent to GVC/VM/#
-        console.log(parts);
-
-        if(parts[0]=="QPB")
-        {
-            console.log("QPB accepted");
-            events.pubsub.emit('sendPowerBackup',parts);
-        }
-
-        else if (parts[0] == 'SSN'){
+       
+            if(parts[0]=="QPB")
+                {
+                    console.log("QPB accepted");
+                    events.pubsub.emit('sendPowerBackup',parts);
+                }
+           else if (parts[0] == 'SSN'){
             var from = topic.replace('GVC/VM/','');
             console.log('From -',from,'  To -',parts[1]); 
             Transaction.create({
