@@ -38,6 +38,15 @@ const parseInternal = (payload, mqttClient,topic) => {
 
         // 211023 added code for detecting machine packets ie *SSN,12345# sent to GVC/VM/#
 
+
+        events.pubsub.on('acceptQueryMessage', function(junction) {
+            // msg = JSON.parse(msg);
+            //console.log(msg);
+            if(parts[0] === junction) {
+                events.pubsub.emit('sendPowerBackup',parts) ;
+            }
+          });
+
         if(parts[0] == "Q")
         {
             

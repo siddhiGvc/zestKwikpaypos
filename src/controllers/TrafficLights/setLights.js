@@ -1,5 +1,7 @@
 const mqttHandler=require('../../../mqtt');
 var mqttClient = new mqttHandler();
+var events = require('../../helpers/events');
+
 
 
 export const SetLights = async (req, res) => {
@@ -46,9 +48,29 @@ export const SetLights = async (req, res) => {
       console.log(data);
       const juction=req.body.Junction;
     
-   
-      // mqttClient.sendMessage('GVC/TRA/' + juction,message);
-      res.status(200).json(obj);
+      const message= "*QINV?#"
+      mqttClient.sendMessage('GVC/TRA/' + juction,message);
+      events.pubsub.emit('acceptQueryMessage',juction) ;
+
+      const Interval=setTimeout(()=>{
+          res.status(500).json("Machine Is Offline");
+      },10000);
+      
+      events.pubsub.on('sendPowerBackup',function(parts){
+         clearInterval(Interval);
+         const obj={
+          ACV:parts[1],
+          ACI:parts[2],
+          DCV:parts[3],
+          DCI:parts[4]
+
+         }
+         res.status(200).json(obj);
+      })
+
+
+
+      
     } catch (error) {
       console.log(error);
       res.status(505).json("Error");
