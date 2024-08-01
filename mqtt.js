@@ -58,7 +58,7 @@ class MqttHandler {
        if (this.clientmqtt) {
            console.log(topic, message);
            this.clientmqtt.publish(topic, message);
-           events.pubsub.emit('acceptQueryMessage',juction) ;
+           events.pubsub.emit('acceptQueryMessage','20000') ;
        } else {
            console.error('Error: MQTT client is not initialized.');
        }
