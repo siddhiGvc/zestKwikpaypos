@@ -61,7 +61,7 @@ export const SetLights = async (req, res) => {
         console.log(parts);
         if(parts[1]==juction)
         {
-         clearTimeout(Interval);
+          clearInterval(Interval);
          const obj={
           ACV:parts[2],
           ACI:parts[3],

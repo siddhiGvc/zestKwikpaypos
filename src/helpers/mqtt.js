@@ -20,10 +20,7 @@ module.exports.parse = (payload, mqttClient,topic) => {
     })
 }
 
-const sendQueryPowerBackup=()=>{
-   
-    mqttClient.sendMessage('GVC/TRA/',obj.Junction,obj );
-  }
+
 
 
 

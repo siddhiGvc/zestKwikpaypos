@@ -43,7 +43,7 @@ class MqttHandler {
       
    
        this.clientmqtt.on('message',async(topic, payload)=> {
-//            console.log(payload.toString());
+           console.log(payload.toString());
             fs.appendFile(logPath, `[${moment().format()}]\n${payload}\n\n`, err => {
                // console.log(err)
             });
