@@ -1,16 +1,23 @@
 const mqttHandler=require('../../../mqtt');
 var mqttClient = new mqttHandler();
 var events = require('../../helpers/events');
-import {InverterStaus} from '../../models';
+import {InverterStaus,TrafficLightColors} from '../../models';
 
 
 export const SetLights = async (req, res) => {
     try {
       const data=req.body;
       console.log(data);
-      const juction=req.body.Junction;
+      const junction=req.body.Junction;
       var message="*"+req.body.R1+","+req.body.R2+","+req.body.R3+","+req.body.R4+"#";
-      mqttClient.sendMessage('GVC/VM/' + juction,message);
+      await mqttClient.sendMessage('GVC/VM/' + junction,message);
+      await TrafficLightColors.create({
+        Junction:junction,
+        R1:req.body.R1,
+        R2:req.body.R2,
+        R3:req.body.R3,
+        R4:req.body.R4
+      })
       res.status(200).json("Okay");
     } catch (error) {
       console.log(error);
@@ -18,14 +25,27 @@ export const SetLights = async (req, res) => {
     }
   };
 
+  export const getLights = async (req, res) => {
+    try {
+    
+      const junction=req.body.Junction;
+      const data= TrafficLightColors.findAll({where:{Junction:junction}});
+      res.status(200).json(data);
+    } catch (error) {
+      console.log(error);
+      res.status(505).json("Error");
+    }
+  };
+
+
 
   export const SetDate = async (req, res) => {
     try {
       const data=req.body;
       console.log(data);
-      const juction=req.body.Junction;
+      const junction=req.body.Junction;
       var message="*"+req.body.DateTime+"#";
-      mqttClient.sendMessage('GVC/VM/' + juction,message);
+      mqttClient.sendMessage('GVC/VM/' + junction,message);
       res.status(200).json("Okay");
     } catch (error) {
       console.log(error);
@@ -46,20 +66,22 @@ export const SetLights = async (req, res) => {
     try {
       const data=req.body;
       console.log(data);
-      const juction=req.body.Junction;
-    
-      const message= "*QINV?#"
-      mqttClient.sendMessage('GVC/VM/' + juction,message);
+      const junction=req.body.Junction;
+      if(!junction)  {
+        res.status('506').json("Error");
+      }
+      else{
+       
     
 
       const Interval=setTimeout(()=>{
-          res.status(500).json("Machine Is Offline");
-      },60000);
+          res.status(202).json("Machine Is Offline");
+      },5000);
       
       events.pubsub.on('sendPowerBackup',async function(parts){
         console.log(1);
         console.log(parts);
-        if(parts[1]==juction)
+        if(parts[1]==junction)
         {
           clearInterval(Interval);
          const obj={
@@ -79,10 +101,15 @@ export const SetLights = async (req, res) => {
 
          })
 
+         
+
          res.status(200).json(obj);
         }
       })
-
+      const message= "*QINV?#"
+      await mqttClient.sendMessage('GVC/VM/' + junction,message);
+    
+    }
 
 
       

@@ -1,4 +1,4 @@
-import { Transaction, MachineData, Machine, RejectedRecord, sequelize } from '../models';
+import { Transaction, MachineData, Machine, RejectedRecord, sequelize ,TrafficLightColors} from '../models';
 // import { sendQueryPowerBackup} from '../controllers/TrafficLights/setLights';
 var events = require('./events');
 //a
@@ -43,7 +43,19 @@ const parseInternal = (payload, mqttClient,topic) => {
                     console.log("QPB accepted");
                     events.pubsub.emit('sendPowerBackup',parts);
                 }
-           else if (parts[0] == 'SSN'){
+
+            if(parts[0]=="TRA")
+            {
+               TrafficLightColors.create({
+                  Junction:parts[1],
+                  R1:parts[2],
+                  R2:parts[3],
+                  R3:parts[4],
+                  R4:parts[5]
+               })
+            }
+
+            if (parts[0] == 'SSN'){
             var from = topic.replace('GVC/VM/','');
             console.log('From -',from,'  To -',parts[1]); 
             Transaction.create({
