@@ -2,10 +2,10 @@
 module.exports = (sequelize, DataTypes) => {
   const TrafficLightColors = sequelize.define('TrafficLightColors', {
     Junction:DataTypes.STRING,
-    ACV:DataTypes.STRING,
-    ACI:DataTypes.STRING,
-    DCV:DataTypes.STRING,
-    DCI:DataTypes.STRING,
+    R1:DataTypes.STRING,
+    R2:DataTypes.STRING,
+    R3:DataTypes.STRING,
+    R4:DataTypes.STRING,
 
 
    
