@@ -11,13 +11,13 @@ export const SetLights = async (req, res) => {
       const junction=req.body.Junction;
       var message="*"+req.body.R1+","+req.body.R2+","+req.body.R3+","+req.body.R4+"#";
       await mqttClient.sendMessage('GVC/VM/' + junction,message);
-      // await TrafficLightColors.create({
-      //   Junction:junction,
-      //   R1:req.body.R1,
-      //   R2:req.body.R2,
-      //   R3:req.body.R3,
-      //   R4:req.body.R4
-      // })
+      await TrafficLightColors.create({
+        Junction:junction,
+        R1:req.body.R1,
+        R2:req.body.R2,
+        R3:req.body.R3,
+        R4:req.body.R4
+      })
       res.status(200).json("Okay");
     } catch (error) {
       console.log(error);
