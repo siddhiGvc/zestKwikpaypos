@@ -11,13 +11,13 @@ export const SetLights = async (req, res) => {
       const junction=req.body.Junction;
       var message="*"+req.body.R1+","+req.body.R2+","+req.body.R3+","+req.body.R4+"#";
       await mqttClient.sendMessage('GVC/VM/' + junction,message);
-      await TrafficLightColors.create({
-        Junction:junction,
-        R1:req.body.R1,
-        R2:req.body.R2,
-        R3:req.body.R3,
-        R4:req.body.R4
-      })
+      // await TrafficLightColors.create({
+      //   Junction:junction,
+      //   R1:req.body.R1,
+      //   R2:req.body.R2,
+      //   R3:req.body.R3,
+      //   R4:req.body.R4
+      // })
       res.status(200).json("Okay");
     } catch (error) {
       console.log(error);
@@ -29,7 +29,7 @@ export const SetLights = async (req, res) => {
     try {
     
       const junction=req.body.Junction;
-      const data= TrafficLightColors.findAll({where:{Junction:junction}});
+      const data=await TrafficLightColors.findAll({where:{Junction:junction}});
       res.status(200).json(data);
     } catch (error) {
       console.log(error);
@@ -53,15 +53,7 @@ export const SetLights = async (req, res) => {
     }
   };
 
-  const obj={
-    Junction:'J01',
-    ACV:"230",
-    ACI:"1.2",
-    DCV:"12.3",
-    DCI:"+2.5"
-
-  }
-
+  
   export const QueryPowreBackup = async (req, res) => {
     try {
       const data=req.body;

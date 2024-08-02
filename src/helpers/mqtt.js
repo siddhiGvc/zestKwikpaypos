@@ -46,6 +46,7 @@ const parseInternal = (payload, mqttClient,topic) => {
 
             if(parts[0]=="TRA")
             {
+                console.log(parts)
                TrafficLightColors.create({
                   Junction:parts[1],
                   R1:parts[2],
