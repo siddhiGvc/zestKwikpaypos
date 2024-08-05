@@ -151,6 +151,17 @@ export const SetLights = async (req, res) => {
       res.status(505).json("Error");
     }
   };
+
+
+  export const GetAllJunctions = async (req, res) => {
+    try {
+      const data=await TrafficLightColors.findAll();
+      res.status(200).json(data);
+    } catch (error) {
+      console.log(error);
+      res.status(505).json("Error");
+    }
+  };
  
   
 
