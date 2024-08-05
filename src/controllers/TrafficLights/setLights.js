@@ -11,7 +11,7 @@ export const SetLights = async (req, res) => {
       const junction=req.body.Junction;
       var message="*"+req.body.R1+","+req.body.R2+","+req.body.R3+","+req.body.R4+"#";
       await mqttClient.sendMessage('GVC/VM/' + junction,message);
-      const obj=await TrafficLightColors.findOne({where:{Junction:parts[1]}})
+      const obj=await TrafficLightColors.findOne({where:{Junction:junction}})
       if(obj)
       {
           obj.R1=parts[2],
