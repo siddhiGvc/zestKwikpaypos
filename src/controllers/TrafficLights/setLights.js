@@ -14,20 +14,20 @@ export const SetLights = async (req, res) => {
       const obj=await TrafficLightColors.findOne({where:{Junction:junction}})
       if(obj)
       {
-          obj.R1=parts[2],
-          obj.R2=parts[3],
-          obj.R3=parts[4],
-          obj.R4=parts[5],
+          obj.R1=req.body.R1,
+          obj.R2=req.body.R2,
+          obj.R3=req.body.R3,
+          obj.R4=req.body.R4,
           obj.lastHeartBeatTime=new Date().toISOString()
           await obj.save();
       }
       else{
        await TrafficLightColors.create({
-        Junction:parts[1],
-        R1:parts[2],
-        R2:parts[3],
-        R3:parts[4],
-        R4:parts[5],
+        Junction:junction,
+        R1:req.body.R1,
+        R2:req.body.R2,
+        R3:req.body.R3,
+        R4:req.body.R4,
         lastHeartBeatTime:new Date().toISOString()
      })
       }
