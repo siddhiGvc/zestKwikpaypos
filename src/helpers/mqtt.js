@@ -47,13 +47,26 @@ const parseInternal = (payload, mqttClient,topic) => {
             if(parts[0]=="TRA")
             {
                 console.log(parts)
+                const obj=TrafficLightColors.findOne({where:{Junction:parts[1]}})
+                if(obj)
+                {
+                    obj.R1=parts[2],
+                    obj.R2=parts[3],
+                    obj.R3=parts[4],
+                    obj.R4=parts[5],
+                    obj.lastHeartBeatTime=new Date().toISOString()
+                    obj.save();
+                }
+                else{
                TrafficLightColors.create({
                   Junction:parts[1],
                   R1:parts[2],
                   R2:parts[3],
                   R3:parts[4],
-                  R4:parts[5]
+                  R4:parts[5],
+                  lastHeartBeatTime:new Date().toISOString()
                })
+              }
             }
 
             if (parts[0] == 'SSN'){

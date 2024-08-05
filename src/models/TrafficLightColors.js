@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     R2:DataTypes.STRING,
     R3:DataTypes.STRING,
     R4:DataTypes.STRING,
-
+    lastHeartBeatTime:DataTypes.DATE
 
    
   }, {

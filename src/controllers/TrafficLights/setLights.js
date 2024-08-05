@@ -11,13 +11,26 @@ export const SetLights = async (req, res) => {
       const junction=req.body.Junction;
       var message="*"+req.body.R1+","+req.body.R2+","+req.body.R3+","+req.body.R4+"#";
       await mqttClient.sendMessage('GVC/VM/' + junction,message);
-      await TrafficLightColors.create({
-        Junction:junction,
-        R1:req.body.R1,
-        R2:req.body.R2,
-        R3:req.body.R3,
-        R4:req.body.R4
-      })
+      const obj=await TrafficLightColors.findOne({where:{Junction:parts[1]}})
+      if(obj)
+      {
+          obj.R1=parts[2],
+          obj.R2=parts[3],
+          obj.R3=parts[4],
+          obj.R4=parts[5],
+          obj.lastHeartBeatTime=new Date().toISOString()
+          await obj.save();
+      }
+      else{
+       await TrafficLightColors.create({
+        Junction:parts[1],
+        R1:parts[2],
+        R2:parts[3],
+        R3:parts[4],
+        R4:parts[5],
+        lastHeartBeatTime:new Date().toISOString()
+     })
+      }
       res.status(200).json("Okay");
     } catch (error) {
       console.log(error);
@@ -76,7 +89,7 @@ export const SetLights = async (req, res) => {
         if(parts[1]==junction)
         {
           clearInterval(Interval);
-         const obj={
+         const data={
           ACV:parts[2]+" V",
           ACI:parts[3]+" AMP",
           DCV:parts[4]+" V",
@@ -84,18 +97,32 @@ export const SetLights = async (req, res) => {
 
          }
 
-         await InverterStaus.create({
+       
+         const obj=TrafficLightColors.findOne({where:{Junction:junction}})
+         if(obj)
+         {
+          obj.ACV=parts[2]+" V",
+          obj.ACI=parts[3]+" AMP",
+          obj.DCV=parts[4]+" V",
+          obj.DCI=parts[5]+" AMP",
+          obj.lastHeartBeatTime=new Date().toISOString()
+          await obj.save();
+         }
+         else{
+          await InverterStaus.create({
             Junction:parts[1],
             ACV:parts[2]+" V",
             ACI:parts[3]+" AMP",
             DCV:parts[4]+" V",
-            DCI:parts[5]+" AMP"
-
+            DCI:parts[5]+" AMP",
+            lastHeartBeatTime:new Date().toISOString()
          })
+       
+        }
 
          
 
-         res.status(200).json(obj);
+         res.status(200).json(data);
         }
       })
       const message= "*QINV?#"
