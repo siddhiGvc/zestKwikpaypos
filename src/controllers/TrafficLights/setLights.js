@@ -1,7 +1,7 @@
 const mqttHandler=require('../../../mqtt');
 var mqttClient = new mqttHandler();
 var events = require('../../helpers/events');
-import {InverterStaus,TrafficLightColors,InverterStaus} from '../../models';
+import {InverterStaus,TrafficLightColors} from '../../models';
 
 
 export const SetLights = async (req, res) => {
