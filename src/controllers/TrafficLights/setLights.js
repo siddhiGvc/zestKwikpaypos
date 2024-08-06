@@ -1,7 +1,7 @@
 const mqttHandler=require('../../../mqtt');
 var mqttClient = new mqttHandler();
 var events = require('../../helpers/events');
-import {InverterStaus,TrafficLightColors} from '../../models';
+import {InverterStaus,TrafficLightColors,TrafficLightDevices} from '../../models';
 
 
 export const SetLights = async (req, res) => {
@@ -156,6 +156,17 @@ export const SetLights = async (req, res) => {
   export const GetAllJunctions = async (req, res) => {
     try {
       const data=await TrafficLightColors.findAll();
+      res.status(200).json(data);
+    } catch (error) {
+      console.log(error);
+      res.status(505).json("Error");
+    }
+  };
+ 
+
+  export const GetAllDevices = async (req, res) => {
+    try {
+      const data=await TrafficLightDevices.findAll();
       res.status(200).json(data);
     } catch (error) {
       console.log(error);

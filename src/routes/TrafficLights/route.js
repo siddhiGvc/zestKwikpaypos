@@ -1,5 +1,5 @@
 import express from 'express';
-import { SetLights,SetDate,QueryPowreBackup,getLights,getQueryPowerBackup, GetAllJunctions} from '../../controllers/TrafficLights/setLights';
+import { SetLights,SetDate,QueryPowreBackup,getLights,getQueryPowerBackup, GetAllJunctions, GetAllDevices} from '../../controllers/TrafficLights/setLights';
 
 const router = express.Router();
 
@@ -12,6 +12,7 @@ router.post('/queryPowerBackup', QueryPowreBackup);
 router.post('/getInverterStatus', getQueryPowerBackup);
 router.post('/getLights',getLights);
 router.get('/getAllJunstion',GetAllJunctions);
+router.get('/getAllDevices',GetAllDevices);
 
 
 module.exports = router;
