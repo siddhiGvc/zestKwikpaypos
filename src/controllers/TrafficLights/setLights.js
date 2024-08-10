@@ -162,6 +162,16 @@ export const SetLights = async (req, res) => {
       res.status(505).json("Error");
     }
   };
+
+  export const GetAllInverters = async (req, res) => {
+    try {
+      const data=await InverterStaus.findAll();
+      res.status(200).json(data);
+    } catch (error) {
+      console.log(error);
+      res.status(505).json("Error");
+    }
+  };
  
 
   export const GetAllDevices = async (req, res) => {
