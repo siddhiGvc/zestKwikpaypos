@@ -385,18 +385,7 @@ const server = net.createServer((socket) => {
         
         if(remotePort == port) {
 
-          await setTimeout(async()=>{
-            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
-            // console.log(data);
-             if(data)
-             {
-                 data.Color="warning";
-                 await data.save();
-             }
-
-           
-
-          },500)
+         
         
           await setTimeout(async()=>{
            const data=await Testing.findAll({where:{device_number:1}});
@@ -415,16 +404,22 @@ const server = net.createServer((socket) => {
                  await socket.write(data[i].command);
                  events.pubsub.emit('Receive', data[i].expected_output, data[i], 0,port);
                 }
+                
+                   i++;
+                  if(i==data.length)
+                  {
+                    i=0;
+                  }
                 }
                 
-                i++;
                
-              },10000);  // 100000 milliseconds = 100 seconds
+               
+              },15000);  // 100000 milliseconds = 100 seconds
             
 
 
          
-          },2000)
+          },15000)
       
          
          
@@ -435,18 +430,7 @@ const server = net.createServer((socket) => {
          
         if(remotePort == port) {
 
-          await setTimeout(async()=>{
-            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
-            // console.log(data);
-             if(data)
-             {
-                 data.Color="warning";
-                 await data.save();
-             }
-
-           
-
-          },500)
+        
         
           await setTimeout(async()=>{
            const data=await Testing.findAll({where:{device_number:2}});
@@ -464,15 +448,20 @@ const server = net.createServer((socket) => {
                  await socket.write(data[i].command);
                  events.pubsub.emit('Receive', data[i].expected_output, data[i], 0,port);
                 }
+                  i++;
+                  if(i==data.length)
+                  {
+                    i=0;
+                  }
                 }
-                i++;
+               
               
-              }, 14000);  // 100000 milliseconds = 100 seconds
+              }, 15000);  // 100000 milliseconds = 100 seconds
             
 
 
          
-          },2000)
+          },15000)
       
          
          
@@ -486,18 +475,7 @@ const server = net.createServer((socket) => {
         
         if(remotePort == port) {
 
-          await setTimeout(async()=>{
-            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
-            // console.log(data);
-             if(data)
-             {
-                 data.Color="warning";
-                 await data.save();
-             }
-
-           
-
-          },500)
+         
         
           await setTimeout(async()=>{
            const data=await Testing.findAll({where:{device_number:3}});
@@ -525,7 +503,7 @@ const server = net.createServer((socket) => {
 
 
          
-          },2000)
+          },10000)
       
          
          
@@ -676,18 +654,23 @@ const server = net.createServer((socket) => {
         
         if(command[0]=="MAC")
         {
-            //console.log("Timer Started");
+            console.log("*****************");
             // await setTimeout(()=>{
             //    console.log("Resetting Connection");
             //    socket.write(`*RST#`);
             // },10000)
+            
+         
             const address=command[1];
             console.log(`Mac Adress:${address}`);
+            console.log("SN:",command[2]);
             const data=await MacMapping.findOne({where:{MacID:command[1]}});
            // console.log(data);
             if(data)
                 {
+                
                     data.SocketNumber=remotePort;
+                    data.SNoutput=command[2];
                     data.lastHeartBeatTime=new Date().toISOString();
                     await data.save();
                       await Transaction.create({
@@ -703,6 +686,7 @@ const server = net.createServer((socket) => {
                 else{
                   await MacMapping.create({
                     MacID:command[1],
+                    SNoutput:command[2],
                     lastHeartBeatTime:new Date().toISOString(),
                     INHinput:false,
                     INHoutput:false
@@ -741,15 +725,19 @@ const server = net.createServer((socket) => {
             else  if(command[0]=="HBT")
               {
                 
-                  
+                  // console.log("Hbt recived",command[1]);
                   const data=await MacMapping.findOne({where:{MacID:command[1]}});
+                  // console.log(data);
                 
                   if(data)
                       {
                         
                           data.SocketNumber=remotePort;
                           data.lastHeartBeatTime=new Date().toISOString();
+                          data.SNoutput=command[2];
                           await data.save();
+                          
+                          console.log("data saved for:"+command[1]);
                         
                             await Transaction.create({
                                 machine:data.UID,
@@ -763,7 +751,17 @@ const server = net.createServer((socket) => {
                            
                           
                       }
-                 
+                  else{
+                  await MacMapping.create({
+                    MacID:command[1],
+                    SNoutput:command[2],
+                    lastHeartBeatTime:new Date().toISOString(),
+                    INHinput:false,
+                    INHoutput:false
+                    
+
+                  })
+                }
                 
            } 
             else  if(command[0]=="RST-OK")
@@ -946,23 +944,12 @@ const server = net.createServer((socket) => {
                               {
                                 const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
                                     // console.log(data);
-                                     if(data)
-                                     {
-                                         data.Color="";
-                                         await data.save();
-                                     }
+                                   
                                 
-                                  data.Voutput=strData;
-                                  data.lastHeartBeatTime=new Date().toISOString();
-                                  await data.save();
-                                    await Transaction.create({
-                                        machine:data.UID,
-                                        command:command[0],
-                                        p1:command[1],
-                                        p2:command[2],
-                                        p3:command[3],
-                                        p4:command[4]
-                                    })
+                                  //data.Voutput=strData;
+                                  //data.lastHeartBeatTime=new Date().toISOString();
+                                  //await data.save();
+                                   
                                      console.log("Saved In Transactions");
                                      setTimeout(()=>{
                                       data.Voutput='';
