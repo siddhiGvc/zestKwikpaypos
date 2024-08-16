@@ -23,7 +23,8 @@ const trafficRouter =require("./src/routes/TrafficLights/route")
 
 dotenv.config();
 require('./src/config/sequelize');
-require('./src/helpers/socketServer')
+require('./src/helpers/socketServer');
+
 
 const app = express();
 app.use(
