@@ -9,6 +9,8 @@ const mqtt = require('./mqtt');
 const daily_schedule = require('./daily_schedule');
 //const { MqttClient } = require('mqtt');
 var mqttHandler = require('./mqtt');
+const fs = require('fs');
+const path = require('path');
 var mqttClient = new mqttHandler();
 
 
@@ -75,6 +77,13 @@ const setUpExpress = () => {
     console.log(`App running on port ${chalk.greenBright(port)}...`);
     console.log ("vinay - 12Oct23V2")
   });
+
+  server.on('error', (err) => {
+    // Log error
+    fs.appendFile(logPath, `${new Date().toISOString()} - Error: ${err.message}\n`, 'utf8', (fileErr) => {
+        if (fileErr) console.error('Error writing to log file:', fileErr);
+    });
+});
 
   // In case of an error
   app.on('error', (appErr, appCtx) => {
