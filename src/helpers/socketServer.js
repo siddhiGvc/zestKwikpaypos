@@ -959,12 +959,12 @@ const server = net.createServer((socket) => {
                           if(data)
                               {
                                 const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
-                                    // console.log(data);
+                                    console.log(data);
                                    
                                 
-                                  //data.Voutput=strData;
-                                  //data.lastHeartBeatTime=new Date().toISOString();
-                                  //await data.save();
+                                  data.Voutput=strData;
+                                  data.lastHeartBeatTime=new Date().toISOString();
+                                  await data.save();
                                    
                                      console.log("Saved In Transactions");
                                      setTimeout(()=>{
