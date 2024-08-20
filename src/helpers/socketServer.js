@@ -383,7 +383,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*Erase:${name}:${getDateTime()}:${sn}#`);
+          socket.write(`*ERASE:${name}:${getDateTime()}:${sn}#`);
         }
       });
 
@@ -391,7 +391,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*Erase?#`);
+          socket.write(`*ERASE?#`);
         }
       });
 
