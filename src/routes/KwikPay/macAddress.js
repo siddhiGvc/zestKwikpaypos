@@ -33,5 +33,7 @@ router.get('/getTestMode',macAddress.getTestMode);
 router.post('/setTestMode',macAddress.setTestMode);
 router.post('/setSN',macAddress.setSN);
 router.post('/checkSN',macAddress.checkSN);
+router.post('/setErase',macAddress.setErase);
+router.post('/checkErase',macAddress.checkErase);
 
 module.exports = router;

@@ -165,6 +165,14 @@ module.exports = (sequelize, DataTypes) => {
             type:DataTypes.STRING,
             
           },
+          ERASEoutput:{
+            type:DataTypes.STRING,
+            
+          },
+          ERASEmessage:{
+            type:DataTypes.STRING,
+            
+          },
           RPoutput:{
             type:DataTypes.STRING,
             
