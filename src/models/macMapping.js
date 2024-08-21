@@ -184,7 +184,16 @@ module.exports = (sequelize, DataTypes) => {
           SIPmessage:{
             type:DataTypes.STRING,
             
-          }
+          },
+          Loutput:{
+            type:DataTypes.STRING,
+            
+          },
+          Lmessage:{
+            type:DataTypes.STRING,
+            
+          },
+          
          
          
          

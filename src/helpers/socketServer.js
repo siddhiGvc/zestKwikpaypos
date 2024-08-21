@@ -4,7 +4,7 @@ const {sequelize,MacMapping,Transaction,Testing}=require("../models");
 var events = require('../helpers/events');
 const { sendV } = require("../controllers/KwikPay/macAddress");
 
-const port = 6666;
+const port = process.env.SOCKET_PORT;
 let TID=Math.floor(Math.random() * 100000) + 1;
 
 let intervals = [];
@@ -384,6 +384,14 @@ const server = net.createServer((socket) => {
         
         if(remotePort == port) {
           socket.write(`*ERASE:${name}:${getDateTime()}:${sn}#`);
+        }
+      });
+
+      events.pubsub.on('setL', function(port,name,sn) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*L:${name}:${getDateTime()}:${sn}#`);
         }
       });
 
@@ -1163,6 +1171,42 @@ const server = net.createServer((socket) => {
                          
                         
                       }
+                      else  if(command[0]=="L-OK")
+                        {
+                          
+                           // console.log(remotePort);
+                           
+                          
+                            
+                           
+                            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                          // console.log(data);
+                            if(data)
+                                {
+                                  
+                                    data.Loutput=command[0];
+                                    data.lastHeartBeatTime=new Date().toISOString();
+                                    await data.save();
+                                    setTimeout(()=>{
+                                      data.Loutput='';
+                                    
+                                     data.save();
+        
+                                    },8000)
+                                      await Transaction.create({
+                                          machine:data.UID,
+                                          command:command[0],
+                                          p1:command[1],
+                                          p2:command[2],
+                                          p3:command[3],
+                                          p4:command[4]
+                                      })
+                                       console.log("Saved In Transactions");
+                                     
+                                }
+                           
+                          
+                        }
                     
                       else  if(command[0]=="SS-OK")
                         {

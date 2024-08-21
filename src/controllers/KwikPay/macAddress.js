@@ -285,6 +285,24 @@ export const setErase=async(req,res)=>{
     }
 
 }
+
+export const setL=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('setL',req.body.socketNumber,req.body.UserName,req.body.LNumber) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}
 export const checkErase=async(req,res)=>{
     try{
         
