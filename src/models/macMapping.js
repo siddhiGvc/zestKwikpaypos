@@ -189,7 +189,7 @@ module.exports = (sequelize, DataTypes) => {
             type:DataTypes.STRING,
             
           },
-          Lmessage:{
+          LEmessage:{
             type:DataTypes.STRING,
             
           },
