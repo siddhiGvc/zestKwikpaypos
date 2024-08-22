@@ -387,13 +387,7 @@ const server = net.createServer((socket) => {
         }
       });
 
-      events.pubsub.on('setL', function(port,name,sn) {
      
-        
-        if(remotePort == port) {
-          socket.write(`*L:${name}:${getDateTime()}:${sn}#`);
-        }
-      });
 
       events.pubsub.on('checkErase', function(port,name) {
      
@@ -403,6 +397,31 @@ const server = net.createServer((socket) => {
         }
       });
 
+      events.pubsub.on('setL', function(port,name,sn) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*L:${name}:${getDateTime()}:${sn}#`);
+        }
+      });
+       
+      events.pubsub.on('setPair', function(port,name,sn) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*PAIR:${name}:${getDateTime()}:${sn}#`);
+        }
+      });
+
+     
+
+      events.pubsub.on('checkPair', function(port,name) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*PAIR?#`);
+        }
+      });
      
       events.pubsub.on('modeTest1',async function(port,name) {
        

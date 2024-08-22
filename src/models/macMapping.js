@@ -169,6 +169,14 @@ module.exports = (sequelize, DataTypes) => {
             type:DataTypes.STRING,
             
           },
+          PAIRmessage:{
+            type:DataTypes.STRING,
+            
+          },
+          PAIRoutput:{
+            type:DataTypes.STRING,
+            
+          },
           ERASEmessage:{
             type:DataTypes.STRING,
             

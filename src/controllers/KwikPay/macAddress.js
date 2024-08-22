@@ -321,6 +321,41 @@ export const checkErase=async(req,res)=>{
 
 }
 
+export const setPair=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('setPair',req.body.socketNumber,req.body.UserName,req.body.PairNumber) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}
+export const checkPair=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('checkPair',req.body.socketNumber) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}
+
 export const checkSN=async(req,res)=>{
     try{
         
