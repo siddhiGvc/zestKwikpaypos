@@ -35,8 +35,8 @@ router.post('/setSN',macAddress.setSN);
 router.post('/checkSN',macAddress.checkSN);
 router.post('/setErase',macAddress.setErase);
 router.post('/checkErase',macAddress.checkErase);
-router.post('/setPair',macAddress.setErase);
-router.post('/checkPair',macAddress.checkErase);
+router.post('/setPair',macAddress.setPair);
+router.post('/checkPair',macAddress.checkPair);
 router.post('/setL',macAddress.setL);
 
 module.exports = router;
