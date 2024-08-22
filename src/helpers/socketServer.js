@@ -228,7 +228,7 @@ const server = net.createServer((socket) => {
         }
       });
 
-       events.pubsub.on('sendV', function(port,pin,pulse,name) {
+       events.pubsub.on('sendV', function(port,pin,pulse) {
      
         
         if(remotePort == port) {
@@ -870,8 +870,25 @@ const server = net.createServer((socket) => {
                
               
             } 
+
+             else if(command[0]=="IP")
+             {
+              const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+              if(data)
+                {
+                  const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                  // console.log(data);
+                   if(data.SNoutput==command[2])
+                   {
+                    const data=await MacMapping.findOne({where:{SNoutput:command[1]}});
+                    events.pubsub.emit('sendV',data.SocketNumber,1,command[3]) ;
+                  
+                   }
+                }
+
+             }
             
-                else  if(command[0].includes("TC"))
+            else  if(command[0].includes("TC"))
                     {
                       
                         
