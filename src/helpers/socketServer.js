@@ -228,11 +228,11 @@ const server = net.createServer((socket) => {
         }
       });
 
-       events.pubsub.on('sendV', function(port,pin,pulse) {
+       events.pubsub.on('sendV', function(port,pin,pulse,SerialNumber) {
      
         
         if(remotePort == port) {
-          socket.write(`*V:${TID++}:${pin}:${pulse}`);
+          socket.write(`*V:${TID++}:${SerialNumber}:${pin}:${pulse}`);
           console.log("V command sent");
         }
       });
@@ -886,8 +886,9 @@ const server = net.createServer((socket) => {
                    {
 
                     const data=await MacMapping.findOne({where:{SNoutput:command[1]}});
+                    const data1=await MacMapping.findOne({where:{SNoutput:command[2]}});
                     console.log("SocketNumber of Paired Device", data.SocketNumber);
-                    events.pubsub.emit('sendV',data.SocketNumber,1,command[3]) ;
+                    events.pubsub.emit('sendV',data.SocketNumber,1,command[3],data1.SNoutput) ;
                   
                   
                    }

@@ -147,8 +147,9 @@ export const sendV=async(req,res)=>{
     try{
         
       
-        events.pubsub.emit('sendV',req.body.socketNumber,req.body.Pin,req.body.Pulse) ;
+      
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+        events.pubsub.emit('sendV',req.body.socketNumber,req.body.Pin,req.body.Pulse,obj.SNoutput) ;
        
         res.status(200).json({data:obj})
   
