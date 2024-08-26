@@ -41,5 +41,6 @@ router.post("/getFR",faultReport.getFaultReportData);
 router.post("/getSSN",SSNReport.getSSNReportData);
 router.get("/getCountsSerial",machineSetting.getCountSerialNumber);
 
+
 module.exports = router;
 

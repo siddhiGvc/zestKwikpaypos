@@ -1,6 +1,6 @@
 import { where } from "sequelize";
 
-const {MacMapping,TestMode} =require("../../models")
+const {MacMapping,TestMode,SerialPort} =require("../../models")
 import { successResponse, errorResponse, uniqueId } from '../../helpers';
 var events = require('../../helpers/events')
 
@@ -687,6 +687,22 @@ export const setTestMode=async(req,res)=>{
         obj.save();
        
         res.status(200).json()
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}
+
+export const getSerialPorts=async(req,res)=>{
+    try{
+        
+        const obj = await SerialPort.findAll();
+       
+        res.status(200).json({data:obj[0]})
   
     }
     catch(err)
