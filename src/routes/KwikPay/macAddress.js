@@ -38,6 +38,6 @@ router.post('/checkErase',macAddress.checkErase);
 router.post('/setPair',macAddress.setPair);
 router.post('/checkPair',macAddress.checkPair);
 router.post('/setL',macAddress.setL);
-router.get("/getSerialPorts",macAddress.getSerialPorts);
+router.get('/getSerialPorts',macAddress.getSerialPorts);
 
 module.exports = router;

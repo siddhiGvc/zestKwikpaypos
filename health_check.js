@@ -21,7 +21,7 @@ const setup = async function (mqtt_client) {
                     }
                 });
             } else {
-                console.log('Message published successfully.');
+                // console.log('Message published successfully.');
             }
         });
     });
