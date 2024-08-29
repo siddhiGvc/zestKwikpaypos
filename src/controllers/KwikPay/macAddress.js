@@ -734,7 +734,7 @@ export const setTestMode=async(req,res)=>{
 
 export const getSerialPorts=async(req,res)=>{
     try{
-        console.log("serialPort api called");
+       
         const obj = await SerialPort.findAll();
        
         res.status(200).json({data:obj[0]})
