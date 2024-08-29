@@ -39,7 +39,7 @@ router.post('/setPair',macAddress.setPair);
 router.post('/checkPair',macAddress.checkPair);
 router.post('/setL',macAddress.setL);
 router.get('/getSerialPorts',macAddress.getSerialPorts);
-router.post('/setSN',macAddress.sendPassThru);
-router.post('/checkSN',macAddress.checkPassThru);
+router.post('/setPassThru',macAddress.sendPassThru);
+router.post('/checkPassThru',macAddress.checkPassThru);
 
 module.exports = router;
