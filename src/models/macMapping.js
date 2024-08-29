@@ -201,6 +201,14 @@ module.exports = (sequelize, DataTypes) => {
             type:DataTypes.STRING,
             
           },
+          PToutput:{
+            type:DataTypes.STRING,
+            
+          },
+          PTmessage:{
+            type:DataTypes.STRING,
+            
+          },
           
          
          

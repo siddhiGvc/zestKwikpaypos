@@ -535,6 +535,41 @@ export const askSSID=async(req,res)=>{
 
 }
 
+export const sendPassThru=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('sendPassThru',req.body.socketNumber,req.body.UserName,req.body.PassThru) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}
+export const checkPassThru=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('checkPassThru',req.body.socketNumber) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}
+
 export const sendPWD=async(req,res)=>{
     try{
         
