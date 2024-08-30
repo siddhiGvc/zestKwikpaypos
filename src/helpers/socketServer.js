@@ -384,6 +384,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
+          console.log("Sent PT command",`*PT:${name}:${getDateTime()}:${sn}#`)
           socket.write(`*PT:${name}:${getDateTime()}:${sn}#`);
         }
       });
@@ -803,6 +804,12 @@ const server = net.createServer((socket) => {
                                 p4:command[4]
                             })
                              console.log("Saved In Transactions");
+                             setTimeout(()=>{
+                              data.PToutput='';
+                            
+                             data.save();
+
+                            },8000)
                       }
                  
                 
@@ -828,6 +835,12 @@ const server = net.createServer((socket) => {
                                   p4:command[4]
                               })
                                console.log("Saved In Transactions");
+                               setTimeout(()=>{
+                                data.PTMessage='';
+                              
+                               data.save();
+  
+                              },8000)
                         }
                    
                   
