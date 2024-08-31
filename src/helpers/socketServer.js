@@ -1,8 +1,9 @@
 const net = require("net");
 const moment=require("moment");
-const {sequelize,MacMapping,Transaction,Testing}=require("../models");
+const {sequelize,MacMapping,Transaction,Testing,SerialPort}=require("../models");
 var events = require('../helpers/events');
 const { sendV } = require("../controllers/KwikPay/macAddress");
+const SerialPort = require("../models/SerialPort");
 
 const port = process.env.SOCKET_PORT;
 let TID=Math.floor(Math.random() * 100000) + 1;
@@ -1783,6 +1784,12 @@ const server = net.createServer((socket) => {
                                           data.RPoutput=strData;
                                           data.lastHeartBeatTime=new Date().toISOString();
                                           await data.save();
+
+                                          const data1=await SerialPort.findOne({where:{id:1}});
+                                          data1.value1=command[1];
+                                          await data1.save();
+ 
+
                                           setTimeout(()=>{
                                             data.RPoutput='';
                                            data.save();
