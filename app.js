@@ -17,9 +17,9 @@ import colorRouter from './src/routes/hourlyReportColors';
 import inventoryRouter from './src/routes/inventory';
 import kwikpayRouter from "./src/routes/KwikPay/macAddress";
 import kwikpayTestingRouter from "./src/routes/KwikPay/testing";
-const paytmRouter=require("./src/routes/paytmRoutes")
+const paytmRouter=require("./src/routes/paytmRoutes");
 const customerRouter=require("./src/routes/customer");
-const trafficRouter =require("./src/routes/TrafficLights/route")
+const trafficRouter =require("./src/routes/TrafficLights/route");
 
 dotenv.config();
 require('./src/config/sequelize');
