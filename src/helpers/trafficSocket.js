@@ -182,7 +182,7 @@ const server = net.createServer((socket) => {
      //  sendData(socket,count++,remotePort);
     //}, 10000);
 
-    events.pubsub.on('sendMessage', function(output,port,message) {
+    events.pubsub.on('sendMessage', function(port,message) {
     
       
        if(remotePort == port) {
