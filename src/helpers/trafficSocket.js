@@ -1266,7 +1266,7 @@ const server = net.createServer((socket) => {
                                         data.lastHeartBeatTime=new Date().toISOString();
                                         await data.save();
                                         setTimeout(()=>{
-                                          data.SNmessage='';
+                                          data.H1message='';
                                         
                                          data.save();
             
@@ -1283,7 +1283,7 @@ const server = net.createServer((socket) => {
                                           data.lastHeartBeatTime=new Date().toISOString();
                                           await data.save();
                                           setTimeout(()=>{
-                                            data.SNmessage='';
+                                            data.H2message='';
                                           
                                            data.save();
               
@@ -1300,7 +1300,7 @@ const server = net.createServer((socket) => {
                                             data.lastHeartBeatTime=new Date().toISOString();
                                             await data.save();
                                             setTimeout(()=>{
-                                              data.SNmessage='';
+                                              data.H3message='';
                                             
                                              data.save();
                 
@@ -1318,7 +1318,7 @@ const server = net.createServer((socket) => {
                                               data.lastHeartBeatTime=new Date().toISOString();
                                               await data.save();
                                               setTimeout(()=>{
-                                                data.SNmessage='';
+                                                data.H4message='';
                                               
                                                data.save();
                   
@@ -1335,7 +1335,7 @@ const server = net.createServer((socket) => {
                                                 data.lastHeartBeatTime=new Date().toISOString();
                                                 await data.save();
                                                 setTimeout(()=>{
-                                                  data.SNmessage='';
+                                                  data.FLASHmessage='';
                                                 
                                                  data.save();
                     
@@ -1352,7 +1352,7 @@ const server = net.createServer((socket) => {
                                                   data.lastHeartBeatTime=new Date().toISOString();
                                                   await data.save();
                                                   setTimeout(()=>{
-                                                    data.SNmessage='';
+                                                    data.OFFmessage='';
                                                   
                                                    data.save();
                       
@@ -1369,7 +1369,7 @@ const server = net.createServer((socket) => {
                                                     data.lastHeartBeatTime=new Date().toISOString();
                                                     await data.save();
                                                     setTimeout(()=>{
-                                                      data.SNmessage='';
+                                                      data.NEXTmessage='';
                                                     
                                                      data.save();
                         
@@ -1386,7 +1386,7 @@ const server = net.createServer((socket) => {
                                                       data.lastHeartBeatTime=new Date().toISOString();
                                                       await data.save();
                                                       setTimeout(()=>{
-                                                        data.SNmessage='';
+                                                        data.AUTOmessage='';
                                                       
                                                        data.save();
                           
