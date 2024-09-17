@@ -1393,6 +1393,23 @@ const server = net.createServer((socket) => {
                                                       },8000)
                                                   }
                                            }
+                                           else  if(command[0]=="Q")
+                                            {
+                                              const data=await TrafficMacMapping.findOne({where:{SocketNumber:remotePort}});
+                                                  if(data)
+                                                    {
+                                                      
+                                                        data.Qmessage=strData;
+                                                        data.lastHeartBeatTime=new Date().toISOString();
+                                                        await data.save();
+                                                        setTimeout(()=>{
+                                                          data.Qmessage='';
+                                                        
+                                                         data.save();
+                            
+                                                        },8000)
+                                                    }
+                                             }
 
                         
 
