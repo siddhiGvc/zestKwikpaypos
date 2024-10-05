@@ -9,7 +9,7 @@ const num = a => {
 }
 //q
 module.exports.parse = (payload, mqttClient,topic) => {
-    console.log("Payload1",payload.toString());
+    // console.log("Payload1",payload.toString());
      parseInternal(payload.toString(), mqttClient,topic);
     // if (!/.*?(\*[0-9A-Za-z\,]*\#)+?.*?/gm.test(payload.toString())) return;
     // var commands = [...payload.toString().matchAll(/.*?(\*[0-9A-Za-z\,]*\#)+?.*?/gm)].map(q => q[0]);
@@ -30,182 +30,28 @@ module.exports.parse = (payload, mqttClient,topic) => {
 const parseInternal = (payload, mqttClient,topic) => {
     // 'Parsing message - ' + payload
     try {
-        console.log("Payload2",payload)
-        var cleaned = /^\**(.*?)\#*$/.exec(payload)[1];
-        var parts = cleaned.split(',');
-        // 211023 - ignore test with numeric number, allow commands in parts[0] 
-        //if (!/^\d+$/.test(parts[0])) return;
-
-        // 211023 added code for detecting machine packets ie *SSN,12345# sent to GVC/VM/#
        
-            if(parts[0]=="QPB")
-                {
-                    console.log("QPB accepted");
-                    events.pubsub.emit('sendPowerBackup',parts);
-                }
 
-            if(parts[0]=="TRA")
-            {
-                console.log(parts)
-                const obj=TrafficLightColors.findOne({where:{Junction:parts[1]}})
-                if(obj)
-                {
-                    obj.R1=parts[2],
-                    obj.R2=parts[3],
-                    obj.R3=parts[4],
-                    obj.R4=parts[5],
-                    obj.lastHeartBeatTime=new Date().toISOString()
-                    obj.save();
-                }
-                else{
-               TrafficLightColors.create({
-                  Junction:parts[1],
-                  R1:parts[2],
-                  R2:parts[3],
-                  R3:parts[4],
-                  R4:parts[5],
-                  lastHeartBeatTime:new Date().toISOString()
-               })
-              }
-            }
-
-            if (parts[0] == 'SSN'){
-            var from = topic.replace('GVC/VM/','');
-            console.log('From -',from,'  To -',parts[1]); 
-            Transaction.create({
-                machine: from,
-                command: parts[0],
-                p1: parts[1],
-            }) 
-            return;
-            }  
-
-            if (parts[1] == 'STA')
-            {
-                console.log(parts);
-             //   events.pubsub.emit('paytm_success',parts[3],parts[2]) ;
-            }   
-    
-        if (parts[1] == 'UPI')
+     if(!payload.includes('*'))
         {
-         //   console.log(parts);
-            events.pubsub.emit('paytm_success',parts[3],parts[2]) ;
-        }   
+       
+        events.pubsub.on('getResponse',(callback) => {
+          
+           
+                console.log(1);
+                console.log("Payload2",payload)
+                var parts = payload.split(' ');
+                callback(parts);
+             
+          
+        });
+    }
+       
 
-        if (parts[1] == 'QRY')
-        {
-            console.log(parts);
-            events.pubsub.emit('QueryValues',parts[0],parts[2],parts[3],parts[4],parts[5],parts[6],parts[7],parts[8],parts[9]) ;
-        }   
-
-
-        if (parts[1] == 'RFN')
-        {
-         //   console.log(parts);
-            events.pubsub.emit('partialRefund',parts[3],parts[2]) ;
-        }   
-
+       
         
-
-        if(parts[1] != 'SUM' && parts[1] != 'PWR' && parts[1] != 'UPI' && parts[1] != 'RFN' ) return;
-//        console.log(parts);   
-        Transaction.create({
-            machine: parts[0],
-            command: parts[1],
-            p1: parts[2],
-            p2: parts[3],
-            p3: parts[4],
-            p4: parts[5],
-            p5: parts[6],
-            p6: parts[7],
-            p7: parts[8],
-            p8: parts[9],
-            p9: parts[10],
-            p10: parts[11],
-            p11: parts[12],
-            p12: parts[13],
-        })
-        const staticValues = { lastOnTime: "COALESCE(lastOnTime, NOW())", lastHeartbeatTime: "NOW()", status: 1 };
-        switch (parts[1]) {
-            case "PWR":
-                //console.log(parts.join(','))
-                query({ lastOnTime: 'NOW()', lastHeartbeatTime: 'NOW()', sim_number: "'" + parts[2] + "'", status: 1 }, parts[0]);
-                // sequelize.query(`
-                //     update MachineData set lastOnTime = NOW(), lastHeartbeatTime = NOW(), burn_status = 0, status = 1 where machineId =
-                //         (select id from Machines where serial = '${parts[0]}' limit 1)
-                //     `)
-                break;
-            case "HBT":
-                query(staticValues, parts[0]);
-                // sequelize.query(`
-                // update MachineData set ${staticValues} where machineId =
-                //         (select id from Machines where serial = '${parts[0]}' limit 1)
-                //     `)
-                break;
-            case "STK":
-                query(Object.assign({ spiral_a_status: parts[2] }, staticValues), parts[0]);
-                // sequelize.query(`
-                //     update MachineData set spiral_a_status = ${parts[2]}, ${staticValues} where machineId =
-                //             (select id from Machines where serial = '${parts[0]}' limit 1)
-                //         `)
-                break;
-            case "CSH":
-                query(Object.assign({ cashCurrent: parts[3] }, staticValues), parts[0]);
-                // sequelize.query(`
-                //         update MachineData set cashCurrent = ${parts[3]}, ${staticValues} where machineId =
-                //                 (select id from Machines where serial = '${parts[0]}' limit 1)
-                //             `)
-                break;
-            case "VND":
-                query(Object.assign({ qtyCurrent: parts[2] }, staticValues), parts[0]);
-                // sequelize.query(`
-                //         update MachineData set qtyCurrent = ${parts[2]}, ${staticValues} where machineId =
-                //                 (select id from Machines where serial = '${parts[0]}' limit 1)
-                //             `)
-                break;
-            case "BST":
-                query(Object.assign({ burn_status: 1, burnCycleCurrent: parts[2] }, staticValues), parts[0]);
-                // sequelize.query(`
-                //         update MachineData set burn_status = 1, burnCycleCurrent = ${parts[2]}, ${staticValues} where machineId =
-                //                 (select id from Machines where serial = '${parts[0]}' limit 1)
-                //             `)
-                break;
-            case "BEN":
-                query(Object.assign({ burn_status: 0, burnCycleCurrent: parts[2] }, staticValues), parts[0]);
-                // sequelize.query(`
-                //         update MachineData set burn_status = 0, burnCycleCurrent = ${parts[2]}, ${staticValues} where machineId =
-                //                 (select id from Machines where serial = '${parts[0]}' limit 1)
-                //             `)
-                break;
-            case "BER":
-                query(Object.assign({ burn_status: 2, burnCycleCurrent: parts[2] }, staticValues), parts[0]);
-                // sequelize.query(`
-                //         update MachineData set burn_status = 2, burnCycleCurrent = ${parts[2]}, ${staticValues} where machineId =
-                //                 (select id from Machines where serial = '${parts[0]}' limit 1)
-                //             `)
-                break;
-            case "RST":
-                query(Object.assign({ reset_ts: "'" + parts[2] + "'" }, staticValues), parts[0]);
-                reset_machine(parts[2] ?? '', parts[0])
-                mqttClient.publish('GVC/VM/' + parts[0], '*ACK#')
-                break;
-            case "SUM":
-                summary(parts, staticValues, mqttClient)
-                // sequelize.query(`
-                //         update MachineData set burn_status = ${bstat}, spiral_a_status = ${parts[3]}, 
-                //             cashCurrent = ${parts[4]}, qtyCurrent = ${parts[5]}, burnCycleCurrent = ${parts[6]}, ${staticValues} 
-                //             where machineId =
-                //                 (select id from Machines where serial = '${parts[0]}' limit 1)
-                //             `)
-                break;
-            default:
-                query(Object.assign({}, staticValues), parts[0]);
-                // sequelize.query(`
-                // update MachineData set ${staticValues} where machineId =
-                //         (select id from Machines where serial = '${parts[0]}' limit 1)
-                //     `)
-                break;
-        }
+        
+           
     } catch (ex) {
         console.log('Failed to parse message', ex);
         // 'Failed to parse message'
