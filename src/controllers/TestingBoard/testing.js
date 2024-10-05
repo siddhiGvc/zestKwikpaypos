@@ -7,16 +7,21 @@ var mqttClient = new mqttHandler();
 
 export const sendG1 = async (req, res) => {
     try {
+      let responseSent = false;
       console.log("API called", req.body);
   
       // Send the MQTT message
     
-      await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "G1/r/n");
+  
+    
       // Set up a timeout to handle cases where no response is received in time
       const timeout = setTimeout(() => {
         console.log("Device is Offline");
         events.pubsub.removeAllListeners('getResponse');
-        res.status(200).json({ data: "Device Is Offline" });
+        if (!responseSent) { 
+            responseSent=true;
+        res.status(200).json({ data: "Device Is Offline" }); // Send the response back to the client
+        }
        
       }, 10000); // Adjust the timeout duration as needed
   
@@ -26,12 +31,14 @@ export const sendG1 = async (req, res) => {
         console.log("Response:",response);
         clearTimeout(timeout);
         events.pubsub.removeAllListeners('getResponse');
+        if (!responseSent) { 
+            responseSent=true;
         res.status(200).json({ data: response }); // Send the response back to the client
+        }
        
       });
-
+      await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "G1/r/n");
       
-  
     } catch (err) {
       console.log(err);
       res.status(505).json({ status: 505 });

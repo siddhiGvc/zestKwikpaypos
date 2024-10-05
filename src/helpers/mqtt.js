@@ -32,20 +32,21 @@ const parseInternal = (payload, mqttClient,topic) => {
     try {
        
 
-     if(!payload.includes('*'))
-        {
+    
        
         events.pubsub.on('getResponse',(callback) => {
           
-           
+             
                 console.log(1);
                 console.log("Payload2",payload)
                 var parts = payload.split(' ');
+                events.pubsub.removeAllListeners('getResponse');
                 callback(parts);
+              
              
           
         });
-    }
+    
        
 
        
