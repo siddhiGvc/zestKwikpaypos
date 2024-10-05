@@ -34,18 +34,64 @@ const parseInternal = (payload, mqttClient,topic) => {
 
     
        
-        events.pubsub.on('getResponse',(callback) => {
+        events.pubsub.on('getResponse1',(callback) => {
           
-             
+          
                 console.log(1);
                 console.log("Payload2",payload)
                 var parts = payload.split(' ');
                 events.pubsub.removeAllListeners('getResponse');
+                console.log("parts",parts);
                 callback(parts);
+             
               
              
           
         });
+        events.pubsub.on('getResponse2',(callback) => {
+          
+          
+            console.log(1);
+            console.log("Payload2",payload)
+            var parts = payload.split(' ');
+            events.pubsub.removeAllListeners('getResponse2');
+            console.log("parts",parts);
+            callback(parts);
+         
+          
+         
+      
+    });
+    events.pubsub.on('getResponse3',(callback) => {
+          
+          
+        console.log(1);
+        console.log("Payload2",payload)
+        var parts = payload.split(' ');
+        events.pubsub.removeAllListeners('getResponse3');
+        console.log("parts",parts);
+        callback(parts);
+     });
+     events.pubsub.on('getResponse4',(callback) => {
+          
+          
+        console.log(1);
+        console.log("Payload2",payload)
+        var parts = payload.split(' ');
+        events.pubsub.removeAllListeners('getResponse4');
+        console.log("parts",parts);
+        callback(parts);
+     });
+     events.pubsub.on('getResponse5',(callback) => {
+          
+          
+        console.log(1);
+        console.log("Payload2",payload)
+        var parts = payload.split(' ');
+        events.pubsub.removeAllListeners('getResponse5');
+        console.log("parts",parts);
+        callback(parts);
+     });
     
        
 
