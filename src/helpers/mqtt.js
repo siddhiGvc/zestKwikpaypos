@@ -92,6 +92,84 @@ const parseInternal = (payload, mqttClient,topic) => {
         console.log("parts",parts);
         callback(parts);
      });
+
+     events.pubsub.on('getResponse6',(callback) => {
+          
+          
+        console.log(1);
+        console.log("Payload2",payload)
+        var parts = payload.split(' ');
+        events.pubsub.removeAllListeners('getResponse6');
+        console.log("parts",parts);
+        callback(parts);
+     });
+
+     events.pubsub.on('getResponse7',(callback) => {
+          
+          
+        console.log(1);
+        console.log("Payload2",payload)
+        var parts = payload.split(' ');
+        events.pubsub.removeAllListeners('getResponse7');
+        console.log("parts",parts);
+        callback(parts);
+     });
+
+     events.pubsub.on('getResponse8',(callback) => {
+          
+          
+        console.log(1);
+        console.log("Payload2",payload)
+        var parts = payload.split(' ');
+        events.pubsub.removeAllListeners('getResponse8');
+        console.log("parts",parts);
+        callback(parts);
+     });
+
+
+     events.pubsub.on('getResponse9',(callback) => {
+          
+          
+        console.log(1);
+        console.log("Payload2",payload)
+        var parts = payload.split(' ');
+        events.pubsub.removeAllListeners('getResponse9');
+        console.log("parts",parts);
+        callback(parts);
+     });
+
+     events.pubsub.on('getResponse10',(callback) => {
+          
+          
+        console.log(1);
+        console.log("Payload2",payload)
+        var parts = payload.split(' ');
+        events.pubsub.removeAllListeners('getResponse11');
+        console.log("parts",parts);
+        callback(parts);
+     });
+
+     events.pubsub.on('getResponse12',(callback) => {
+          
+          
+        console.log(1);
+        console.log("Payload2",payload)
+        var parts = payload.split(' ');
+        events.pubsub.removeAllListeners('getResponse12');
+        console.log("parts",parts);
+        callback(parts);
+     });
+
+     events.pubsub.on('getResponse13',(callback) => {
+          
+          
+        console.log(1);
+        console.log("Payload2",payload)
+        var parts = payload.split(' ');
+        events.pubsub.removeAllListeners('getResponse13');
+        console.log("parts",parts);
+        callback(parts);
+     });
     
        
 
