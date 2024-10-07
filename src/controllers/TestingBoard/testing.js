@@ -214,5 +214,89 @@ export const sendG1 = async (req, res) => {
       res.status(505).json({ status: 505 });
     }
   };
+
+
+  export const sendQ = async (req, res) => {
+    try {
+      let responseSent = false;
+      console.log("API called", req.body);
+  
+      // Send the MQTT message
+    
+      
+    
+      // Set up a timeout to handle cases where no response is received in time
+      const timeout = setTimeout(() => {
+        console.log("Device is Offline");
+        events.pubsub.removeAllListeners('getResponse5');
+        if (!responseSent) { 
+            responseSent=true;
+        res.status(200).json({ data: "Device Is Offline" }); // Send the response back to the client
+        }
+       
+      }, 10000); // Adjust the timeout duration as needed
+    
+      await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "Q1/r/n");
+      // Listen for the response using the event emitter
+      await events.pubsub.emit('getResponse5', (response) => {
+        // Clear the timeout if the response is received in time
+        console.log("Response:",response);
+        clearTimeout(timeout);
+        events.pubsub.removeAllListeners('getResponse5');
+        if (!responseSent) { 
+            responseSent=true;
+           res.status(200).json({ data: response }); // Send the response back to the client
+        }
+       
+      });
+     
+      
+    } catch (err) {
+      console.log(err);
+      res.status(505).json({ status: 505 });
+    }
+  };
+
+
+  export const sendQ1 = async (req, res) => {
+    try {
+      let responseSent = false;
+      console.log("API called", req.body);
+  
+      // Send the MQTT message
+    
+      
+    
+      // Set up a timeout to handle cases where no response is received in time
+      const timeout = setTimeout(() => {
+        console.log("Device is Offline");
+        events.pubsub.removeAllListeners('getResponse5');
+        if (!responseSent) { 
+            responseSent=true;
+        res.status(200).json({ data: "Device Is Offline" }); // Send the response back to the client
+        }
+       
+      }, 10000); // Adjust the timeout duration as needed
+    
+      await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "Q1/r/n");
+      // Listen for the response using the event emitter
+      await events.pubsub.emit('getResponse5', (response) => {
+        // Clear the timeout if the response is received in time
+        console.log("Response:",response);
+        clearTimeout(timeout);
+        events.pubsub.removeAllListeners('getResponse5');
+        if (!responseSent) { 
+            responseSent=true;
+           res.status(200).json({ data: response }); // Send the response back to the client
+        }
+       
+      });
+     
+      
+    } catch (err) {
+      console.log(err);
+      res.status(505).json({ status: 505 });
+    }
+  };
   
 
