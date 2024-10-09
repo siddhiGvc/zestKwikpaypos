@@ -16,11 +16,11 @@ export const sendG1 = async (req, res) => {
     
       // Set up a timeout to handle cases where no response is received in time
       const timeout = setTimeout(() => {
-        console.log("Device is Offline");
+        
         events.pubsub.removeAllListeners('getResponse1');
         if (!responseSent) { 
             responseSent=true;
-        res.status(200).json({ data: "Device Is Offline" }); // Send the response back to the client
+        res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
       }, 10000); // Adjust the timeout duration as needed
@@ -59,11 +59,11 @@ export const sendG1 = async (req, res) => {
     
       // Set up a timeout to handle cases where no response is received in time
       const timeout = setTimeout(() => {
-        console.log("Device is Offline");
+        console.log("D");
         events.pubsub.removeAllListeners('getResponse2');
         if (!responseSent) { 
             responseSent=true;
-        res.status(200).json({ data: "Device Is Offline" }); // Send the response back to the client
+        res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
       }, 10000); // Adjust the timeout duration as needed
@@ -103,11 +103,11 @@ export const sendG1 = async (req, res) => {
     
       // Set up a timeout to handle cases where no response is received in time
       const timeout = setTimeout(() => {
-        console.log("Device is Offline");
+        console.log("D");
         events.pubsub.removeAllListeners('getResponse3');
         if (!responseSent) { 
             responseSent=true;
-        res.status(200).json({ data: "Device Is Offline" }); // Send the response back to the client
+        res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
       }, 10000); // Adjust the timeout duration as needed
@@ -144,11 +144,11 @@ export const sendG1 = async (req, res) => {
     
       // Set up a timeout to handle cases where no response is received in time
       const timeout = setTimeout(() => {
-        console.log("Device is Offline");
+        console.log("D");
         events.pubsub.removeAllListeners('getResponse4');
         if (!responseSent) { 
             responseSent=true;
-        res.status(200).json({ data: "Device Is Offline" }); // Send the response back to the client
+        res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
       }, 10000); // Adjust the timeout duration as needed
@@ -185,11 +185,11 @@ export const sendG1 = async (req, res) => {
     
       // Set up a timeout to handle cases where no response is received in time
       const timeout = setTimeout(() => {
-        console.log("Device is Offline");
+        console.log("D");
         events.pubsub.removeAllListeners('getResponse5');
         if (!responseSent) { 
             responseSent=true;
-        res.status(200).json({ data: "Device Is Offline" }); // Send the response back to the client
+        res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
       }, 10000); // Adjust the timeout duration as needed
@@ -227,11 +227,11 @@ export const sendG1 = async (req, res) => {
     
       // Set up a timeout to handle cases where no response is received in time
       const timeout = setTimeout(() => {
-        console.log("Device is Offline");
+        console.log("D");
         events.pubsub.removeAllListeners('getResponse6');
         if (!responseSent) { 
             responseSent=true;
-        res.status(200).json({ data: "Device Is Offline" }); // Send the response back to the client
+        res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
       }, 10000); // Adjust the timeout duration as needed
@@ -269,11 +269,11 @@ export const sendG1 = async (req, res) => {
     
       // Set up a timeout to handle cases where no response is received in time
       const timeout = setTimeout(() => {
-        console.log("Device is Offline");
+        console.log("D");
         events.pubsub.removeAllListeners('getResponse7');
         if (!responseSent) { 
             responseSent=true;
-        res.status(200).json({ data: "Device Is Offline" }); // Send the response back to the client
+        res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
       }, 10000); // Adjust the timeout duration as needed
@@ -310,11 +310,11 @@ export const sendG1 = async (req, res) => {
     
       // Set up a timeout to handle cases where no response is received in time
       const timeout = setTimeout(() => {
-        console.log("Device is Offline");
+        console.log("D");
         events.pubsub.removeAllListeners('getResponse8');
         if (!responseSent) { 
             responseSent=true;
-        res.status(200).json({ data: "Device Is Offline" }); // Send the response back to the client
+        res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
       }, 10000); // Adjust the timeout duration as needed
@@ -351,11 +351,11 @@ export const sendG1 = async (req, res) => {
     
       // Set up a timeout to handle cases where no response is received in time
       const timeout = setTimeout(() => {
-        console.log("Device is Offline");
+        console.log("D");
         events.pubsub.removeAllListeners('getResponse9');
         if (!responseSent) { 
             responseSent=true;
-        res.status(200).json({ data: "Device Is Offline" }); // Send the response back to the client
+        res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
       }, 10000); // Adjust the timeout duration as needed
@@ -392,11 +392,11 @@ export const sendG1 = async (req, res) => {
     
       // Set up a timeout to handle cases where no response is received in time
       const timeout = setTimeout(() => {
-        console.log("Device is Offline");
+        console.log("D");
         events.pubsub.removeAllListeners('getResponse10');
         if (!responseSent) { 
             responseSent=true;
-        res.status(200).json({ data: "Device Is Offline" }); // Send the response back to the client
+        res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
       }, 10000); // Adjust the timeout duration as needed
@@ -434,11 +434,11 @@ export const sendG1 = async (req, res) => {
     
       // Set up a timeout to handle cases where no response is received in time
       const timeout = setTimeout(() => {
-        console.log("Device is Offline");
+        console.log("D");
         events.pubsub.removeAllListeners('getResponse11');
         if (!responseSent) { 
             responseSent=true;
-        res.status(200).json({ data: "Device Is Offline" }); // Send the response back to the client
+        res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
       }, 10000); // Adjust the timeout duration as needed
@@ -476,11 +476,11 @@ export const sendG1 = async (req, res) => {
     
       // Set up a timeout to handle cases where no response is received in time
       const timeout = setTimeout(() => {
-        console.log("Device is Offline");
+        console.log("D");
         events.pubsub.removeAllListeners('getResponse12');
         if (!responseSent) { 
             responseSent=true;
-        res.status(200).json({ data: "Device Is Offline" }); // Send the response back to the client
+        res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
       }, 10000); // Adjust the timeout duration as needed
@@ -518,11 +518,11 @@ export const sendG1 = async (req, res) => {
     
       // Set up a timeout to handle cases where no response is received in time
       const timeout = setTimeout(() => {
-        console.log("Device is Offline");
+        console.log("D");
         events.pubsub.removeAllListeners('getResponse13');
         if (!responseSent) { 
             responseSent=true;
-        res.status(200).json({ data: "Device Is Offline" }); // Send the response back to the client
+        res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
       }, 10000); // Adjust the timeout duration as needed
