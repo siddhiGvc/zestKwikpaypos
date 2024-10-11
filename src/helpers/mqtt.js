@@ -40,9 +40,16 @@ const parseInternal = (payload, mqttClient,topic) => {
                 console.log(1);
                 console.log("Payload2",payload)
                 var parts = payload.split(' ');
-                events.pubsub.removeAllListeners('getResponse');
+               
                 console.log("parts",parts);
-                callback(parts);
+                if(parts.length==8 || parts.length==9)
+                    {
+                    events.pubsub.removeAllListeners('getResponse1');
+                    callback(parts);
+                    }
+                 
+                
+              
              
               
              
@@ -54,9 +61,15 @@ const parseInternal = (payload, mqttClient,topic) => {
             console.log(1);
             console.log("Payload2",payload)
             var parts = payload.split(' ');
-            events.pubsub.removeAllListeners('getResponse2');
+           
             console.log("parts",parts);
-            callback(parts);
+            console.log("length",parts.length,3);
+            if(parts.length==3 || parts.length==4)
+            {
+                events.pubsub.removeAllListeners('getResponse2');
+                callback(parts);
+                
+            }
          
           
          
@@ -68,9 +81,15 @@ const parseInternal = (payload, mqttClient,topic) => {
         console.log(1);
         console.log("Payload2",payload)
         var parts = payload.split(' ');
-        events.pubsub.removeAllListeners('getResponse3');
+       
         console.log("parts",parts);
-        callback(parts);
+        if(parts.length==4 || parts.length==5)
+            {
+            events.pubsub.removeAllListeners('getResponse3');
+            callback(parts);
+            }
+            
+        
      });
      events.pubsub.on('getResponse4',(callback) => {
           
@@ -78,9 +97,16 @@ const parseInternal = (payload, mqttClient,topic) => {
         console.log(1);
         console.log("Payload2",payload)
         var parts = payload.split(' ');
-        events.pubsub.removeAllListeners('getResponse4');
+      
         console.log("parts",parts);
-        callback(parts);
+        console.log("length",parts.length,12);
+        if(parts.length==12 || parts.length==13)
+        {
+            events.pubsub.removeAllListeners('getResponse4');
+            callback(parts);
+            
+        }
+    
      });
      events.pubsub.on('getResponse5',(callback) => {
           
@@ -88,9 +114,15 @@ const parseInternal = (payload, mqttClient,topic) => {
         console.log(1);
         console.log("Payload2",payload)
         var parts = payload.split(' ');
-        events.pubsub.removeAllListeners('getResponse5');
+    
         console.log("parts",parts);
-        callback(parts);
+        console.log("length",parts.length,11);
+        if(parts.length==11 || parts.length==12)
+            {
+                events.pubsub.removeAllListeners('getResponse5');
+                callback(parts);
+                
+            }
      });
 
      events.pubsub.on('getResponse6',(callback) => {
@@ -99,9 +131,15 @@ const parseInternal = (payload, mqttClient,topic) => {
         console.log(1);
         console.log("Payload2",payload)
         var parts = payload.split(' ');
-        events.pubsub.removeAllListeners('getResponse6');
+      
         console.log("parts",parts);
-        callback(parts);
+        console.log("length",parts.length,8);
+        if(parts.length==8 || parts.length==9)
+            {
+                events.pubsub.removeAllListeners('getResponse6');
+                callback(parts);
+                
+            }
      });
 
      events.pubsub.on('getResponse7',(callback) => {
@@ -110,9 +148,15 @@ const parseInternal = (payload, mqttClient,topic) => {
         console.log(1);
         console.log("Payload2",payload)
         var parts = payload.split(' ');
-        events.pubsub.removeAllListeners('getResponse7');
+        
         console.log("parts",parts);
-        callback(parts);
+        console.log("length",parts.length,8);
+        if(parts.length==8 || parts.length==9)
+            {
+                events.pubsub.removeAllListeners('getResponse7');
+                callback(parts);
+                
+            }
      });
 
      events.pubsub.on('getResponse8',(callback) => {
