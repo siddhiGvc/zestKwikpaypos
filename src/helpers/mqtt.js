@@ -81,8 +81,7 @@ const parseInternal = (payload, mqttClient,topic) => {
     });
     events.pubsub.on('getResponse3',(callback) => {
           
-          
-        console.log(1);
+        
         console.log("Payload2",payload)
         var parts = payload.split(' ');
        
