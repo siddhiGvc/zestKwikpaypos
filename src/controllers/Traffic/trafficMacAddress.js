@@ -89,7 +89,7 @@ export const getData=async(req,res)=>{
 
 export const sendFota=async(req,res)=>{
     try{
-        console.log(req.body);
+        // console.log(req.body);
         const output=req.body.outPutValue;
         events.pubsub.emit('sendFota',output,req.body.socketNumber,req.body.UserName,req.body.type) ;
         const obj = await TrafficMacMapping.findOne({where:{MacID:req.body.MacId}});
