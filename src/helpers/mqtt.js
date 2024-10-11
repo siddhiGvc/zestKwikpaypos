@@ -42,8 +42,10 @@ const parseInternal = (payload, mqttClient,topic) => {
                 var parts = payload.split(' ');
                
                 console.log("parts",parts);
-                if(parts.length==8 || parts.length==9)
+                if(parts.length==8 || parts.length==9 || parts.length==10)
                     {
+                    console.log('GOT the G1 Response');
+                    console.log("length",parts.length);
                     events.pubsub.removeAllListeners('getResponse1');
                     callback(parts);
                     }
@@ -63,9 +65,11 @@ const parseInternal = (payload, mqttClient,topic) => {
             var parts = payload.split(' ');
            
             console.log("parts",parts);
-            console.log("length",parts.length,3);
-            if(parts.length==3 || parts.length==4)
+           
+            if(parts.length==3 || parts.length==4 || parts.length==5)
             {
+                console.log('GOT the G2 Response');
+                console.log("length",parts.length);
                 events.pubsub.removeAllListeners('getResponse2');
                 callback(parts);
                 
@@ -83,8 +87,10 @@ const parseInternal = (payload, mqttClient,topic) => {
         var parts = payload.split(' ');
        
         console.log("parts",parts);
-        if(parts.length==4 || parts.length==5)
+        if(parts.length==4 || parts.length==5 || parts.length==6)
             {
+            console.log('GOT the G3 Response');
+            console.log("parts",parts.length);
             events.pubsub.removeAllListeners('getResponse3');
             callback(parts);
             }
