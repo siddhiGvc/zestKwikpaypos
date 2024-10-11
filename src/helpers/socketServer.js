@@ -962,16 +962,16 @@ const server = net.createServer((socket) => {
                 {
                   console.log("Found Device");
                   const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
-                  console.log("SerialNumber Of This Device && received SerialNumber",data.SNoutput , command[1]);
-                   if(data.SNoutput==command[1])
+                  console.log("SerialNumber Of This Device && received SerialNumber",data.SNoutput , command[2]);
+                   if(data.SNoutput==command[2])
                    {
 
-                    const data=await MacMapping.findOne({where:{SNoutput:command[2]}});
-                    const data1=await MacMapping.findOne({where:{SNoutput:command[1]}});
+                    const data=await MacMapping.findOne({where:{SNoutput:command[1]}});
+                    const data1=await MacMapping.findOne({where:{SNoutput:command[2]}});
                     if(data && data1)
                     {
                     // console.log("SocketNumber of Paired Device", data.SocketNumber);
-                    events.pubsub.emit('sendV',data1.SocketNumber,1,command[3],data.SNoutput) ;
+                    events.pubsub.emit('sendV',data.SocketNumber,1,command[3],data.SNoutput) ;
                     }
                   
                   
