@@ -971,7 +971,7 @@ const server = net.createServer((socket) => {
                     if(data && data1)
                     {
                     // console.log("SocketNumber of Paired Device", data.SocketNumber);
-                    events.pubsub.emit('sendV',data.SocketNumber,1,command[3],data.SNoutput) ;
+                    events.pubsub.emit('sendV',data.SocketNumber,1,command[3],data1.SNoutput) ;
                     }
                   
                   
