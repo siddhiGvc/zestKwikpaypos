@@ -1,4 +1,4 @@
-const {MacMapping,TestMode,SerialPort,UnilineMacMapping} =require("../../models")
+const {MacMapping,TestMode,SerialPort,UnilineMacMapping,UnilineTransactions} =require("../../models")
 import { successResponse, errorResponse, uniqueId } from '../../helpers';
 var events = require('../../helpers/events');
 const mqttHandler=require('../../../mqtt');
