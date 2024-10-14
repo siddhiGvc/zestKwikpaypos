@@ -66,7 +66,7 @@ const parseInternal = (payload, mqttClient,topic) => {
            
             console.log("parts",parts);
            
-            if(parts.length==3 || parts.length==4 )
+            if(parts.length==3)
             {
                 console.log('GOT the G2 Response');
                 console.log("length",parts.length);
@@ -86,7 +86,7 @@ const parseInternal = (payload, mqttClient,topic) => {
         var parts = payload.split(' ');
        
         console.log("parts",parts);
-        if(parts.length==4 || parts.length==5)
+        if(parts.length==4 )
             {
             console.log('GOT the G3 Response');
             console.log("parts",parts.length);
