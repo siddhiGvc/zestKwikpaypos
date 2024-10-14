@@ -32,13 +32,21 @@ export const sendG1 = async (req, res) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
-        const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
-        data.G1=response.toString();
-        await data.save();
+      
         events.pubsub.removeAllListeners('getResponse1');
         if (!responseSent) { 
             responseSent=true;
-        res.status(200).json({ data: response }); // Send the response back to the client
+            const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
+            data.G1=response.toString();
+            await data.save();
+
+            await UnilineTransactions.create({
+                MacID:req.body.MacID,
+                SNoutput:req.body.serialNumber,
+                G1:response.toString()
+
+            })
+           res.status(200).json({ data: response }); // Send the response back to the client
         }
        
       });
@@ -80,14 +88,22 @@ export const sendG1 = async (req, res) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
-        const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
-        data.G2=response.toString();
-        await data.save();
+      
         events.pubsub.removeAllListeners('getResponse2');
 
         if (!responseSent) { 
             responseSent=true;
-        res.status(200).json({ data: response }); // Send the response back to the client
+            const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
+            data.G2=response.toString();
+            await data.save();
+
+            await UnilineTransactions.create({
+                MacID:req.body.MacID,
+                SNoutput:req.body.serialNumber,
+                G2:response.toString()
+
+            })
+           res.status(200).json({ data: response }); // Send the response back to the client
         }
        
       });
@@ -126,12 +142,20 @@ export const sendG1 = async (req, res) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
-        const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
-        data.G3=response.toString();
-        await data.save();
+       
         events.pubsub.removeAllListeners('getResponse3');
         if (!responseSent) { 
             responseSent=true;
+            const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
+            data.G3=response.toString();
+            await data.save();
+
+            await UnilineTransactions.create({
+                MacID:req.body.MacID,
+                SNoutput:req.body.serialNumber,
+                G3:response.toString()
+
+            })
            res.status(200).json({ data: response }); // Send the response back to the client
         }
        
@@ -170,12 +194,20 @@ export const sendG1 = async (req, res) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
-        const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
-        data.I=response.toString();
-        await data.save();
+       
         events.pubsub.removeAllListeners('getResponse4');
         if (!responseSent) { 
             responseSent=true;
+            const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
+            data.I=response.toString();
+            await data.save();
+
+            await UnilineTransactions.create({
+                MacID:req.body.MacID,
+                SNoutput:req.body.serialNumber,
+                I:response.toString()
+
+            })
            res.status(200).json({ data: response }); // Send the response back to the client
         }
        
@@ -214,12 +246,20 @@ export const sendG1 = async (req, res) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
-        const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
-        data.GF=response.toString();
-        await data.save();
+      
         events.pubsub.removeAllListeners('getResponse5');
         if (!responseSent) { 
             responseSent=true;
+            const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
+            data.GF=response.toString();
+            await data.save();
+
+            await UnilineTransactions.create({
+                MacID:req.body.MacID,
+                SNoutput:req.body.serialNumber,
+                GF:response.toString()
+
+            })
            res.status(200).json({ data: response }); // Send the response back to the client
         }
        
@@ -253,18 +293,26 @@ export const sendG1 = async (req, res) => {
        
       }, 10000); // Adjust the timeout duration as needed
     
-      await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "Q1/r/n");
+      await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "Q/r/n");
       // Listen for the response using the event emitter
       await events.pubsub.emit('getResponse6', async(response) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
-        const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
-        data.Q=response.toString();
-        await data.save();
+        
         events.pubsub.removeAllListeners('getResponse6');
         if (!responseSent) { 
             responseSent=true;
+            const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
+            data.Q=response.toString();
+            await data.save();
+
+            await UnilineTransactions.create({
+                MacID:req.body.MacID,
+                SNoutput:req.body.serialNumber,
+                Q:response.toString()
+
+            })
            res.status(200).json({ data: response }); // Send the response back to the client
         }
        
@@ -304,12 +352,20 @@ export const sendG1 = async (req, res) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
-        const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
-        data.Q1=response.toString();
-        await data.save();
+       
         events.pubsub.removeAllListeners('getResponse7');
         if (!responseSent) { 
             responseSent=true;
+            const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
+            data.Q1=response.toString();
+            await data.save();
+
+            await UnilineTransactions.create({
+                MacID:req.body.MacID,
+                SNoutput:req.body.serialNumber,
+                Q1:response.toString()
+
+            })
            res.status(200).json({ data: response }); // Send the response back to the client
         }
        
