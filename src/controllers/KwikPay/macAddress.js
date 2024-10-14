@@ -8,7 +8,7 @@ export const getAllMacAddress=async(req,res)=>{
     try{
     
        
-        const obj = await MacMapping.findAll();
+        const obj = await UnilineMacMacMapping.findAll();
          res.status(200).json({data:obj})
 
     }
