@@ -23,7 +23,7 @@ export const sendG1 = async (req, res) => {
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
-      }, 10000); // Adjust the timeout duration as needed
+      }, 5000); // Adjust the timeout duration as needed
   
 
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "G1/r/n");
@@ -78,7 +78,7 @@ export const sendG1 = async (req, res) => {
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
-      }, 10000); // Adjust the timeout duration as needed
+      }, 5000); // Adjust the timeout duration as needed
 
 
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "G2/r/n");
@@ -134,7 +134,7 @@ export const sendG1 = async (req, res) => {
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
-      }, 10000); // Adjust the timeout duration as needed
+      }, 5000); // Adjust the timeout duration as needed
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "G3/r/n");
       // Listen for the response using the event emitter
@@ -186,7 +186,7 @@ export const sendG1 = async (req, res) => {
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
-      }, 10000); // Adjust the timeout duration as needed
+      }, 5000); // Adjust the timeout duration as needed
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "I/r/n");
       // Listen for the response using the event emitter
@@ -238,7 +238,7 @@ export const sendG1 = async (req, res) => {
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
-      }, 10000); // Adjust the timeout duration as needed
+      }, 5000); // Adjust the timeout duration as needed
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "GF/r/n");
       // Listen for the response using the event emitter
@@ -291,7 +291,7 @@ export const sendG1 = async (req, res) => {
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
-      }, 10000); // Adjust the timeout duration as needed
+      }, 5000); // Adjust the timeout duration as needed
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "Q/r/n");
       // Listen for the response using the event emitter
@@ -344,7 +344,7 @@ export const sendG1 = async (req, res) => {
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
-      }, 10000); // Adjust the timeout duration as needed
+      }, 5000); // Adjust the timeout duration as needed
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "Q1/r/n");
       // Listen for the response using the event emitter
@@ -396,7 +396,7 @@ export const sendG1 = async (req, res) => {
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
-      }, 10000); // Adjust the timeout duration as needed
+      }, 5000); // Adjust the timeout duration as needed
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "T/r/n");
       // Listen for the response using the event emitter
@@ -437,7 +437,7 @@ export const sendG1 = async (req, res) => {
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
-      }, 10000); // Adjust the timeout duration as needed
+      }, 5000); // Adjust the timeout duration as needed
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "TL/r/n");
       // Listen for the response using the event emitter
@@ -478,7 +478,7 @@ export const sendG1 = async (req, res) => {
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
-      }, 10000); // Adjust the timeout duration as needed
+      }, 5000); // Adjust the timeout duration as needed
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "S/r/n");
       // Listen for the response using the event emitter
@@ -520,7 +520,7 @@ export const sendG1 = async (req, res) => {
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
-      }, 10000); // Adjust the timeout duration as needed
+      }, 5000); // Adjust the timeout duration as needed
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "C/r/n");
       // Listen for the response using the event emitter
@@ -562,7 +562,7 @@ export const sendG1 = async (req, res) => {
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
-      }, 10000); // Adjust the timeout duration as needed
+      }, 5000); // Adjust the timeout duration as needed
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "CT/r/n");
       // Listen for the response using the event emitter
@@ -604,7 +604,7 @@ export const sendG1 = async (req, res) => {
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
        
-      }, 10000); // Adjust the timeout duration as needed
+      }, 5000); // Adjust the timeout duration as needed
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "F/r/n");
       // Listen for the response using the event emitter
