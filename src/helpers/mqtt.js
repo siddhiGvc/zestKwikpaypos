@@ -80,6 +80,10 @@ const parseInternal = (payload, mqttClient,topic) => {
                 callback(parts);
                 
             }
+            else{
+                events.pubsub.removeAllListeners('getResponse2');
+                callback('');
+            }
          
           
          
