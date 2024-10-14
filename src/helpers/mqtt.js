@@ -104,6 +104,11 @@ const parseInternal = (payload, mqttClient,topic) => {
             events.pubsub.removeAllListeners('getResponse3');
             callback(parts);
             }
+            else{
+                events.pubsub.removeAllListeners('getResponse3');
+                callback(parts);
+
+            }
             
         
      });
