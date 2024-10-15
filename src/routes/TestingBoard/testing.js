@@ -14,6 +14,8 @@ router.post('/sendTL',testing.sendTL);
 router.post('/sendC',testing.sendC);
 router.post('/sendCT',testing.sendCT);
 router.post('/sendF',testing.sendF);
+router.post('/sendF',testing.sendF);
+router.post('/report',testing.report);
 
 
 module.exports=router;

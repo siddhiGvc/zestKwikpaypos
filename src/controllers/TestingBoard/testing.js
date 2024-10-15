@@ -6,12 +6,42 @@ var mqttClient = new mqttHandler();
 
 
 
-export const getAllTransactions=()=>{
+export const report=async(req,res)=>{
   try{
-    
+    if (!req.body.startDate) return errorResponse(req, res, "Start Date is required");
+    if (!req.body.endDate) return errorResponse(req, res, "End Date is required");
+    var filterObj = { where: {} };
+    if (req.body.devices) filterObj.where.SNoutput = { [Op.in]: req.body.devices.split(',') };
+    const serialCount = (await UnilineMacMapping.findAll(filterObj)).length;
+    var machines = await UnilineMacMapping.findAll(filterObj);
+    var summaries = await UnilineTransactions.findAll({
+      where: {
+        SNoutput: { [Op.in]: machines.map(q => q.SNoutput) },
+        createdAt: { [Op.between]: [req.body.startDate, moment(req.body.endDate).add(1, 'day')] }
+      }
+    });
+
+    machines = JSON.parse(JSON.stringify(machines));
+    summaries = JSON.parse(JSON.stringify(summaries));
+    machines.forEach(m => {
+      m.summary = {};
+      for (var dt = moment(req.body.startDate); dt <= moment(req.body.endDate); dt.add(1, 'day')) {
+        var smr = summaries.filter(q => q.SNoutput == m.SNoutput && moment(q.createdAt).format('DD-MMM-YYYY') == moment(dt).format('DD-MMM-YYYY'))[0];
+        var zero = (smr?.onMinutes ?? 0) == 0;
+        m.summary[dt.format('DD-MMM-YYYY')] = {
+          cash: zero ? 0 : ((smr?.cashCurrent ?? 0) < 0 ? 0 : (smr?.cashCurrent ?? 0)),
+          vend: zero ? 0 : ((smr?.qtyCurrent ?? 0) < 0 ? 0 : (smr?.qtyCurrent ?? 0)),
+          burn: zero ? 0 : ((smr?.burnCycleCurrent ?? 0) < 0 ? 0 : (smr?.burnCycleCurrent ?? 0)),
+          door: zero ? 0 : ((smr?.doorCurrent ?? 0) < 0 ? 0 : (smr?.doorCurrent ?? 0)),
+          onTime: smr?.onMinutes ?? 0,
+        }
+      }
+    })
+    res.status(200).json({data:{ success: true,devices: serialCount }, machines: machines });
   }
   catch(err){
-
+    console.log(err);
+    res.status(505).json({ status: 505 });
   }
 }
 
