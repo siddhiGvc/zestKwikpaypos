@@ -1,6 +1,6 @@
 const net = require("net");
 const moment=require("moment");
-const {sequelize,MacMapping,Transaction,Testing}=require("../models");
+const {sequelize,MacMapping,Transaction,Testing,UnilineMacMapping}=require("../models");
 const { SerialPort: serials } = require("../models");
 var events = require('../helpers/events');
 const { sendV } = require("../controllers/KwikPay/macAddress");
@@ -727,7 +727,7 @@ const server = net.createServer((socket) => {
             const address=command[1];
             console.log(`Mac Adress:${address}`);
             console.log("SN:",command[2]);
-            const data=await MacMapping.findOne({where:{MacID:command[1]}});
+            const data=await UnilineMacMapping.findOne({where:{MacID:command[1]}});
            // console.log(data);
             if(data)
                 {
@@ -851,7 +851,7 @@ const server = net.createServer((socket) => {
               {
                 
                   // console.log("Hbt recived",command[1]);
-                  const data=await MacMapping.findOne({where:{MacID:command[1]}});
+                  const data=await UnilineMacMapping.findOne({where:{MacID:command[1]}});
                   // console.log(data);
                 
                   if(data)
