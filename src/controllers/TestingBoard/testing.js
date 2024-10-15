@@ -31,11 +31,8 @@ export const report=async(req,res)=>{
         var smr = summaries.filter(q => q.SNoutput == m.SNoutput && moment(q.createdAt).format('DD-MMM-YYYY') == moment(dt).format('DD-MMM-YYYY'))[0];
         var zero = (smr?.onMinutes ?? 0) == 0;
         m.summary[dt.format('DD-MMM-YYYY')] = {
-          cash: zero ? 0 : ((smr?.cashCurrent ?? 0) < 0 ? 0 : (smr?.cashCurrent ?? 0)),
-          vend: zero ? 0 : ((smr?.qtyCurrent ?? 0) < 0 ? 0 : (smr?.qtyCurrent ?? 0)),
-          burn: zero ? 0 : ((smr?.burnCycleCurrent ?? 0) < 0 ? 0 : (smr?.burnCycleCurrent ?? 0)),
-          door: zero ? 0 : ((smr?.doorCurrent ?? 0) < 0 ? 0 : (smr?.doorCurrent ?? 0)),
-          onTime: smr?.onMinutes ?? 0,
+          G1: zero ? '' : ((smr?.G1 ?? 0) ),
+      
         }
       }
     })
