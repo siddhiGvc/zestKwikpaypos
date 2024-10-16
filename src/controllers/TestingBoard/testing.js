@@ -37,7 +37,7 @@ export const report=async(req,res)=>{
       }
     })
     console.log(machines);
-    res.status(200).json({data:{ success: true,devices: serialCount }, machines: machines });
+    res.status(200).json({data:{ success: true,devices: serialCount }, machines: JSON.stringify(machines) });
   }
   catch(err){
     console.log(err);
