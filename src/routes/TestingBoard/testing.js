@@ -1,8 +1,17 @@
 import express from "express";
 import * as testing from '../../controllers/TestingBoard/testing';
+import * as getData from "../../controllers/TestingBoard/Uniline.data.controller"
+
 
 const router = express.Router();
 router.get('/getMacAddress',testing.getAllMacAddress);
+
+router.get('/getData',getData.getData);
+router.get('/getCities',getData.getCities);
+router.get('/getZones',getData.getZones);
+router.get('/getWards',getData.getWards);
+router.get('/getBeats',getData.getBeats);
+
 router.post('/sendG1',testing.sendG1);
 router.post('/sendG2',testing.sendG2);
 router.post('/sendG3',testing.sendG3);

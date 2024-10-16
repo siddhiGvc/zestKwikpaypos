@@ -3,8 +3,8 @@
 
 
 module.exports = (sequelize, DataTypes) => {
-    const UnilineMacMapping = sequelize.define(
-      'UnilineMacMapping',
+    const UnilineMachineData = sequelize.define(
+      'UnilineMachineData',
       {
         UID: {
             type: DataTypes.STRING,
@@ -89,12 +89,12 @@ module.exports = (sequelize, DataTypes) => {
          
       },
       {
-        tableName: 'UnilineMacMapping'
+        tableName: 'UnilineMachineData'
       }
     
     );
-    UnilineMacMapping.associate = function (models) {
+    UnilineMachineData.associate = function (models) {
       // associations can be defined here
     };
-    return UnilineMacMapping;
+    return UnilineMachineData;
   };

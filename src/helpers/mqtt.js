@@ -284,6 +284,8 @@ function reset_qty(reset_ts, serial) {
         console.log('Error', ex);
     });
 }
+
+
 function reset_cash(reset_ts, serial) {
     sequelize.query(`
         update MachineData 
@@ -320,17 +322,7 @@ async function summary(parts, staticValues, mqttClient) {
     // special SUM command with only 2 parts added
     if (parts.length!= 2)
     {
- // 121023 - 
- // there are three parameters
- // QTY - CASH - BURN
- // so there are totally three values for eact type
- // new value - current value - life value
- // now we need to only check if new value is less than current value
- // if yes, then make life value as life value + (current value or maximum value)
- // and save new value as current value
-
  
- //   if (Math.abs(parseInt(parts[5]) - md.qtyCurrent) > parseInt(process.env.THRESHOLD_QTY)) {
     if (parseInt(parts[5]) < md.qtyCurrent)  {
     console.log('Qty Less than previous ' + parts[0]);
         var rr = await RejectedRecord.create({
@@ -340,8 +332,7 @@ async function summary(parts, staticValues, mqttClient) {
             cashOld : 1,
             cashNew : 1,    
         });
-        // removed on 211023 to ensure that figures match with zest-iot
-        //reset_qty('ERR', parts[0])
+      
     }
 //    if (Math.abs(parseInt(parts[4]) - md.cashCurrent) > parseInt(process.env.THRESHOLD_CASH)) {
     if (parseInt(parts[4]) < md.cashCurrent) {
