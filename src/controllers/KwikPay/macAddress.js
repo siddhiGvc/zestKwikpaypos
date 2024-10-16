@@ -1,6 +1,6 @@
 import { where } from "sequelize";
 
-const {MacMapping,TestMode,SerialPort,UnilineMacMapping} =require("../../models")
+const {MacMapping,TestMode,SerialPort ,MacMapping} =require("../../models")
 import { successResponse, errorResponse, uniqueId } from '../../helpers';
 var events = require('../../helpers/events')
 
@@ -8,7 +8,7 @@ export const getAllMacAddress=async(req,res)=>{
     try{
     
        
-        const obj = await UnilineMacMapping.findAll();
+        const obj = await MacMapping.findAll();
          res.status(200).json({data:obj})
 
     }
