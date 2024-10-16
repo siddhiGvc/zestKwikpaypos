@@ -728,6 +728,7 @@ const server = net.createServer((socket) => {
             console.log(`Mac Adress:${address}`);
             console.log("SN:",command[2]);
             const data=await MacMapping.findOne({where:{MacID:command[1]}});
+            const data1=await UnilineMacMapping.findOne({where:{MacID:command[1]}});
            // console.log(data);
             if(data)
                 {
@@ -746,6 +747,7 @@ const server = net.createServer((socket) => {
                       })
                        console.log("Saved In Transactions");
                 }
+                
                 else{
                   await MacMapping.create({
                     MacID:command[1],
@@ -756,6 +758,12 @@ const server = net.createServer((socket) => {
                     
 
                   })
+                }
+
+                if(data1){
+                  data1.SocketNumber=remotePort;
+                  data1.SNoutput=command[2];
+                  data1.lastHeartBeatTime=new Date().toISOString();
                 }
            
           
@@ -852,6 +860,7 @@ const server = net.createServer((socket) => {
                 
                   // console.log("Hbt recived",command[1]);
                   const data=await MacMapping.findOne({where:{MacID:command[1]}});
+                  const data1=await MacMapping.findOne({where:{MacID:command[1]}});
                   // console.log(data);
                 
                   if(data)
@@ -886,6 +895,11 @@ const server = net.createServer((socket) => {
                     
 
                   })
+                }
+                if(data1){
+                  data1.SocketNumber=remotePort;
+                  data1.SNoutput=command[2];
+                  data1.lastHeartBeatTime=new Date().toISOString();
                 }
                 
            } 

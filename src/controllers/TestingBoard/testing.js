@@ -8,6 +8,23 @@ var mqttClient = new mqttHandler();
 
 
 
+export const getAllMacAddress=async(req,res)=>{
+  try{
+  
+     
+      const obj = await UnilineMacMapping.findAll();
+       res.status(200).json({data:obj})
+
+  }
+  catch(err){
+      console.log(err);
+      res.status(505).json({status:505})
+
+  }
+
+}
+
+
 export const report=async(req,res)=>{
   try{
     if (!req.body.startDate) return errorResponse(req, res, "Start Date is required");
