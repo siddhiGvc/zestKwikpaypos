@@ -22,6 +22,7 @@ const customerRouter=require("./src/routes/customer");
 const trafficRouter =require("./src/routes/TrafficLights/route");
 const testingBoardRouter=require("./src/routes/TestingBoard/testing");
 const UnilineUserRouter=require('./src/routes/unilineAdmin')
+const UnilineCustomerRouter=require('./src/routes/TestingBoard/customers')
 
 dotenv.config();
 require('./src/config/sequelize');
@@ -52,6 +53,7 @@ app.use('/kwikpayTesting',kwikpayTestingRouter);
 app.use('/trafficLights',trafficRouter);
 app.use('/testingBoard',testingBoardRouter);
 app.use('/unilineAdmin', UnilineUserRouter);
+app.use('/unilineCustomer',UnilineCustomerRouter);
 
 app.get('/hbt', (req, res) => {
   const clientIP = req.ip.replace('::ffff:', '');
