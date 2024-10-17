@@ -129,7 +129,7 @@ export const getData = async (req, res) => {
   
     export const getWards = async (req, res) => {
       try {
-        console.log(req.query)
+     
 
         const [obj, metadata] = await sequelize.query(`
           select distinct Ward from UnilineMacMapping where City in (:city) and Zone in (:zone) order by Ward;
