@@ -5,7 +5,6 @@ import * as getData from "../../controllers/TestingBoard/Uniline.data.controller
 
 const router = express.Router();
 router.get('/getMacAddress',testing.getAllMacAddress);
-
 router.get('/getData',getData.getData);
 router.get('/getCities',getData.getCities);
 router.get('/getZones',getData.getZones);

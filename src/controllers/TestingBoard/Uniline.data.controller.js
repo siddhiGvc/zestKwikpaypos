@@ -1,6 +1,6 @@
 import { where } from "sequelize";
 
-const {UnilineMacMapping,TestMode,SerialPort} =require("../../models")
+const {sequelize,UnilineMacMapping,TestMode,SerialPort} =require("../../models")
 import { successResponse, errorResponse, uniqueId } from '../../helpers';
 var events = require('../../helpers/events')
 
@@ -28,7 +28,7 @@ export const getData = async (req, res) => {
       if (req.query.zone) replObjG['Zone'] = req.query.zone.split(',');
       if (req.query.ward) replObjG['Ward'] = req.query.ward.split(',');
       if (req.query.beat) replObjG['Beat'] = req.query.beat.split(',');
-      if (req.query.status) replObjG['device_status'] = req.query.device_status.split(',');
+      if (req.query.status) replObjG['device_status'] = req.query.status.split(',');
     //   if (req.query.status) replObjG['inverter_status'] = req.query.inverter_status.split(',');
     
       const replacements = {};
@@ -38,19 +38,19 @@ export const getData = async (req, res) => {
   }
   
   if (req.query.zone) {
-    replacements.location = req.query.zone.split(',');
+    replacements.zone = req.query.zone.split(',');
   }
   
   if (req.query.ward) {
-    replacements.uid = req.query.ward.split(',');
+    replacements.ward = req.query.ward.split(',');
   }
 
   if (req.query.beat) {
-    replacements.uid = req.query.beat.split(',');
+    replacements.beat = req.query.beat.split(',');
   }
   
-  if (req.query.device_status) {
-    replacements.device_status = req.query.device_status.split(',');
+  if (req.query.status) {
+    replacements.device_status = req.query.status.split(',');
   }
   
 //   if (req.query.inverter_status) {
@@ -62,22 +62,23 @@ export const getData = async (req, res) => {
     FROM UnilineMacMapping a
     LEFT JOIN Uniline_summary b ON a.SNoutput = b.SNoutput
     WHERE 1=1
-    ${req.query.city ? ` AND b.City IN (:city)` : ''}
-    ${req.query.zone ? ` AND b.Zone IN (:zone)` : ''}
-    ${req.query.ward ? ` AND b.Ward IN (:ward)` : ''}
-     ${req.query.beat ? ` AND b.Beat IN (:bard)` : ''}
+    ${req.query.city ? ` AND a.City IN (:city)` : ''}
+    ${req.query.zone ? ` AND a.Zone IN (:zone)` : ''}
+    ${req.query.ward ? ` AND a.Ward IN (:ward)` : ''}
+     ${req.query.beat ? ` AND a.Beat IN (:beat)` : ''}
   `, { replacements });
   
   const [obj, metadata] = await sequelize.query(`
-    SELECT a.*, b.*, c.* 
+    SELECT a.*, b.*
     FROM UnilineMacMapping a
     LEFT JOIN Uniline_summary b ON a.SNoutput = b.SNoutput
     WHERE 1=1
     ${replObjG.City ? ` AND b.City IN (:city)` : ''}
     ${replObjG.Zone ? ` AND b.Zone IN (:zone)` : ''}
-    ${replObjG.Ward ? ` AND b.Ward IN (:uid)` : ''}
-    ${req.query.beat ? ` AND b.Beat IN (:bard)` : ''}
-    ${replObjG.device_status ? ` AND b.device_status IN (:device_status)` : ''}
+    ${replObjG.Ward ? ` AND b.Ward IN (:ward)` : ''}
+    ${req.query.beat ? ` AND b.Beat IN (:beat)` : ''}
+    ${req.query.status ? ` AND b.device_status IN (:device_status)` : ''}
+  
    
   `, { replacements });
       // console.log(obj,objAll)
@@ -117,7 +118,7 @@ export const getData = async (req, res) => {
          
           },
         });
-        var respObj = obj.map(q => q.zone);
+        var respObj = obj.map(q => q.Zone);
       //   if (!req.user.isAdmin && req.user.ward)
       //     respObj = respObj.filter(q => req.user.ward.split(',').indexOf(q) >= 0)
         return successResponse(req, res, respObj);
@@ -128,21 +129,20 @@ export const getData = async (req, res) => {
   
     export const getWards = async (req, res) => {
       try {
-        // console.log(req.query.city)
-        // console.log(req.query.location);
+        console.log(req.query)
+
         const [obj, metadata] = await sequelize.query(`
-          select distinct Ward from UnilineMacMapping where City in (:city) and Wone in (:location) order by Ward;
+          select distinct Ward from UnilineMacMapping where City in (:city) and Zone in (:zone) order by Ward;
         `, {
           replacements: {
             city: req.query.city.split(','),
             zone:req.query.zone.split(','),
-            ward:req.query.ward.split(','),
-            beat:req.query.beat.split(',')
+        
           
           },
         });
   
-        return successResponse(req, res, obj.map(q => q.ward));
+        return successResponse(req, res, obj.map(q => q.Ward));
       } catch (error) {
         // console.log(error)
         return errorResponse(req, res, error.message);
@@ -160,12 +160,12 @@ export const getData = async (req, res) => {
             city: req.query.city.split(','),
             zone:req.query.zone.split(','),
             ward:req.query.ward.split(','),
-            beat:req.query.beat.split(',')
+         
           
           },
         });
   
-        return successResponse(req, res, obj.map(q => q.beat));
+        return successResponse(req, res, obj.map(q => q.Beat));
       } catch (error) {
         // console.log(error)
         return errorResponse(req, res, error.message);
