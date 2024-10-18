@@ -53,7 +53,7 @@ app.use('/kwikpayTesting',kwikpayTestingRouter);
 app.use('/trafficLights',trafficRouter);
 app.use('/testingBoard',testingBoardRouter);
 app.use('/unilineAdmin', UnilineUserRouter);
-app.use('/unilineCustomer',UnilineCustomerRouter);
+app.use('/unilineCustomers',UnilineCustomerRouter);
 
 app.get('/hbt', (req, res) => {
   const clientIP = req.ip.replace('::ffff:', '');

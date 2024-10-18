@@ -22,13 +22,14 @@ export const getAllMacAddress=async(req,res)=>{
 
 export const getData = async (req, res) => {
     try {
-      // console.log(req.query.status)
+      // console.log(req.query)
       var replObjG = {};
       if (req.query.city) replObjG['City'] = req.query.city.split(',');
       if (req.query.zone) replObjG['Zone'] = req.query.zone.split(',');
       if (req.query.ward) replObjG['Ward'] = req.query.ward.split(',');
       if (req.query.beat) replObjG['Beat'] = req.query.beat.split(',');
       if (req.query.status) replObjG['device_status'] = req.query.status.split(',');
+      if (req.query.inverterStatus) replObjG['inverter_status'] = req.query.inverterStatus.split(',');
     //   if (req.query.status) replObjG['inverter_status'] = req.query.inverter_status.split(',');
     
       const replacements = {};
@@ -53,9 +54,9 @@ export const getData = async (req, res) => {
     replacements.device_status = req.query.status.split(',');
   }
   
-//   if (req.query.inverter_status) {
-//     replacements.inverter_status = req.query.inverter_status.split(',');
-//   }
+  if (req.query.inverterStatus) {
+    replacements.inverter_status = req.query.inverterStatus.split(',');
+  }
   
   const [objAll, _metadata] = await sequelize.query(`
     SELECT a.*, b.* 
@@ -78,6 +79,7 @@ export const getData = async (req, res) => {
     ${replObjG.Ward ? ` AND b.Ward IN (:ward)` : ''}
     ${req.query.beat ? ` AND b.Beat IN (:beat)` : ''}
     ${req.query.status ? ` AND b.device_status IN (:device_status)` : ''}
+     ${req.query.inverterStatus ? ` AND b.inverter_status IN (:inverter_status)` : ''}
   
    
   `, { replacements });
