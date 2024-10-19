@@ -96,6 +96,7 @@ export const sendG1 = async (req, res) => {
             responseSent=true;
             const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
             data.G1=response.toString();
+            data.lastHeartBeatTime=new Date().toISOString();
             await data.save();
 
             await UnilineTransactions.create({
@@ -153,6 +154,7 @@ export const sendG1 = async (req, res) => {
             responseSent=true;
             const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
             data.G2=response.toString();
+            data.lastHeartBeatTime=new Date().toISOString();
             await data.save();
 
             await UnilineTransactions.create({
@@ -206,6 +208,7 @@ export const sendG1 = async (req, res) => {
             responseSent=true;
             const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
             data.G3=response.toString();
+            data.lastHeartBeatTime=new Date().toISOString();
             await data.save();
 
             await UnilineTransactions.create({
@@ -258,6 +261,7 @@ export const sendG1 = async (req, res) => {
             responseSent=true;
             const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
             data.I=response.toString();
+            data.lastHeartBeatTime=new Date().toISOString();
             await data.save();
 
             await UnilineTransactions.create({
@@ -310,6 +314,7 @@ export const sendG1 = async (req, res) => {
             responseSent=true;
             const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
             data.GF=response.toString();
+            data.lastHeartBeatTime=new Date().toISOString();
             await data.save();
 
             await UnilineTransactions.create({
@@ -363,6 +368,7 @@ export const sendG1 = async (req, res) => {
             responseSent=true;
             const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
             data.Q=response.toString();
+            data.lastHeartBeatTime=new Date().toISOString();
             await data.save();
 
             await UnilineTransactions.create({
@@ -416,6 +422,7 @@ export const sendG1 = async (req, res) => {
             responseSent=true;
             const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
             data.Q1=response.toString();
+            data.lastHeartBeatTime=new Date().toISOString();
             await data.save();
 
             await UnilineTransactions.create({
