@@ -50,10 +50,10 @@ const parseInternal = (payload, mqttClient,topic) => {
                     events.pubsub.removeAllListeners('getResponse1');
                     callback(parts);
                     }
-                    // else{
-                    //     events.pubsub.removeAllListeners('getResponse1');
-                    //     callback('');  
-                    // }                  
+                    else{
+                        events.pubsub.removeAllListeners('getResponse1');
+                        callback('');  
+                    }                  
                     
                  
                 
@@ -72,7 +72,7 @@ const parseInternal = (payload, mqttClient,topic) => {
            
             console.log("parts",parts);
             console.log("partsLength",parts.length,4);
-            if(parts.length==4)
+            if(parts.length==3)
             {
                 console.log('GOT the G2 Response');
                 console.log("length",parts.length);
@@ -80,10 +80,10 @@ const parseInternal = (payload, mqttClient,topic) => {
                 callback(parts);
                 
             }
-            // else{
-            //     events.pubsub.removeAllListeners('getResponse2');
-            //     callback('');
-            // }
+            else{
+                events.pubsub.removeAllListeners('getResponse2');
+                callback('');
+            }
          
           
          
@@ -97,18 +97,18 @@ const parseInternal = (payload, mqttClient,topic) => {
        
         console.log("parts",parts);
         console.log("partsLength",parts.length,5);
-        if(parts.length==5 )
+        if(parts.length==4 )
             {
             console.log('GOT the G3 Response');
             console.log("parts",parts.length);
             events.pubsub.removeAllListeners('getResponse3');
             callback(parts);
             }
-            // else{
-            //     events.pubsub.removeAllListeners('getResponse3');
-            //     callback(parts);
+            else{
+                events.pubsub.removeAllListeners('getResponse3');
+                callback(parts);
 
-            // }
+            }
             
         
      });
