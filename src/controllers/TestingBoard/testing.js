@@ -112,7 +112,7 @@ export const sendG1 = async (req, res) => {
      
       
     } catch (err) {
-      console.log(err);
+      console.log("G1 ERROR",err);
       res.status(505).json({ status: 505 });
     }
   };
