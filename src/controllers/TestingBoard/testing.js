@@ -170,7 +170,7 @@ export const sendG1 = async (req, res) => {
     
       
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(505).json({ status: 505 });
     }
   };
@@ -224,7 +224,7 @@ export const sendG1 = async (req, res) => {
      
       
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(505).json({ status: 505 });
     }
   };
@@ -277,7 +277,7 @@ export const sendG1 = async (req, res) => {
      
       
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(505).json({ status: 505 });
     }
   };
@@ -330,7 +330,7 @@ export const sendG1 = async (req, res) => {
      
       
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(505).json({ status: 505 });
     }
   };
@@ -384,7 +384,7 @@ export const sendG1 = async (req, res) => {
      
       
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(505).json({ status: 505 });
     }
   };
@@ -438,7 +438,7 @@ export const sendG1 = async (req, res) => {
      
       
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(505).json({ status: 505 });
     }
   };
@@ -479,7 +479,7 @@ export const sendG1 = async (req, res) => {
      
       
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(505).json({ status: 505 });
     }
   };
@@ -520,7 +520,7 @@ export const sendG1 = async (req, res) => {
      
       
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(505).json({ status: 505 });
     }
   };
@@ -561,7 +561,7 @@ export const sendG1 = async (req, res) => {
      
       
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(505).json({ status: 505 });
     }
   };
@@ -603,7 +603,7 @@ export const sendG1 = async (req, res) => {
      
       
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(505).json({ status: 505 });
     }
   };
@@ -645,7 +645,7 @@ export const sendG1 = async (req, res) => {
      
       
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(505).json({ status: 505 });
     }
   };
@@ -687,7 +687,7 @@ export const sendG1 = async (req, res) => {
      
       
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       res.status(505).json({ status: 505 });
     }
   };
