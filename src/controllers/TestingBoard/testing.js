@@ -94,10 +94,10 @@ export const sendG1 = async (req, res) => {
         events.pubsub.removeAllListeners('getResponse1');
         if (!responseSent) { 
             responseSent=true;
-            const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
-            data.G1=response.toString();
-            data.lastHeartBeatTime=new Date().toISOString();
-            await data.save();
+            // const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
+            // data.G1=response.toString();
+            // data.lastHeartBeatTime=new Date().toISOString();
+            // await data.save();
 
             await UnilineTransactions.create({
                 MacID:req.body.MacID,
