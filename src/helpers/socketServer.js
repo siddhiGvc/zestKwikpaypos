@@ -861,7 +861,7 @@ const server = net.createServer((socket) => {
                   // console.log("Hbt recived",command[1]);
                   const data=await MacMapping.findOne({where:{MacID:command[1]}});
                   const data1=await UnilineMacMapping.findOne({where:{MacID:command[1]}});
-                  // console.log(data);
+                  console.log("Uniline data",data1);
                 
                   if(data)
                       {
@@ -897,6 +897,7 @@ const server = net.createServer((socket) => {
                   })
                 }
                 if(data1){
+                  console.log("Uniline device identified");
                   data1.SocketNumber=remotePort;
                   data1.SNoutput=command[2];
                   data1.lastHeartBeatTime=new Date().toISOString();
