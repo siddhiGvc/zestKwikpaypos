@@ -92,7 +92,7 @@ export const sendG1 = async (req, res) => {
         clearTimeout(timeout);
       
         events.pubsub.removeAllListeners('getResponse1');
-        if (!responseSent) { 
+        if (!responseSent && response.length>2) { 
             responseSent=true;
             const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
             data.G1=response.toString();
@@ -132,7 +132,7 @@ export const sendG1 = async (req, res) => {
         console.log("D");
         events.pubsub.removeAllListeners('getResponse2');
      
-        if (!responseSent) { 
+        if (!responseSent && response.length>2) { 
             responseSent=true;
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
@@ -150,7 +150,7 @@ export const sendG1 = async (req, res) => {
       
         events.pubsub.removeAllListeners('getResponse2');
 
-        if (!responseSent) { 
+        if (!responseSent && response.length>2) { 
             responseSent=true;
             const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
             data.G2=response.toString();
@@ -204,7 +204,7 @@ export const sendG1 = async (req, res) => {
         clearTimeout(timeout);
        
         events.pubsub.removeAllListeners('getResponse3');
-        if (!responseSent) { 
+        if (!responseSent && response.length>2) { 
             responseSent=true;
             const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
             data.G3=response.toString();
@@ -242,7 +242,7 @@ export const sendG1 = async (req, res) => {
       const timeout = setTimeout(() => {
         console.log("D");
         events.pubsub.removeAllListeners('getResponse4');
-        if (!responseSent) { 
+        if (!responseSent && response.length>2) { 
             responseSent=true;
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
@@ -257,7 +257,7 @@ export const sendG1 = async (req, res) => {
         clearTimeout(timeout);
        
         events.pubsub.removeAllListeners('getResponse4');
-        if (!responseSent) { 
+        if (!responseSent && response.length>2) { 
             responseSent=true;
             const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
             data.I=response.toString();
@@ -310,7 +310,7 @@ export const sendG1 = async (req, res) => {
         clearTimeout(timeout);
       
         events.pubsub.removeAllListeners('getResponse5');
-        if (!responseSent) { 
+        if (!responseSent && response.length>2) { 
             responseSent=true;
             const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
             data.GF=response.toString();
@@ -364,7 +364,7 @@ export const sendG1 = async (req, res) => {
         clearTimeout(timeout);
         
         events.pubsub.removeAllListeners('getResponse6');
-        if (!responseSent) { 
+        if (!responseSent && response.length>2) { 
             responseSent=true;
             const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
             data.Q=response.toString();
@@ -403,7 +403,7 @@ export const sendG1 = async (req, res) => {
       const timeout = setTimeout(() => {
         console.log("D");
         events.pubsub.removeAllListeners('getResponse7');
-        if (!responseSent) { 
+        if (!responseSent ) { 
             responseSent=true;
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
@@ -418,7 +418,7 @@ export const sendG1 = async (req, res) => {
         clearTimeout(timeout);
        
         events.pubsub.removeAllListeners('getResponse7');
-        if (!responseSent) { 
+        if (!responseSent && response.length>2) { 
             responseSent=true;
             const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
             data.Q1=response.toString();
@@ -470,7 +470,7 @@ export const sendG1 = async (req, res) => {
         console.log("Response:",response);
         clearTimeout(timeout);
         events.pubsub.removeAllListeners('getResponse8');
-        if (!responseSent) { 
+        if (!responseSent && response.length>2) { 
             responseSent=true;
            res.status(200).json({ data: response }); // Send the response back to the client
         }
@@ -497,7 +497,7 @@ export const sendG1 = async (req, res) => {
       const timeout = setTimeout(() => {
         console.log("D");
         events.pubsub.removeAllListeners('getResponse9');
-        if (!responseSent) { 
+        if (!responseSent ) { 
             responseSent=true;
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
@@ -511,7 +511,7 @@ export const sendG1 = async (req, res) => {
         console.log("Response:",response);
         clearTimeout(timeout);
         events.pubsub.removeAllListeners('getResponse9');
-        if (!responseSent) { 
+        if (!responseSent && response.length>2) { 
             responseSent=true;
            res.status(200).json({ data: response }); // Send the response back to the client
         }
@@ -552,7 +552,7 @@ export const sendG1 = async (req, res) => {
         console.log("Response:",response);
         clearTimeout(timeout);
         events.pubsub.removeAllListeners('getResponse10');
-        if (!responseSent) { 
+        if (!responseSent && response.length>2) { 
             responseSent=true;
            res.status(200).json({ data: response }); // Send the response back to the client
         }
@@ -594,7 +594,7 @@ export const sendG1 = async (req, res) => {
         console.log("Response:",response);
         clearTimeout(timeout);
         events.pubsub.removeAllListeners('getResponse11');
-        if (!responseSent) { 
+        if (!responseSent && response.length>2) { 
             responseSent=true;
            res.status(200).json({ data: response }); // Send the response back to the client
         }
@@ -636,7 +636,7 @@ export const sendG1 = async (req, res) => {
         console.log("Response:",response);
         clearTimeout(timeout);
         events.pubsub.removeAllListeners('getResponse12');
-        if (!responseSent) { 
+        if (!responseSent && response.length>2) { 
             responseSent=true;
            res.status(200).json({ data: response }); // Send the response back to the client
         }
@@ -664,7 +664,7 @@ export const sendG1 = async (req, res) => {
       const timeout = setTimeout(() => {
         console.log("D");
         events.pubsub.removeAllListeners('getResponse13');
-        if (!responseSent) { 
+        if (!responseSent ) { 
             responseSent=true;
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }
@@ -678,7 +678,7 @@ export const sendG1 = async (req, res) => {
         console.log("Response:",response);
         clearTimeout(timeout);
         events.pubsub.removeAllListeners('getResponse13');
-        if (!responseSent) { 
+        if (!responseSent && response.length>2) { 
             responseSent=true;
            res.status(200).json({ data: response }); // Send the response back to the client
         }
