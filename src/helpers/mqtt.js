@@ -97,7 +97,7 @@ const parseInternal = (payload, mqttClient,topic) => {
        
         console.log("parts",parts);
         console.log("partsLength",parts.length,5);
-        if(parts.length==4 )
+        if(parts.length==5 )
             {
             console.log('GOT the G3 Response');
             console.log("parts",parts.length);
