@@ -50,10 +50,10 @@ const parseInternal = (payload, mqttClient,topic) => {
                     events.pubsub.removeAllListeners('getResponse1');
                     callback(parts);
                     }
-                    else{
-                        events.pubsub.removeAllListeners('getResponse1');
-                        callback('');  
-                    }                  
+                    // else{
+                    //     events.pubsub.removeAllListeners('getResponse1');
+                    //     callback('');  
+                    // }                  
                     
                  
                 
@@ -80,10 +80,10 @@ const parseInternal = (payload, mqttClient,topic) => {
                 callback(parts);
                 
             }
-            else{
-                events.pubsub.removeAllListeners('getResponse2');
-                callback('');
-            }
+            // else{
+            //     events.pubsub.removeAllListeners('getResponse2');
+            //     callback('');
+            // }
          
           
          
@@ -104,11 +104,11 @@ const parseInternal = (payload, mqttClient,topic) => {
             events.pubsub.removeAllListeners('getResponse3');
             callback(parts);
             }
-            else{
-                events.pubsub.removeAllListeners('getResponse3');
-                callback(parts);
+            // else{
+            //     events.pubsub.removeAllListeners('getResponse3');
+            //     callback(parts);
 
-            }
+            // }
             
         
      });
