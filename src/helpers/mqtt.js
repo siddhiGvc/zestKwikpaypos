@@ -52,7 +52,7 @@ const parseInternal = (payload, mqttClient,topic) => {
                     }
                     else{
                         events.pubsub.removeAllListeners('getResponse1');
-                        callback('');  
+                        callback(' ');  
                     }                  
                     
                  
@@ -82,7 +82,7 @@ const parseInternal = (payload, mqttClient,topic) => {
             }
             else{
                 events.pubsub.removeAllListeners('getResponse2');
-                callback('');
+                callback(' ');
             }
          
           
@@ -106,7 +106,7 @@ const parseInternal = (payload, mqttClient,topic) => {
             }
             else{
                 events.pubsub.removeAllListeners('getResponse3');
-                callback(parts);
+                callback(' ');
 
             }
             
