@@ -72,7 +72,7 @@ const parseInternal = (payload, mqttClient,topic) => {
            
             console.log("parts",parts);
             console.log("partsLength",parts.length,4);
-            if(parts.length==3)
+            if(parts.length==4)
             {
                 console.log('GOT the G2 Response');
                 console.log("length",parts.length);
