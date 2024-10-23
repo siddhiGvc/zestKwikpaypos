@@ -242,7 +242,7 @@ export const sendG1 = async (req, res) => {
       const timeout = setTimeout(() => {
         console.log("D");
         events.pubsub.removeAllListeners('getResponse4');
-        if (!responseSent && response.length>2) { 
+        if (!responseSent ) { 
             responseSent=true;
         res.status(200).json({ data: "D" }); // Send the response back to the client
         }

@@ -83,7 +83,7 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    // console.log(req.body);
+    console.log(req.body);
     const user = await UnilineUsers.scope('withSecretColumns').findOne({
       where: { email: req.body.email },
     });
@@ -94,7 +94,7 @@ export const login = async (req, res) => {
       .createHash('sha256')
       .update(req.body.password || '')
       .digest('hex');
-   
+   console.log(reqPass);
     if (reqPass!== user.password) {
       throw new Error('Incorrect Email Id/Password');
     }
