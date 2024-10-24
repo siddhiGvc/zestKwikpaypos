@@ -92,7 +92,7 @@ export const sendG1 = async (req, res) => {
         clearTimeout(timeout);
       
         events.pubsub.removeAllListeners('getResponse1');
-        if (!responseSent) { 
+        if (!responseSent && response.length>2) { 
             responseSent=true;
             // const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
             // data.G1=response.toString();
@@ -150,7 +150,7 @@ export const sendG1 = async (req, res) => {
       
         events.pubsub.removeAllListeners('getResponse2');
 
-        if (!responseSent) { 
+        if (!responseSent && response.length>2) { 
             responseSent=true;
             const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
             data.G2=response.toString();
@@ -204,7 +204,7 @@ export const sendG1 = async (req, res) => {
         clearTimeout(timeout);
        
         events.pubsub.removeAllListeners('getResponse3');
-        if (!responseSent ) { 
+        if (!responseSent && response.length>2 ) { 
             responseSent=true;
             const data=await UnilineMacMapping.findOne({where:{SNoutput:req.body.serialNumber}});
             data.G3=response.toString();
