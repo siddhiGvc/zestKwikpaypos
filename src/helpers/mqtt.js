@@ -34,7 +34,7 @@ const parseInternal = (payload, mqttClient,topic) => {
 
     
        
-        events.pubsub.on('getResponse1',(callback) => {
+        events.pubsub.on('getResponse1',(SerialNumber,callback) => {
           
           
                 console.log(1);
@@ -42,8 +42,7 @@ const parseInternal = (payload, mqttClient,topic) => {
                 var parts = payload.split(' ');
                
                 console.log("parts",parts);
-                console.log("partsLength",parts.length ,9);
-                    if(parts.length==9)
+                    if(parts[parts.length-2]==SerialNumber && parts[parts.length-1]=='G1')
                     {
                     console.log('GOT the G1 Response');
                     console.log("length",parts.length);
@@ -63,7 +62,7 @@ const parseInternal = (payload, mqttClient,topic) => {
              
           
         });
-        events.pubsub.on('getResponse2',(callback) => {
+        events.pubsub.on('getResponse2',(SerialNumber,callback) => {
           
           
             console.log(1);
@@ -71,8 +70,8 @@ const parseInternal = (payload, mqttClient,topic) => {
             var parts = payload.split(' ');
            
             console.log("parts",parts);
-            console.log("partsLength",parts.length,4);
-            if(parts.length==3)
+            
+            if(parts[parts.length-2]==SerialNumber && parts[parts.length-1]=='G2')
             {
                 console.log('GOT the G2 Response');
                 console.log("length",parts.length);
@@ -89,15 +88,15 @@ const parseInternal = (payload, mqttClient,topic) => {
          
       
     });
-    events.pubsub.on('getResponse3',(callback) => {
+    events.pubsub.on('getResponse3',(SerialNumber,callback) => {
           
         
         console.log("Payload2",payload)
         var parts = payload.split(' ');
        
         console.log("parts",parts);
-        console.log("partsLength",parts.length,5);
-        if(parts.length==4 )
+       
+        if(parts[parts.length-2]==SerialNumber && parts[parts.length-1]=='G3')
             {
             console.log('GOT the G3 Response');
             console.log("parts",parts.length);
@@ -112,7 +111,7 @@ const parseInternal = (payload, mqttClient,topic) => {
             
         
      });
-     events.pubsub.on('getResponse4',(callback) => {
+     events.pubsub.on('getResponse4',(SerialNumber,callback) => {
           
           
         console.log(1);
@@ -120,8 +119,7 @@ const parseInternal = (payload, mqttClient,topic) => {
         var parts = payload.split(' ');
       
         console.log("parts",parts);
-        console.log("length",parts.length,13);
-        if(parts.length==18)
+        if(parts[parts.length-2]==SerialNumber && parts[parts.length-1]=='I')
         {
             events.pubsub.removeAllListeners('getResponse4');
             callback(parts);
@@ -129,7 +127,7 @@ const parseInternal = (payload, mqttClient,topic) => {
         }
     
      });
-     events.pubsub.on('getResponse5',(callback) => {
+     events.pubsub.on('getResponse5',(SerialNumber,callback) => {
           
           
         console.log(1);
@@ -138,7 +136,7 @@ const parseInternal = (payload, mqttClient,topic) => {
     
         console.log("parts",parts);
         console.log("length",parts.length,12);
-        if(parts.length==15)
+        if(parts[parts.length-2]==SerialNumber && parts[parts.length-1]=='GF')
             {
                 events.pubsub.removeAllListeners('getResponse5');
                 callback(parts);
@@ -146,7 +144,7 @@ const parseInternal = (payload, mqttClient,topic) => {
             }
      });
 
-     events.pubsub.on('getResponse6',(callback) => {
+     events.pubsub.on('getResponse6',(SerialNumber,callback) => {
           
           
         console.log(1);
@@ -154,8 +152,8 @@ const parseInternal = (payload, mqttClient,topic) => {
         var parts = payload.split(' ');
       
         console.log("parts",parts);
-        console.log("length",parts.length,9);
-        if(parts.length==8)
+      
+        if(parts[parts.length-2]==SerialNumber && parts[parts.length-1]=='Q')
             {
                 events.pubsub.removeAllListeners('getResponse6');
                 callback(parts);
@@ -163,7 +161,7 @@ const parseInternal = (payload, mqttClient,topic) => {
             }
      });
 
-     events.pubsub.on('getResponse7',(callback) => {
+     events.pubsub.on('getResponse7',(SerialNumber,callback) => {
           
           
         console.log(1);
@@ -171,8 +169,8 @@ const parseInternal = (payload, mqttClient,topic) => {
         var parts = payload.split(' ');
         
         console.log("parts",parts);
-        console.log("length",parts.length,8);
-        if(parts.length==8 )
+      
+        if(parts[parts.length-2]==SerialNumber && parts[parts.length-1]=='Q1')
             {
                 events.pubsub.removeAllListeners('getResponse7');
                 callback(parts);

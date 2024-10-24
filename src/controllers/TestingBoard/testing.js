@@ -86,7 +86,7 @@ export const sendG1 = async (req, res) => {
 
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "G1/r/n");
       // Listen for the response using the event emitter
-      await events.pubsub.emit('getResponse1', async(response) => {
+      await events.pubsub.emit('getResponse1',req.body.serialNumber, async(response) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
@@ -143,7 +143,7 @@ export const sendG1 = async (req, res) => {
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "G2/r/n");
   
       // Listen for the response using the event emitter
-      await events.pubsub.emit('getResponse2', async(response) => {
+      await events.pubsub.emit('getResponse2',req.body.serialNumber, async(response) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
@@ -198,7 +198,7 @@ export const sendG1 = async (req, res) => {
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "G3/r/n");
       // Listen for the response using the event emitter
-      await events.pubsub.emit('getResponse3', async(response) => {
+      await events.pubsub.emit('getResponse3',req.body.serialNumber, async(response) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
@@ -251,7 +251,7 @@ export const sendG1 = async (req, res) => {
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "I/r/n");
       // Listen for the response using the event emitter
-      await events.pubsub.emit('getResponse4', async(response) => {
+      await events.pubsub.emit('getResponse4',req.body.serialNumber, async(response) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
@@ -304,7 +304,7 @@ export const sendG1 = async (req, res) => {
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "GF/r/n");
       // Listen for the response using the event emitter
-      await events.pubsub.emit('getResponse5', async(response) => {
+      await events.pubsub.emit('getResponse5',req.body.serialNumber, async(response) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
@@ -358,7 +358,7 @@ export const sendG1 = async (req, res) => {
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "Q/r/n");
       // Listen for the response using the event emitter
-      await events.pubsub.emit('getResponse6', async(response) => {
+      await events.pubsub.emit('getResponse6',req.body.serialNumber, async(response) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
@@ -412,7 +412,7 @@ export const sendG1 = async (req, res) => {
     
       await mqttClient.sendMessage('GVC/' + req.body.serialNumber, "Q1/r/n");
       // Listen for the response using the event emitter
-      await events.pubsub.emit('getResponse7', async(response) => {
+      await events.pubsub.emit('getResponse7',req.body.serialNumber, async(response) => {
         // Clear the timeout if the response is received in time
         console.log("Response:",response);
         clearTimeout(timeout);
