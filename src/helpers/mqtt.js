@@ -39,12 +39,7 @@ const parseInternal = async(payload, mqttClient,topic) => {
             data.lastHeartBeatTime=new Date().toISOString();
             await data.save();
 
-            await UnilineTransactions.create({
-                MacID:req.body.MacID,
-                SNoutput:SerialNumber,
-                G2:parts.toString()
-
-            })
+          
         }
     
        
