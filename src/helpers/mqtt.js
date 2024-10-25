@@ -1,4 +1,4 @@
-import { Transaction, MachineData, Machine, RejectedRecord, sequelize ,TrafficLightColors} from '../models';
+import { Transaction, MachineData, Machine, RejectedRecord, sequelize ,TrafficLightColors,UnilineMacMapping} from '../models';
 // import { sendQueryPowerBackup} from '../controllers/TrafficLights/setLights';
 var events = require('./events');
 //a
@@ -27,18 +27,31 @@ module.exports.parse = (payload, mqttClient,topic) => {
 
 
 
-const parseInternal = (payload, mqttClient,topic) => {
+const parseInternal = async(payload, mqttClient,topic) => {
     // 'Parsing message - ' + payload
     try {
-       
+        const parts = payload.split(' ');
+        const SerialNumber= parts[parts.length-2];
+        const data=await UnilineMacMapping.findOne({where:{SNoutput:SerialNumber}})
+        if(data)
+        {
+            data.G2=parts.toISOString();
+            data.lastHeartBeatTime=new Date().toISOString();
+            await data.save();
 
+            await UnilineTransactions.create({
+                MacID:req.body.MacID,
+                SNoutput:SerialNumber,
+                G2:parts.toString()
+
+            })
+        }
     
        
         events.pubsub.on('getResponse1',(SerialNumber,callback) => {
           
           
-                console.log(1);
-                console.log("Payload2",payload)
+             
                 var parts = payload.split(' ');
                
                 console.log("parts",parts);
@@ -125,6 +138,11 @@ const parseInternal = (payload, mqttClient,topic) => {
             callback(parts);
             
         }
+        else{
+            events.pubsub.removeAllListeners('getResponse4');
+            callback(' ');
+
+        }
     
      });
      events.pubsub.on('getResponse5',(SerialNumber,callback) => {
@@ -141,6 +159,11 @@ const parseInternal = (payload, mqttClient,topic) => {
                 events.pubsub.removeAllListeners('getResponse5');
                 callback(parts);
                 
+            }
+            else{
+                events.pubsub.removeAllListeners('getResponse5');
+                callback(' ');
+
             }
      });
 
@@ -159,6 +182,11 @@ const parseInternal = (payload, mqttClient,topic) => {
                 callback(parts);
                 
             }
+            else{
+                events.pubsub.removeAllListeners('getResponse6');
+                callback(' ');
+
+            }
      });
 
      events.pubsub.on('getResponse7',(SerialNumber,callback) => {
@@ -175,6 +203,11 @@ const parseInternal = (payload, mqttClient,topic) => {
                 events.pubsub.removeAllListeners('getResponse7');
                 callback(parts);
                 
+            }
+            else{
+                events.pubsub.removeAllListeners('getResponse7');
+                callback(' ');
+
             }
      });
 
