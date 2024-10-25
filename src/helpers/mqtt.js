@@ -33,7 +33,7 @@ const parseInternal = async(payload, mqttClient,topic) => {
         const parts = payload.split(' ');
         const SerialNumber= parts[parts.length-2];
         const data=await UnilineMacMapping.findOne({where:{SNoutput:SerialNumber}})
-        if(data)
+        if(data && parts[parts.length-1]=='G2')
         {
             data.G2=parts.toString();
             data.lastHeartBeatTime=new Date().toISOString();
@@ -41,6 +41,14 @@ const parseInternal = async(payload, mqttClient,topic) => {
 
           
         }
+        if(data && parts[parts.length-1]=='G1')
+            {
+                data.G1=parts.toString();
+                data.lastHeartBeatTime=new Date().toISOString();
+                await data.save();
+    
+              
+            }
     
        
         events.pubsub.on('getResponse1',(SerialNumber,callback) => {
