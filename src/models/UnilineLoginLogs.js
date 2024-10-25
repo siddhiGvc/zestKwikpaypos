@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const loginLogs = sequelize.define('loginLogs', {
+  const UnilineLoginLogs = sequelize.define('UnilineLoginLogs', {
     userName : DataTypes.STRING,
     loginLat : DataTypes.STRING,
     loginLong : DataTypes.STRING,
@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     
 
   }, {});
-  loginLogs.associate = function(models) {
+  UnilineLoginLogs.associate = function(models) {
     // associations can be defined here
   };
-  return loginLogs;
+  return UnilineLoginLogs;
 };
