@@ -1,4 +1,4 @@
-import { Transaction, MachineData, Machine, RejectedRecord, sequelize ,TrafficLightColors,UnilineMacMapping} from '../models';
+import { Transaction, MachineData, Machine, RejectedRecord, sequelize ,TrafficLightColors,UnilineMacMapping,UnilineTransactions} from '../models';
 // import { sendQueryPowerBackup} from '../controllers/TrafficLights/setLights';
 var events = require('./events');
 //a
