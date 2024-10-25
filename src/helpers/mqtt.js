@@ -35,7 +35,7 @@ const parseInternal = async(payload, mqttClient,topic) => {
         const data=await UnilineMacMapping.findOne({where:{SNoutput:SerialNumber}})
         if(data)
         {
-            data.G2=parts.toISOString();
+            data.G2=parts.toString();
             data.lastHeartBeatTime=new Date().toISOString();
             await data.save();
 
