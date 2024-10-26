@@ -178,3 +178,96 @@ export const getData = async (req, res) => {
         return errorResponse(req, res, error.message);
       }
     };
+
+
+    export const updateHourlyTable = async () => {
+      try{
+      console.log("Table Updation in Progress");
+    
+      // get all wards
+      const [AllWardNames] = await sequelize.query(`
+      select distinct UnilineMacMapping.Ward ,  count (*)
+      from UnilineMacMapping 
+      inner join Uniline_summary  
+      on UnilineMacMapping.SNoutput = Uniline_summary.SNoutput
+      where UnilineMacMapping.City = "Delhi"
+      group by UnilineMacMapping.Ward;
+      `);
+      // console.log ("*************ALL WARD NAMES+Total Machines");
+      //console.log(AllWardNames);
+    
+    const [CountDeviceOnLine] = await sequelize.query(`
+    select distinct a.Ward, count(device_status) from Uniline_summary a
+    left join UnilineMacMapping b on a.SNoutput = b.SNoutput
+    where a.device_status ="Online" group by Ward;      
+    `);
+
+  const [CountInverterOnLine] = await sequelize.query(`
+    select distinct a.Ward, count(inverter_status) from Uniline_summary a
+    left join UnilineMacMapping b on a.SNoutput = b.SNoutput
+    where a.inverter_status ="Online" group by Ward;      
+    `);
+
+  const [CountBatteryShutDown] = await sequelize.query(`
+    select distinct a.Ward, count(battery_status) from Uniline_summary a
+    left join UnilineMacMapping b on a.SNoutput = b.SNoutput
+    where a.inverter_status ="Shut Down" group by Ward;      
+    `);
+
+  const [CountBatteryLow] = await sequelize.query(`
+    select distinct a.Ward, count(battery_status) from Uniline_summary a
+    left join UnilineMacMapping b on a.SNoutput = b.SNoutput
+    where a.inverter_status ="Low" group by Ward;      
+    `);
+    
+    
+    
+    
+      for (const index in AllWardNames)
+      {
+   
+    
+        const [ZoneForWard] = await sequelize.query(`
+        select Zone,Ward  from UnilineMacMapping 
+        where City = "Delhi" 
+        and Ward = '${AllWardNames[index].Ward}'
+        limit 1 ;
+        `);
+   
+        
+      const DataWardSummary = {
+        ward: AllWardNames[index].Ward,
+        deviceTotal : parseInt(AllWardNames[index]['count (*)']),
+        deviceOnline : parseInt(CountDeviceOnLine[index]['count(device_status)']),
+        inverterTotal : parseInt(AllWardNames[index]['count (*)']),
+        inverterOnline : parseInt(CountInverterOnLine[index]['count(inverter_status)']),
+        BatteryShuDown : parseInt(CountBatteryShutDown[index]['count(battery_status)']),
+        BatteryLow : parseInt(CountBatteryLow[index]['count(battery_status)']),
+        zone : ZoneForWard[0].Zone
+      };
+    
+      
+      const hourlyReportLog = await UnilineHourlyReport.create({
+        ward:DataWardSummary.ward,
+        deviceTotal : DataWardSummary.deviceTotal,
+        deviceOnline : DataWardSummary.deviceOnline,
+        inverterTotal : DataWardSummary.inverterTotal,
+        inverterOnline : DataWardSummary.inverterOnline,
+        BatteryShuDown : DataWardSummary.BatteryShuDown,
+        BatteryLow : DataWardSummary.BatteryLow,
+        onTime:0,
+        zone :DataWardSummary.zone
+      });
+    
+    
+    
+    //   console.log (DataWardSummary);
+      }  
+    }
+    catch(err)
+    {
+      console.log("hourly report update error");
+      console.log(err);
+    }
+    
+    } 

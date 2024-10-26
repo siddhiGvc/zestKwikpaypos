@@ -3,15 +3,15 @@ const fs = require('fs')
 const path = require('path')
 const moment = require('moment')
 const logPath = path.resolve(__dirname, 'daily.log')
-import * as dataController from './src/controllers/machine/machine.data.controller';
+import * as dataController from './src/controllers/TestingBoard/Uniline.data.controller';
 
 const setup = async function () {
-    // const jobHourlyReport = schedule.scheduleJob('*/1 * * * * ', function() {
-    //     console.log("Starting 1 minute function");
-    //     dataController.updateHourlyTable().then (list =>{
-    //         console.log("Table Updated")
-    //     })
-    // });
+    const jobHourlyReport = schedule.scheduleJob('*/1 * * * * ', function() {
+        console.log("Starting 1 minute function");
+        dataController.updateHourlyTable().then (list =>{
+            console.log("Table Updated")
+        })
+    });
 
 
 

@@ -1,7 +1,7 @@
 import express from "express";
 import * as testing from '../../controllers/TestingBoard/testing';
 import * as getData from "../../controllers/TestingBoard/Uniline.data.controller"
-
+import * as hourlyReport from "../../controllers/TestingBoard/hourlyReport"
 
 const router = express.Router();
 router.get('/getMacAddress',testing.getAllMacAddress);
@@ -25,6 +25,10 @@ router.post('/sendCT',testing.sendCT);
 router.post('/sendF',testing.sendF);
 router.post('/sendF',testing.sendF);
 router.post('/report',testing.report);
+
+
+router.post("/saveHR",hourlyReport.postHourlyReportData);
+router.post("/getHR",hourlyReport.getHourlyReportData);
 
 
 module.exports=router;
