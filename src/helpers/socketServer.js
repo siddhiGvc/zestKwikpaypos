@@ -853,6 +853,7 @@ const server = net.createServer((socket) => {
             else  if(command[0]=="HBT")
               {
                 
+                console.log("SNoutput",command[2])
                   // console.log("Hbt recived",command[1]);
                   const data=await MacMapping.findOne({where:{MacID:command[1]}});
                   const data1=await UnilineMacMapping.findOne({where:{MacID:command[1]}});
