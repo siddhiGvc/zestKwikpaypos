@@ -9,7 +9,12 @@ SELECT
   CASE 
     WHEN SUBSTRING(SUBSTRING_INDEX(d.G2, ',', 1), 7, 1) = '0' THEN 'Online' 
     ELSE 'Offline' 
-  END AS inverter_status
+  END AS inverter_status,
+  CASE 
+    WHEN SUBSTRING(SUBSTRING_INDEX(d.G2, ',', 1), 5, 1) = '1' THEN 'Low' 
+    WHEN SUBSTRING(SUBSTRING_INDEX(d.G2, ',', 1), 4, 1) = '1' THEN 'Shut Down'
+    ELSE 'Okay' 
+  END AS battery_status
 FROM UnilineMacMapping d
 `;
 

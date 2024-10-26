@@ -30,7 +30,7 @@ export const getData = async (req, res) => {
       if (req.query.beat) replObjG['Beat'] = req.query.beat.split(',');
       if (req.query.status) replObjG['device_status'] = req.query.status.split(',');
       if (req.query.inverterStatus) replObjG['inverter_status'] = req.query.inverterStatus.split(',');
-    //   if (req.query.status) replObjG['inverter_status'] = req.query.inverter_status.split(',');
+      if (req.query.batteryStatus) replObjG['battery_status'] = req.query.batteryStatus.split(',');
     
       const replacements = {};
   
@@ -57,6 +57,10 @@ export const getData = async (req, res) => {
   if (req.query.inverterStatus) {
     replacements.inverter_status = req.query.inverterStatus.split(',');
   }
+
+  if (req.query.batteryStatus) {
+    replacements.battery_status = req.query.batteryStatus.split(',');
+  }
   
   const [objAll, _metadata] = await sequelize.query(`
     SELECT a.*, b.* 
@@ -79,7 +83,8 @@ export const getData = async (req, res) => {
     ${replObjG.Ward ? ` AND b.Ward IN (:ward)` : ''}
     ${req.query.beat ? ` AND b.Beat IN (:beat)` : ''}
     ${req.query.status ? ` AND b.device_status IN (:device_status)` : ''}
-     ${req.query.inverterStatus ? ` AND b.inverter_status IN (:inverter_status)` : ''}
+    ${req.query.inverterStatus ? ` AND b.inverter_status IN (:inverter_status)` : ''}
+    ${req.query.batteryStatus ? ` AND b.battery_status IN (:battery_status)` : ''}
   
    
   `, { replacements });
