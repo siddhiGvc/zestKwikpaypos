@@ -7,12 +7,15 @@ SELECT
     ELSE 'Offline' 
   END AS device_status,
   CASE 
-    WHEN SUBSTRING(SUBSTRING_INDEX(d.G2, ',', 1), 7, 1) = '0' THEN 'Online' 
+    WHEN SUBSTRING(SUBSTRING_INDEX(d.G2, ',', 1), 7, 1) = '0' 
+         AND TIME_TO_SEC(TIMEDIFF(UTC_TIMESTAMP(), d.lastHeartBeatTime)) / 60 < 1 THEN 'Online' 
     ELSE 'Offline' 
   END AS inverter_status,
   CASE 
-    WHEN SUBSTRING(SUBSTRING_INDEX(d.G2, ',', 1), 5, 1) = '1' THEN 'Low' 
-    WHEN SUBSTRING(SUBSTRING_INDEX(d.G2, ',', 1), 4, 1) = '1' THEN 'Shut Down'
+    WHEN SUBSTRING(SUBSTRING_INDEX(d.G2, ',', 1), 5, 1) = '1' 
+         AND TIME_TO_SEC(TIMEDIFF(UTC_TIMESTAMP(), d.lastHeartBeatTime)) / 60 < 1 THEN 'Low' 
+    WHEN SUBSTRING(SUBSTRING_INDEX(d.G2, ',', 1), 4, 1) = '1' 
+         AND TIME_TO_SEC(TIMEDIFF(UTC_TIMESTAMP(), d.lastHeartBeatTime)) / 60 < 1 THEN 'Shut Down'
     ELSE 'Okay' 
   END AS battery_status
 FROM UnilineMacMapping d
@@ -31,4 +34,3 @@ module.exports = {
     queryInterface.sequelize.query(`DROP VIEW IF EXISTS ${view_name}`),
   ]),
 };
-

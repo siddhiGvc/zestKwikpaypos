@@ -865,7 +865,7 @@ const server = net.createServer((socket) => {
                 
                   if(data)
                       {
-                        
+                         console.log("SNoutput",command[2]);
                           data.SocketNumber=remotePort;
                           data.lastHeartBeatTime=new Date().toISOString();
                           data.SNoutput=command[2];
