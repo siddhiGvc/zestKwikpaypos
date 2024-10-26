@@ -234,7 +234,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*V:${TID++}:${SerialNumber}:${pin}:${pulse}#`);
+          socket.write(`*V:${TID++}:${pin}:${pulse}#`);
           console.log("V command sent");
         }
       });
