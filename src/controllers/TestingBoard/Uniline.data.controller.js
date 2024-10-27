@@ -1,6 +1,6 @@
 import { where } from "sequelize";
 
-const {sequelize,UnilineMacMapping,TestMode,SerialPort} =require("../../models")
+const {sequelize,UnilineMacMapping,TestMode,SerialPort,UnilineHourlyReport} =require("../../models")
 import { successResponse, errorResponse, uniqueId } from '../../helpers';
 var events = require('../../helpers/events')
 
