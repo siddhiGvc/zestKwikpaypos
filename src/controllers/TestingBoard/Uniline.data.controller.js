@@ -237,10 +237,10 @@ export const getData = async (req, res) => {
         
       const DataWardSummary = {
         ward: AllWardNames[index].Ward,
-        deviceTotal : parseInt(AllWardNames[index]['count (*)']),
-        deviceOnline : parseInt(CountDeviceOnLine[index]['count(device_status)']),
-        inverterTotal : parseInt(AllWardNames[index]['count (*)']),
-        inverterOnline : parseInt(CountInverterOnLine[index]['count(inverter_status)']),
+        deviceTotal : parseInt(AllWardNames[index]?.['count (*)']?? 0),
+        deviceOnline : parseInt(CountDeviceOnLine[index]?.['count(device_status)']?? 0),
+        inverterTotal : parseInt(AllWardNames[index]?.['count (*)']?? 0),
+        inverterOnline : parseInt(CountInverterOnLine[index]?.['count(inverter_status)']?? 0),
         BatteryShutDown: parseInt(CountBatteryShutDown[index]?.['count(battery_status)'] ?? 0),
         BatteryLow : parseInt(CountBatteryLow[index]?.['count(battery_status)'] ?? 0),
         zone : ZoneForWard[0].Zone
