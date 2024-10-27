@@ -211,13 +211,13 @@ export const getData = async (req, res) => {
   const [CountBatteryShutDown] = await sequelize.query(`
     select distinct a.Ward, count(battery_status) from Uniline_summary a
     left join UnilineMacMapping b on a.SNoutput = b.SNoutput
-    where a.inverter_status ="Shut Down" group by Ward;      
+    where a.battery_status ="Shut Down" group by Ward;      
     `);
 
   const [CountBatteryLow] = await sequelize.query(`
     select distinct a.Ward, count(battery_status) from Uniline_summary a
     left join UnilineMacMapping b on a.SNoutput = b.SNoutput
-    where a.inverter_status ="Low" group by Ward;      
+    where a.battery_status ="Low" group by Ward;      
     `);
     
     
