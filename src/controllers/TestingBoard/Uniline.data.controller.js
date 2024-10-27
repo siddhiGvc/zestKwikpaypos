@@ -234,6 +234,8 @@ export const getData = async (req, res) => {
         limit 1 ;
         `);
    
+
+        console.log(CountBatteryShutDown[index]);
         
       const DataWardSummary = {
         ward: AllWardNames[index].Ward,
