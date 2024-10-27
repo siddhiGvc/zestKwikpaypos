@@ -34,12 +34,6 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
 
-      qtySales: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-      },
-
-
       onTime: {
         allowNull: false,
         type: Sequelize.INTEGER,

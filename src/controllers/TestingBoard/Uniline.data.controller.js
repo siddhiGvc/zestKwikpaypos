@@ -261,7 +261,7 @@ export const getData = async (req, res) => {
     
     
     
-      console.log (hourlyReportLog);
+      // console.log (hourlyReportLog);
       }  
     }
     catch(err)
