@@ -241,7 +241,7 @@ export const getData = async (req, res) => {
         deviceOnline : parseInt(CountDeviceOnLine[index]['count(device_status)']),
         inverterTotal : parseInt(AllWardNames[index]['count (*)']),
         inverterOnline : parseInt(CountInverterOnLine[index]['count(inverter_status)']),
-        BatteryShuDown: parseInt(CountBatteryShutDown[index]?.['count(battery_status)'] ?? 0),
+        BatteryShutDown: parseInt(CountBatteryShutDown[index]?.['count(battery_status)'] ?? 0),
         BatteryLow : parseInt(CountBatteryLow[index]?.['count(battery_status)'] ?? 0),
         zone : ZoneForWard[0].Zone
       };
@@ -253,7 +253,7 @@ export const getData = async (req, res) => {
         deviceOnline : DataWardSummary.deviceOnline,
         inverterTotal : DataWardSummary.inverterTotal,
         inverterOnline : DataWardSummary.inverterOnline,
-        BatteryShuDown : DataWardSummary.BatteryShuDown,
+        BatteryShutDown : DataWardSummary.BatteryShutDown,
         BatteryLow : DataWardSummary.BatteryLow,
         onTime:0,
         zone :DataWardSummary.zone
