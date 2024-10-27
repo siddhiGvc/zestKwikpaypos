@@ -233,9 +233,7 @@ export const getData = async (req, res) => {
         and Ward = '${AllWardNames[index].Ward}'
         limit 1 ;
         `);
-   
 
-        console.log(CountBatteryShutDown[index]);
         
       const DataWardSummary = {
         ward: AllWardNames[index].Ward,
@@ -263,7 +261,7 @@ export const getData = async (req, res) => {
     
     
     
-    //   console.log (DataWardSummary);
+      console.log (hourlyReportLog);
       }  
     }
     catch(err)
