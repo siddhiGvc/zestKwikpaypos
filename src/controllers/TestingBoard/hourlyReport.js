@@ -83,8 +83,17 @@ export const getHourlyReportData=async(req,res)=>{
         //     }
         //   });
 
+        const [AllWardNames] = await sequelize.query(`
+          select distinct UnilineMacMapping.Ward ,  count (*)
+          from UnilineMacMapping 
+          inner join Uniline_summary  
+          on UnilineMacMapping.SNoutput = Uniline_summary.SNoutput
+          where UnilineMacMapping.City = "Delhi"
+          group by UnilineMacMapping.Ward;
+          `);
+
         var results;
-        const query = 'SELECT * FROM UnilineHourlyReport WHERE createdAt BETWEEN :startTime AND :endTime LIMIT 13';
+        const query = `SELECT * FROM UnilineHourlyReport WHERE createdAt BETWEEN :startTime AND :endTime LIMIT ${AllWardNames.length}`;
 
           sequelize.query(query, {
             replacements: {
