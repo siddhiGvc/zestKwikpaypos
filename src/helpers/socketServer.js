@@ -858,6 +858,15 @@ const server = net.createServer((socket) => {
                   const data=await MacMapping.findOne({where:{MacID:command[1]}});
                   const data1=await UnilineMacMapping.findOne({where:{MacID:command[1]}});
                   // console.log("Uniline data",data1);
+
+                  if(data1){
+                    console.log("Uniline device identified");
+                    data1.SocketNumber=remotePort;
+                    data1.SNoutput=command[2];
+                    data1.lastHeartBeatTime=new Date().toISOString();
+                    await data1.save();
+                  }
+                  
                 
                   if(data)
                       {
@@ -892,14 +901,7 @@ const server = net.createServer((socket) => {
 
                   })
                 }
-                if(data1){
-                  console.log("Uniline device identified");
-                  data1.SocketNumber=remotePort;
-                  data1.SNoutput=command[2];
-                  data1.lastHeartBeatTime=new Date().toISOString();
-                  await data1.save();
-                }
-                
+              
            } 
             else  if(command[0]=="RST-OK")
                 {
@@ -1400,12 +1402,7 @@ const server = net.createServer((socket) => {
                                       data.SNoutput=command[0];
                                       data.lastHeartBeatTime=new Date().toISOString();
                                       await data.save();
-                                      setTimeout(()=>{
-                                        data.SNoutput='';
-                                      
-                                       data.save();
-          
-                                      },8000)
+                                    
                                         await Transaction.create({
                                             machine:data.UID,
                                             command:command[0],
