@@ -271,3 +271,20 @@ export const getData = async (req, res) => {
     }
     
     } 
+
+
+    export const createMapping = async (req, res) => {
+       try{
+
+
+        await UnilineMacMapping(req.body)
+
+        return successResponse(req, res, { status: true });
+
+       }
+       catch(err){
+        return errorResponse(req, res, error.message);
+       }
+     
+     
+    }
