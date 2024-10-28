@@ -859,13 +859,13 @@ const server = net.createServer((socket) => {
                   const data1=await UnilineMacMapping.findOne({where:{MacID:command[1]}});
                   // console.log("Uniline data",data1);
 
-                  // if(data1){
-                  //   console.log("Uniline device identified");
-                  //   data1.SocketNumber=remotePort;
-                  //   data1.SNoutput=command[2];
-                  //   data1.lastHeartBeatTime=new Date().toISOString();
-                  //   await data1.save();
-                  // }
+                  if(data1){
+                    console.log("Uniline device identified");
+                    data1.SocketNumber=remotePort;
+                    data1.SNoutput=command[2];
+                    data1.lastHeartBeatTime=new Date().toISOString();
+                    await data1.save();
+                  }
                   
                 
                   if(data)
@@ -891,15 +891,15 @@ const server = net.createServer((socket) => {
                           
                       }
                   else{
-                  await MacMapping.create({
-                    MacID:command[1],
-                    SNoutput:command[2],
-                    lastHeartBeatTime:new Date().toISOString(),
-                    INHinput:false,
-                    INHoutput:false
+                  // await MacMapping.create({
+                  //   MacID:command[1],
+                  //   SNoutput:command[2],
+                  //   lastHeartBeatTime:new Date().toISOString(),
+                  //   INHinput:false,
+                  //   INHoutput:false
                     
 
-                  })
+                  // })
                 }
               
            } 
