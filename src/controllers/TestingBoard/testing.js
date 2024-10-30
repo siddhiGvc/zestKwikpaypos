@@ -33,7 +33,7 @@ export const report=async(req,res)=>{
     if (req.body.devices) filterObj.where.SNoutput = { [Op.in]: req.body.devices.split(',') };
     const serialCount = (await UnilineMacMapping.findAll(filterObj)).length;
     var machines = await UnilineMacMapping.findAll(filterObj);
-    var summaries = await UnilineTransactions.findAll({
+    var summaries = await UnilineMacMapping.findAll({
       where: {
         SNoutput: { [Op.in]: machines.map(q => q.SNoutput) },
         createdAt: { [Op.between]: [req.body.startDate, moment(req.body.endDate).add(1, 'day')] }
