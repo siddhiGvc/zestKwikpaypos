@@ -110,15 +110,14 @@ const parseInternal = async(payload, mqttClient,topic) => {
                                 SNoutput: G1.sn
                             });
                         
-                            // Reset values after 500ms
-                            setTimeout(() => {
+                           
                                 G1.sn = '';
                                 G2.sn = '';
                                 G3.sn = '';
                                 I.sn = '';
                                 GF.sn = '';
                                 isTransactionInProgress = false;  // Allow the next transaction to proceed
-                            }, 500);
+                          
                         }
                         
                 
