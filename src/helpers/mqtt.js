@@ -95,30 +95,32 @@ const parseInternal = async(payload, mqttClient,topic) => {
                         }
 
                         console.log(G1.sn, G2.sn, G3.sn,I.sn,GF.sn);
-                        if(G1.sn && G1.sn==G2.sn && G2.sn==G3.sn &&G3.sn==I.sn && I.sn==GF.sn)
-                        {
-                            console.log("UnilineTransaction saved");
-                           await UnilineTransactions.create({
-                             G1:G1.message,
-                             G2:G2.message,
-                             G3:G3.message,
-                             I:I.message,
-                             GF:GF.message,
-                             SNoutput:G1.sn
-                           })
-                           
+                        let isTransactionInProgress = false;
 
-                           setTimeout(() => {
-                            G1.sn = '';
-                            G2.sn = '';
-                            G3.sn = '';
-                            I.sn = '';
-                            GF.sn = '';
-                        }, 500);
+                        if (G1.sn && G1.sn == G2.sn && G2.sn == G3.sn && G3.sn == I.sn && I.sn == GF.sn && !isTransactionInProgress) {
+                            isTransactionInProgress = true;
+                            console.log("UnilineTransaction saved");
                         
-                         
-                           
+                            await UnilineTransactions.create({
+                                G1: G1.message,
+                                G2: G2.message,
+                                G3: G3.message,
+                                I: I.message,
+                                GF: GF.message,
+                                SNoutput: G1.sn
+                            });
+                        
+                            // Reset values after 500ms
+                            setTimeout(() => {
+                                G1.sn = '';
+                                G2.sn = '';
+                                G3.sn = '';
+                                I.sn = '';
+                                GF.sn = '';
+                                isTransactionInProgress = false;  // Allow the next transaction to proceed
+                            }, 500);
                         }
+                        
                 
         
        
