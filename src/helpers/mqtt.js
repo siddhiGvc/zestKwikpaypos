@@ -47,8 +47,7 @@ const parseInternal = async(payload, mqttClient,topic) => {
 
         if(data && parts[parts.length-1]=='G1')
             {
-                G1.message=parts.toString();
-                G1.sn=SerialNumber;
+              
                 data.G1=parts.toString();
                 data.lastHeartBeatTime=new Date().toISOString();
                 await data.save();
@@ -58,8 +57,7 @@ const parseInternal = async(payload, mqttClient,topic) => {
         if(data && parts[parts.length-1]=='G2')
         {
 
-            G2.message=parts.toString();
-            G2.sn=SerialNumber;
+          
             data.G2=parts.toString();
             data.lastHeartBeatTime=new Date().toISOString();
             await data.save();
@@ -69,8 +67,7 @@ const parseInternal = async(payload, mqttClient,topic) => {
       
             if(data && parts[parts.length-1]=='G3')
                 {
-                    G3.message=parts.toString();
-                    G3.sn=SerialNumber;
+                   
                     data.G3=parts.toString();
                     data.lastHeartBeatTime=new Date().toISOString();
                     await data.save();
@@ -79,8 +76,7 @@ const parseInternal = async(payload, mqttClient,topic) => {
                 }
                 if(data && parts[parts.length-1]=='I')
                     {
-                        I.message=parts.toString();
-                        I.sn=SerialNumber;
+                       
                         data.I=parts.toString();
                         data.lastHeartBeatTime=new Date().toISOString();
                         await data.save();
@@ -90,8 +86,7 @@ const parseInternal = async(payload, mqttClient,topic) => {
 
                     if(data && parts[parts.length-1]=='GF')
                         {
-                            GF.message=parts.toString();
-                            GF.sn=SerialNumber;
+                           
                             console.log(data.GF);
                             data.GF=parts.toString();
                             data.lastHeartBeatTime=new Date().toISOString();
