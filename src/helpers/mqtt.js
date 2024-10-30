@@ -24,12 +24,7 @@ module.exports.parse = (payload, mqttClient,topic) => {
 
 
 
-let G1={message:'',sn:''};
-let G2={message:'',sn:''};
-let G3={message:'',sn:''};
-let I={message:'',sn:''};
-let GF={message:'',sn:''};
-
+const transactionBuffers = {}; // Dictionary to store buffers by SerialNumber
 
 const parseInternal = async(payload, mqttClient,topic) => {
     // 'Parsing message - ' + payload
@@ -37,7 +32,18 @@ const parseInternal = async(payload, mqttClient,topic) => {
         const parts = payload.split(' ');
         const SerialNumber= parts[parts.length-2];
         const data=await UnilineMacMapping.findOne({where:{SNoutput:SerialNumber}});
-      
+        const messageType = parts[parts.length - 1];
+
+        if (!transactionBuffers[SerialNumber]) {
+            transactionBuffers[SerialNumber] = { G1: null, G2: null, G3: null, I: null, GF: null };
+        }
+
+        const buffer = transactionBuffers[SerialNumber];
+    if (messageType === 'G1') buffer.G1 = parts.toString();
+    else if (messageType === 'G2') buffer.G2 = parts.toString();
+    else if (messageType === 'G3') buffer.G3 = parts.toString();
+    else if (messageType === 'I') buffer.I = parts.toString();
+    else if (messageType === 'GF') buffer.GF = parts.toString();
 
         if(data && parts[parts.length-1]=='G1')
             {
@@ -94,32 +100,22 @@ const parseInternal = async(payload, mqttClient,topic) => {
                           
                         }
 
-                        console.log(G1.sn, G2.sn, G3.sn,I.sn,GF.sn);
-                        let isTransactionInProgress = false;
-
-                        if (G1.sn && G1.sn == G2.sn && G2.sn == G3.sn && G3.sn == I.sn && I.sn == GF.sn && !isTransactionInProgress) {
-                            isTransactionInProgress = true;
-                            console.log("UnilineTransaction saved");
-                        
+                        if (buffer.G1 && buffer.G2 && buffer.G3 && buffer.I && buffer.GF) {
+                            console.log("UnilineTransaction saved for SerialNumber:", SerialNumber);
+                    
+                            // Save transaction for this SerialNumber
                             await UnilineTransactions.create({
-                                G1: G1.message,
-                                G2: G2.message,
-                                G3: G3.message,
-                                I: I.message,
-                                GF: GF.message,
-                                SNoutput: G1.sn
+                                G1: buffer.G1,
+                                G2: buffer.G2,
+                                G3: buffer.G3,
+                                I: buffer.I,
+                                GF: buffer.GF,
+                                SNoutput: SerialNumber
                             });
-                        
-                           
-                                G1.sn = '';
-                                G2.sn = '';
-                                G3.sn = '';
-                                I.sn = '';
-                                GF.sn = '';
-                                isTransactionInProgress = false;  // Allow the next transaction to proceed
-                          
+                    
+                            // Clear the buffer for this SerialNumber after saving
+                            delete transactionBuffers[SerialNumber];
                         }
-                        
                 
         
        
@@ -352,6 +348,15 @@ const parseInternal = async(payload, mqttClient,topic) => {
         console.log('Failed to parse message', ex);
         // 'Failed to parse message'
     }
+}
+
+function resetTransactionBuffer() {
+    transactionBuffer.G1 = null;
+    transactionBuffer.G2 = null;
+    transactionBuffer.G3 = null;
+    transactionBuffer.I = null;
+    transactionBuffer.GF = null;
+    transactionBuffer.serialNumber = null;
 }
 
 function query(values, serial) {
