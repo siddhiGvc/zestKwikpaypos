@@ -24,7 +24,11 @@ module.exports.parse = (payload, mqttClient,topic) => {
 
 
 
-
+let G1={message:'',sn:''};
+let G2={message:'',sn:''};
+let G3={message:'',sn:''};
+let I={message:'',sn:''};
+let GF={message:'',sn:''};
 
 
 const parseInternal = async(payload, mqttClient,topic) => {
@@ -33,11 +37,7 @@ const parseInternal = async(payload, mqttClient,topic) => {
         const parts = payload.split(' ');
         const SerialNumber= parts[parts.length-2];
         const data=await UnilineMacMapping.findOne({where:{SNoutput:SerialNumber}});
-        let G1={message:'',sn:''};
-        let G2={message:'',sn:''};
-        let G3={message:'',sn:''};
-        let I={message:'',sn:''};
-        let GF={message:'',sn:''};
+      
 
         if(data && parts[parts.length-1]=='G1')
             {
@@ -106,6 +106,12 @@ const parseInternal = async(payload, mqttClient,topic) => {
                              GF:GF.message,
                              SNoutput:G1.sn
                            })
+                           G1={message:'',sn:''};
+                           G2={message:'',sn:''};
+                           G3={message:'',sn:''};
+                            I={message:'',sn:''};
+                            GF={message:'',sn:''};
+                           
                         }
                 
         
