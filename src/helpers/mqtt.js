@@ -35,7 +35,7 @@ const parseInternal = async(payload, mqttClient,topic) => {
         const messageType = parts[parts.length - 1];
 
         if (!transactionBuffers[SerialNumber]) {
-            transactionBuffers[SerialNumber] = { G1: null, G2: null, G3: null, I: null, GF: null };
+            transactionBuffers[SerialNumber] = { G1: null, G2: null, G3: null, I: null, GF: null ,isSaving:null};
         }
 
         const buffer = transactionBuffers[SerialNumber];
@@ -95,9 +95,9 @@ const parseInternal = async(payload, mqttClient,topic) => {
                           
                         }
 
-                        if (buffer.G1 && buffer.G2 && buffer.G3 && buffer.I && buffer.GF) {
+                        if (buffer.G1 && buffer.G2 && buffer.G3 && buffer.I && buffer.GF &&!buffer.isSaving) {
                             console.log("UnilineTransaction saved for SerialNumber:", SerialNumber);
-                    
+                            buffer.isSaving=true
                             // Save transaction for this SerialNumber
                             await UnilineTransactions.create({
                                 G1: buffer.G1,
@@ -108,8 +108,12 @@ const parseInternal = async(payload, mqttClient,topic) => {
                                 SNoutput: SerialNumber
                             });
                     
-                            // Clear the buffer for this SerialNumber after saving
-                            delete transactionBuffers[SerialNumber];
+                            buffer.G1 = null;
+                            buffer.G2 = null;
+                            buffer.G3 = null;
+                            buffer.I = null;
+                            buffer.GF = null;
+                            buffer.isSaving = false; // Reset the saving flag
                         }
                 
         
@@ -345,14 +349,7 @@ const parseInternal = async(payload, mqttClient,topic) => {
     }
 }
 
-function resetTransactionBuffer() {
-    transactionBuffer.G1 = null;
-    transactionBuffer.G2 = null;
-    transactionBuffer.G3 = null;
-    transactionBuffer.I = null;
-    transactionBuffer.GF = null;
-    transactionBuffer.serialNumber = null;
-}
+
 
 function query(values, serial) {
     var parts = Object.keys(values).map(k => `${k} = ${values[k]}`).join(', ');
