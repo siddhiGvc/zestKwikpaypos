@@ -63,6 +63,9 @@ module.exports = (sequelize, DataTypes) => {
           I: {
             type: DataTypes.STRING,
           },
+          GF: {
+            type: DataTypes.STRING,
+          },
           Q: {
             type: DataTypes.STRING,
           },
