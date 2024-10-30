@@ -106,11 +106,17 @@ const parseInternal = async(payload, mqttClient,topic) => {
                              GF:GF.message,
                              SNoutput:G1.sn
                            })
-                           G1={message:'',sn:''};
-                           G2={message:'',sn:''};
-                           G3={message:'',sn:''};
-                            I={message:'',sn:''};
-                            GF={message:'',sn:''};
+                           
+
+                           setTimeout(() => {
+                            G1.sn = '';
+                            G2.sn = '';
+                            G3.sn = '';
+                            I.sn = '';
+                            GF.sn = '';
+                        }, 500);
+                        
+                         
                            
                         }
                 
