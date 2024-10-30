@@ -7,7 +7,7 @@ SELECT
     ELSE 'Offline' 
   END AS device_status,
   CASE 
-    WHEN SUBSTRING(SUBSTRING_INDEX(d.G2, ',', 1), 7, 1) = '0' 
+    WHEN SUBSTRING(SUBSTRING_INDEX(d.G2, ',', 1), 7, 1) = '1' 
          AND TIME_TO_SEC(TIMEDIFF(UTC_TIMESTAMP(), d.lastHeartBeatTime)) / 60 < 1 THEN 'Online' 
     ELSE 'Offline' 
   END AS inverter_status,

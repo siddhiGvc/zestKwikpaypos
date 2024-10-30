@@ -57,7 +57,23 @@ const parseInternal = async(payload, mqttClient,topic) => {
         
                   
                 }
-    
+                if(data && parts[parts.length-1]=='I')
+                    {
+                        data.I=parts.toString();
+                        data.lastHeartBeatTime=new Date().toISOString();
+                        await data.save();
+            
+                      
+                    }
+                    if(data && parts[parts.length-1]=='GF')
+                        {
+                            data.GF=parts.toString();
+                            data.lastHeartBeatTime=new Date().toISOString();
+                            await data.save();
+                
+                          
+                        }
+        
        
         events.pubsub.on('getResponse1',(SerialNumber,callback) => {
           
