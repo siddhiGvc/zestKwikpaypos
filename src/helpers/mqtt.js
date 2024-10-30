@@ -32,25 +32,39 @@ const parseInternal = async(payload, mqttClient,topic) => {
     try {
         const parts = payload.split(' ');
         const SerialNumber= parts[parts.length-2];
-        const data=await UnilineMacMapping.findOne({where:{SNoutput:SerialNumber}})
-        if(data && parts[parts.length-1]=='G2')
-        {
-            data.G2=parts.toString();
-            data.lastHeartBeatTime=new Date().toISOString();
-            await data.save();
+        const data=await UnilineMacMapping.findOne({where:{SNoutput:SerialNumber}});
+        let G1={message:'',sn:''};
+        let G2={message:'',sn:''};
+        let G3={message:'',sn:''};
+        let I={message:'',sn:''};
+        let GF={message:'',sn:''};
 
-          
-        }
         if(data && parts[parts.length-1]=='G1')
             {
+                G1.message=parts.toString();
+                G1.sn=SerialNumber;
                 data.G1=parts.toString();
                 data.lastHeartBeatTime=new Date().toISOString();
                 await data.save();
     
               
             }
+        if(data && parts[parts.length-1]=='G2')
+        {
+
+            G2.message=parts.toString();
+            G2.sn=SerialNumber;
+            data.G2=parts.toString();
+            data.lastHeartBeatTime=new Date().toISOString();
+            await data.save();
+
+          
+        }
+      
             if(data && parts[parts.length-1]=='G3')
                 {
+                    G3.message=parts.toString();
+                    G3.sn=SerialNumber;
                     data.G3=parts.toString();
                     data.lastHeartBeatTime=new Date().toISOString();
                     await data.save();
@@ -59,6 +73,8 @@ const parseInternal = async(payload, mqttClient,topic) => {
                 }
                 if(data && parts[parts.length-1]=='I')
                     {
+                        I.message=parts.toString();
+                        I.sn=SerialNumber;
                         data.I=parts.toString();
                         data.lastHeartBeatTime=new Date().toISOString();
                         await data.save();
@@ -68,12 +84,27 @@ const parseInternal = async(payload, mqttClient,topic) => {
 
                     if(data && parts[parts.length-1]=='GF')
                         {
+                            GF.message=parts.toString();
+                            GF.sn=SerialNumber;
                             console.log(data.GF);
                             data.GF=parts.toString();
                             data.lastHeartBeatTime=new Date().toISOString();
                             await data.save();
                 
                           
+                        }
+
+
+                        if(G1.sn==G1.sn==G3.sn==I.sn==GF.sn)
+                        {
+                           await UnilineTransactions.create({
+                             G1:G1.message,
+                             G2:G2.message,
+                             G3:G3.message,
+                             I:I.message,
+                             GF:GF.message,
+                             SNoutput:G1.sn
+                           })
                         }
                 
         
