@@ -94,7 +94,7 @@ const parseInternal = async(payload, mqttClient,topic) => {
                           
                         }
 
-
+                        console.log(G1.sn, G2.sn, G3.sn,I.sn,GF.sn);
                         if(G1.sn==G2.sn && G2.sn==G3.sn &&G3.sn==I.sn && I.sn==GF.sn)
                         {
                            await UnilineTransactions.create({
