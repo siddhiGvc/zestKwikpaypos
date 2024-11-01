@@ -63,7 +63,7 @@ export const report=async(req,res)=>{
       }
     })
     console.log(machines);
-    res.status(200).json({data:{ success: true, counts: { city: cityCount, zone: zoneCount, ward: wardCount, beat: beatCount, machines: serialCount }, machines: machines }});
+    res.status(200).json({data:{ success: true, counts: { city: cityCount, zone: zoneCount, ward: wardCount, beat: beatCount, machines: serialCount }, machines: JSON.stringify(machines )}});
   }
   catch(err){
     console.log(err);
