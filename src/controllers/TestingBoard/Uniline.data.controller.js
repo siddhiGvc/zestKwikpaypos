@@ -283,7 +283,7 @@ export const getData = async (req, res) => {
 
        }
        catch(err){
-        return errorResponse(req, res, error.message);
+        return errorResponse(req, res, err.message);
        }
      
      
