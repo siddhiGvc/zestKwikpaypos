@@ -277,7 +277,7 @@ export const getData = async (req, res) => {
        try{
 
 
-        await UnilineMacMapping(req.body)
+        await UnilineMacMapping.create(req.body)
 
         return successResponse(req, res, { status: true });
 
