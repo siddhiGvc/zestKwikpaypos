@@ -277,7 +277,11 @@ export const getData = async (req, res) => {
        try{
 
 
-        await UnilineMacMapping.create(req.body)
+        await UnilineMacMapping.create({
+          ...req.body,
+          lastHeartBeatTime: new Date().toISOString(),
+        });
+        
 
         return successResponse(req, res, { status: true });
 
