@@ -30,15 +30,15 @@ export const report=async(req,res)=>{
     if (!req.body.startDate) return errorResponse(req, res, "Start Date is required");
     if (!req.body.endDate) return errorResponse(req, res, "End Date is required");
     var filterObj = { where: {} };
-    if (req.body.city) filterObj.where.data1 = { [Op.in]: req.body.City.split(',') };
+    if (req.body.city) filterObj.where.City = { [Op.in]: req.body.City.split(',') };
     const cityCount = (await UnilineMacMapping.findAll(filterObj)).length;
-    if (req.body.zone) filterObj.where.zone = { [Op.in]: req.body.Zone.split(',') };
+    if (req.body.zone) filterObj.where.Zone = { [Op.in]: req.body.Zone.split(',') };
     const zoneCount = (await UnilineMacMapping.findAll(filterObj)).length;
-    if (req.body.ward) filterObj.where.ward = { [Op.in]: req.body.Ward.split(',') };
+    if (req.body.ward) filterObj.where.Ward = { [Op.in]: req.body.Ward.split(',') };
     const wardCount = (await UnilineMacMapping.findAll(filterObj)).length;
-    if (req.body.beat) filterObj.where.beat = { [Op.in]: req.body.Beat.split(',') };
+    if (req.body.beat) filterObj.where.Beat = { [Op.in]: req.body.Beat.split(',') };
     const beatCount = (await UnilineMacMapping.findAll(filterObj)).length;
-    if (req.body.serial) filterObj.where.serial = { [Op.in]: req.body.serial.split(',') };
+   
     if (req.body.devices) filterObj.where.SNoutput = { [Op.in]: req.body.devices.split(',') };
     const serialCount = (await UnilineMacMapping.findAll(filterObj)).length;
     var machines = await UnilineMacMapping.findAll(filterObj);
