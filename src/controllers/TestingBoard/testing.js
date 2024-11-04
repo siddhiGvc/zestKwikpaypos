@@ -75,14 +75,14 @@ export const report=async(req,res)=>{
         var smr = summaries.filter(q => q.SNoutput == m.SNoutput && moment(q.createdAt).format('DD-MMM-YYYY') == moment(dt).format('DD-MMM-YYYY'))[0];
         var zero = (smr?.onMinutes ?? 0) == 0;
         m.summary[dt.format('DD-MMM-YYYY')] = {
-          MacID: zero ? '' : ((smr?.MacID ?? 0) ),
-          SNoutput: zero ? '' : ((smr?.SNoutput ?? 0) ),
-          Zone: zero ? '' : ((smr?.Zone ?? 0) ),
-          Ward: zero ? '' : ((smr?.Ward ?? 0) ),
-          Beat: zero ? '' : ((smr?.Beat ?? 0) ),
-          G1: zero ? '' : ((smr?.G1 ?? 0) ),
-          G2: zero ? '' : ((smr?.G2 ?? 0) ),
-          G3: zero ? '' : ((smr?.G1 ?? 0) ),
+          MacID: ((smr?.MacID ?? 0)),
+          SNoutput: ((smr?.SNoutput ?? 0)),
+          Zone: ((smr?.Zone ?? 0) ),
+          Ward:  ((smr?.Ward ?? 0) ),
+          Beat:  ((smr?.Beat ?? 0) ),
+          G1: ((smr?.G1 ?? 0) ),
+          G2:  ((smr?.G2 ?? 0) ),
+          G3:  ((smr?.G1 ?? 0) ),
       
       
         }
