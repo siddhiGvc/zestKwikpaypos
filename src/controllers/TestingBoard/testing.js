@@ -27,14 +27,16 @@ export const getAllMacAddress=async(req,res)=>{
 
 export const getInverterStatus=async(req, res) => {
   const { date } = req.query;  // e.g., '2024-11-04'
-  sequelize.query(
-    'SELECT * FROM InverterStatusLog WHERE DATE(timestamp) = ?',
-    [date],
-    (err, results) => {
-      if (err) return res.status(500).send(err);
-      res.json(results);
-    }
-  );
+
+
+  sequelize.query('SELECT * FROM InverterStatusLog WHERE DATE(timestamp) = :date', {
+    replacements: { date: date }, // Use a named replacement
+    type: db.QueryTypes.SELECT
+  }).then(results => {
+    console.log(results);
+  }).catch(err => {
+    console.error('Error:', err);
+  });
 }
 
 
