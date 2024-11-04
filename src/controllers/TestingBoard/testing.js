@@ -51,7 +51,7 @@ export const report=async(req,res)=>{
     var machines = await UnilineMacMapping.findAll(filterObj);
   
     
-    const summaries = await UnilineTransactions.findAll({
+    var summaries = await UnilineTransactions.findAll({
       attributes: [
         'SNoutput',
         [sequelize.fn('MAX', sequelize.col('createdAt')), 'latestCreatedAt']
