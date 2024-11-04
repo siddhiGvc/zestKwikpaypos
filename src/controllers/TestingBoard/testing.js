@@ -76,11 +76,14 @@ export const report=async(req,res)=>{
         var zero = (smr?.onMinutes ?? 0) == 0;
         m.summary[dt.format('DD-MMM-YYYY')] = {
           G1: zero ? '' : ((smr?.G1 ?? 0) ),
+          G2: zero ? '' : ((smr?.G2 ?? 0) ),
+          G3: zero ? '' : ((smr?.G1 ?? 0) ),
+      
       
         }
       }
     })
-    console.log(machines);
+    
     res.status(200).json({data:{ success: true, counts: { city: cityCount, zone: zoneCount, ward: wardCount, beat: beatCount, machines: serialCount }, machines: machines }});
   }
   catch(err){
