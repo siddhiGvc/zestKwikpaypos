@@ -72,7 +72,7 @@ export const report=async(req,res)=>{
     machines.forEach(m => {
       m.summary = {};
       for (var dt = moment(req.body.startDate); dt <= moment(req.body.endDate); dt.add(1, 'day')) {
-        var smr = summaries.filter(q => q.SNoutput == m.SNoutput && moment(q.createdAt).format('DD-MMM-YYYY') == moment(dt).format('DD-MMM-YYYY'))[0];
+        var smr = summaries.filter(q => q.SNoutput == m.SNoutput && moment(q.createdAt).format('YYYY-MM-DD') == moment(dt).format('YYYY-MM-DD'))[0];
         console.log("smr",smr);
         var zero = (smr?.onMinutes ?? 0) == 0;
         m.summary[dt.format('DD-MMM-YYYY')] = {
