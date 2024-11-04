@@ -67,10 +67,22 @@ const parseInternal = async(payload, mqttClient,topic) => {
               status='OFF'
             }
             
-            sequelize.query('INSERT INTO InverterStatusLog (status) VALUES (?)', {
-                replacements: [status],
-                type: sequelize.QueryTypes.INSERT
-              });
+            const [latestEntry] = await sequelize.query(
+                'SELECT status FROM InverterStatusLog ORDER BY timestamp DESC LIMIT 1',
+                { type: sequelize.QueryTypes.SELECT }
+              );
+          
+              // Step 2: Check if the new status is different
+              if (!latestEntry || latestEntry.status !== status) {
+                // Step 3: Insert the new status if it's different
+                await sequelize.query(
+                  'INSERT INTO InverterStatusLog (status) VALUES (?)',
+                  {
+                    replacements: [status],
+                    type: sequelize.QueryTypes.INSERT
+                  }
+                );
+              }
               
             data.G2=parts.toString();
             data.lastHeartBeatTime=new Date().toISOString();
