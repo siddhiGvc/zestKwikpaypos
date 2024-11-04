@@ -54,8 +54,12 @@ export const report=async(req,res)=>{
     var summaries = await UnilineTransactions.findAll({
       attributes: [
         'SNoutput',
+        'G1',
+        'G2',
+        'G3',
         [fn('DATE', col('createdAt')), 'date'], // Extract date part
         [fn('MAX', col('createdAt')), 'latestCreatedAt']
+      
       ],
       where: {
         SNoutput: { [Op.in]: machines.map(q => q.SNoutput) },
@@ -63,7 +67,7 @@ export const report=async(req,res)=>{
           [Op.between]: [startDate, endDate]
         }
       },
-      group: ['SNoutput', fn('DATE', col('createdAt'))], // Group by SNoutput and date
+      group: ['SNoutput', fn('DATE', col('createdAt')),'G1','G2','G3'], // Group by SNoutput and date
       order: [[fn('DATE', col('createdAt')), 'ASC']] // Sort by date (optional)
     });
 
