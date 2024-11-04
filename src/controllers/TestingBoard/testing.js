@@ -28,15 +28,38 @@ export const getAllMacAddress=async(req,res)=>{
 export const getInverterStatus=async(req, res) => {
   const { date } = req.query;  // e.g., '2024-11-04'
 
+db.query(
+  `SELECT status, timestamp 
+   FROM InverterStatusLog 
+   WHERE DATE(timestamp) = ? 
+   ORDER BY timestamp`,
+  { 
+    replacements: [date], 
+    type: db.QueryTypes.SELECT 
+  }
+).then(results => {
+  // Process the results to create a summary
+  const summary = [];
 
-  sequelize.query('SELECT * FROM InverterStatusLog WHERE DATE(timestamp) = :date', {
-    replacements: { date: date }, // Use a named replacement
-    type: sequelize.QueryTypes.SELECT
-  }).then(results => {
-    console.log(results);
-  }).catch(err => {
-    console.error('Error:', err);
-  });
+  // Iterate through the results to build time intervals
+  for (let i = 0; i < results.length; i++) {
+    const current = results[i];
+    const next = results[i + 1];
+
+    summary.push({
+      status: current.status,
+      start: current.timestamp,
+      end: next ? next.timestamp : 'Ongoing' // If no next timestamp, it's ongoing
+    });
+  }
+
+  console.log(summary);
+  res.json(summary);
+}).catch(err => {
+  console.error('Error:', err);
+});
+
+
 }
 
 
