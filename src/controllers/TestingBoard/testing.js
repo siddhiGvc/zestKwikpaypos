@@ -40,8 +40,7 @@ sequelize.query(
 ).then(results => {
   // Process the results to create a summary
   const summary = [];
-  let currentStartTime = null; // To track the start time
-  let currentStatus = null;    // To track the current status
+
   
 
   for (let i = 0; i < results.length; i++) {
@@ -59,8 +58,8 @@ sequelize.query(
       // If status is "OFF", show the end time explicitly
       summary.push({
         status: 'OFF',
-        start: current.timestamp,
-        end: next ? next.timestamp : 'End of Day' // Indicate the end of day if no next timestamp
+        start: next ? next.timestamp : 'Ongoing',
+        end: current.timestamp // Indicate the end of day if no next timestamp
       });
     }
   }
