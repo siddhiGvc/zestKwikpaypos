@@ -52,13 +52,13 @@ sequelize.query(
       summary.push({
         status: 'ON',
         start: current.timestamp,
-        end: next ? next.timestamp : 'Ongoing' // If there's no next entry, it's ongoing
+        end: next ? next.timestamp : 'Waiting For End' // If there's no next entry, it's ongoing
       });
     } else if (current.status === 'OFF') {
       // If status is "OFF", show the end time explicitly
       summary.push({
         status: 'OFF',
-        start: next ? next.timestamp : 'Ongoing',
+        start: next ? next.timestamp : 'Waiting For Start',
         end: current.timestamp // Indicate the end of day if no next timestamp
       });
     }
