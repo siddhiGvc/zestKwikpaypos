@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import { Op, fn ,col } from 'sequelize';
 import moment from 'moment';
 const {MacMapping,TestMode,SerialPort,UnilineMacMapping,UnilineTransactions,sequelize} =require("../../models")
 import { successResponse, errorResponse, uniqueId } from '../../helpers';
