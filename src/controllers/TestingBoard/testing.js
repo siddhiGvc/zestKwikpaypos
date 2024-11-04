@@ -42,12 +42,23 @@ export const report=async(req,res)=>{
     if (req.body.devices) filterObj.where.SNoutput = { [Op.in]: req.body.devices.split(',') };
     const serialCount = (await UnilineMacMapping.findAll(filterObj)).length;
     var machines = await UnilineMacMapping.findAll(filterObj);
-    var summaries = await UnilineMacMapping.findAll({
+    const { Op } = require('sequelize');
+    const moment = require('moment');
+    
+    const summaries = await UnilineTransactions.findAll({
+      attributes: [
+        'SNoutput',
+        [sequelize.fn('MAX', sequelize.col('createdAt')), 'latestCreatedAt']
+      ],
       where: {
         SNoutput: { [Op.in]: machines.map(q => q.SNoutput) },
-        createdAt: { [Op.between]: [req.body.startDate, moment(req.body.endDate).add(1, 'day')] }
-      }
+        createdAt: {
+          [Op.between]: [req.body.startDate, moment(req.body.endDate).add(1, 'day')]
+        }
+      },
+      group: ['SNoutput']
     });
+    
 
     machines = JSON.parse(JSON.stringify(machines));
     summaries = JSON.parse(JSON.stringify(summaries));
