@@ -54,17 +54,18 @@ export const report=async(req,res)=>{
     var summaries = await UnilineTransactions.findAll({
       attributes: [
         'SNoutput',
-        [sequelize.fn('MAX', sequelize.col('createdAt')), 'latestCreatedAt']
+        [fn('DATE', col('createdAt')), 'date'], // Extract date part
+        [fn('MAX', col('createdAt')), 'latestCreatedAt']
       ],
       where: {
         SNoutput: { [Op.in]: machines.map(q => q.SNoutput) },
         createdAt: {
-          [Op.between]: [startDate, moment(endDate).add(1, 'day')]
+          [Op.between]: [startDate, endDate]
         }
       },
-      group: ['SNoutput']
+      group: ['SNoutput', fn('DATE', col('createdAt'))], // Group by SNoutput and date
+      order: [[fn('DATE', col('createdAt')), 'ASC']] // Sort by date (optional)
     });
-    
 
     machines = JSON.parse(JSON.stringify(machines));
     summaries = JSON.parse(JSON.stringify(summaries));
