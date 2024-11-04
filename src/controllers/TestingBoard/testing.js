@@ -29,6 +29,10 @@ export const report=async(req,res)=>{
   try{
     if (!req.body.startDate) return errorResponse(req, res, "Start Date is required");
     if (!req.body.endDate) return errorResponse(req, res, "End Date is required");
+
+    const startDate = moment(req.body.startDate, 'DD-MMM-YYYY');
+     const endDate = moment(req.body.endDate, 'DD-MMM-YYYY').add(1, 'day');
+
     var filterObj = { where: {} };
     if (req.body.city) filterObj.where.City = { [Op.in]: req.body.city.split(',') };
     const cityCount = (await UnilineMacMapping.findAll(filterObj)).length;
@@ -52,7 +56,7 @@ export const report=async(req,res)=>{
       where: {
         SNoutput: { [Op.in]: machines.map(q => q.SNoutput) },
         createdAt: {
-          [Op.between]: [req.body.startDate, moment(req.body.endDate).add(1, 'day')]
+          [Op.between]: [startDate, moment(endDate).add(1, 'day')]
         }
       },
       group: ['SNoutput']
