@@ -56,8 +56,20 @@ const parseInternal = async(payload, mqttClient,topic) => {
             }
         if(data && parts[parts.length-1]=='G2')
         {
-
-          
+            let Data1=parts[0].split('');
+            let Data2=parts[1].split('');
+            let  status = '';
+            if(Data1[6] =='1' && Data2[7]== '1')
+            {
+              status='ON'
+            }
+            else{
+              status='OFF'
+            }
+            
+            sequelize.query('INSERT INTO InverterStatusLog (status) VALUES (?)', [status], (err) => {
+                if (err) console.error(err);
+              });
             data.G2=parts.toString();
             data.lastHeartBeatTime=new Date().toISOString();
             await data.save();
