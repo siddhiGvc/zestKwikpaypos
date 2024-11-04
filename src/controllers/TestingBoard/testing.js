@@ -30,8 +30,11 @@ export const report=async(req,res)=>{
     if (!req.body.startDate) return errorResponse(req, res, "Start Date is required");
     if (!req.body.endDate) return errorResponse(req, res, "End Date is required");
 
-    const startDate = moment(req.body.startDate, 'DD-MMM-YYYY');
-     const endDate = moment(req.body.endDate, 'DD-MMM-YYYY').add(1, 'day');
+    let startDate = moment(req.body.startDate, 'DD-MMM-YYYY');
+    let endDate = moment(req.body.endDate, 'DD-MMM-YYYY').add(1, 'day');
+
+    // Reassign `startDate` or `endDate` if needed later in your code
+
 
     var filterObj = { where: {} };
     if (req.body.city) filterObj.where.City = { [Op.in]: req.body.city.split(',') };
