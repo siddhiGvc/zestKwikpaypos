@@ -31,7 +31,7 @@ export const getInverterStatus=async(req, res) => {
 
   sequelize.query('SELECT * FROM InverterStatusLog WHERE DATE(timestamp) = :date', {
     replacements: { date: date }, // Use a named replacement
-    type: db.QueryTypes.SELECT
+    type: sequelize.QueryTypes.SELECT
   }).then(results => {
     console.log(results);
   }).catch(err => {
