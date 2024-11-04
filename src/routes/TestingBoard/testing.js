@@ -12,7 +12,7 @@ router.get('/getWards',getData.getWards);
 router.get('/getBeats',getData.getBeats);
 
 router.post("/addDevice",getData.createMapping);
-router.post('/getInverterStatus',testing.getInverterStatus);
+router.get('/getInverterStatus',testing.getInverterStatus);
 
 router.post('/sendG1',testing.sendG1);
 router.post('/sendG2',testing.sendG2);
