@@ -40,19 +40,38 @@ sequelize.query(
 ).then(results => {
   // Process the results to create a summary
   const summary = [];
+  let currentStartTime = null; // To track the start time
+  let currentStatus = null;    // To track the current status
 
   // Iterate through the results to build time intervals
-  for (let i = 0; i < results.length; i++) {
-    const current = results[i];
-    const next = results[i + 1];
+  results.forEach((entry, index) => {
+    const next = results[index + 1];
 
-    summary.push({
-      status: current.status,
-      start: current.timestamp,
-      end: next ? next.timestamp : 'Ongoing' // If no next timestamp, it's ongoing
+    // If the status has changed, create a new entry
+    if (entry.status !== currentStatus) {
+      if (currentStatus) {
+        // Push the previous status duration before updating
+        summary.push({
+          status: currentStatus,
+          start: currentStartTime,
+          end: entry.timestamp // Current timestamp marks the end of the previous status
+        });
+      }
+      // Update the current status and start time
+      currentStatus = entry.status;
+      currentStartTime = entry.timestamp;
+    }
+
+    // If this is the last entry, push it to the summary
+    if (!next) {
+      summary.push({
+        status: currentStatus,
+        start: currentStartTime,
+        end: 'End of Day' // Mark as end of day if there is no next status change
+      });
+    }
     });
-  }
-
+  
   console.log(summary);
   res.json(summary);
 }).catch(err => {
