@@ -25,6 +25,20 @@ export const getAllMacAddress=async(req,res)=>{
 }
 
 
+export const getInverterStatus=async(req, res) => {
+  const { date } = req.query;  // e.g., '2024-11-04'
+  sequelize.query(
+    'SELECT * FROM InverterStatusLog WHERE DATE(timestamp) = ?',
+    [date],
+    (err, results) => {
+      if (err) return res.status(500).send(err);
+      res.json(results);
+    }
+  );
+}
+
+
+
 export const report=async(req,res)=>{
   try{
     if (!req.body.startDate) return errorResponse(req, res, "Start Date is required");

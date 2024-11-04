@@ -21,6 +21,9 @@ router.post('/sendFotaUrl',macAddress.sendFotaUrl);
 router.post('/askUrl',macAddress.askUrl);
 
 
+
+
+
 router.post('/sendHBT',macAddress.sendHBT);
 router.post('/sendSIP',macAddress.sendSIP);
 router.post('/askSIP',macAddress.askSIP);
