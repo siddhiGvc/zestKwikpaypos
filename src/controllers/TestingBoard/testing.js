@@ -42,8 +42,7 @@ export const report=async(req,res)=>{
     if (req.body.devices) filterObj.where.SNoutput = { [Op.in]: req.body.devices.split(',') };
     const serialCount = (await UnilineMacMapping.findAll(filterObj)).length;
     var machines = await UnilineMacMapping.findAll(filterObj);
-    const { Op } = require('sequelize');
-    const moment = require('moment');
+  
     
     const summaries = await UnilineTransactions.findAll({
       attributes: [
