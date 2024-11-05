@@ -891,15 +891,15 @@ const server = net.createServer((socket) => {
                           
                       }
                   else{
-                  // await MacMapping.create({
-                  //   MacID:command[1],
-                  //   SNoutput:command[2],
-                  //   lastHeartBeatTime:new Date().toISOString(),
-                  //   INHinput:false,
-                  //   INHoutput:false
+                  await MacMapping.create({
+                    MacID:command[1],
+                    SNoutput:command[2],
+                    lastHeartBeatTime:new Date().toISOString(),
+                    INHinput:false,
+                    INHoutput:false
                     
 
-                  // })
+                  })
                 }
               
            } 
