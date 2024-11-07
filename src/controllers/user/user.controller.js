@@ -82,7 +82,7 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    console.log(req.body);
+  
     const user = await User.scope('withSecretColumns').findOne({
       where: { email: req.body.email },
     });
@@ -108,6 +108,42 @@ export const login = async (req, res) => {
     );
     delete user.dataValues.password;
     return successResponse(req, res, { user, token });
+  } catch (error) {
+    return errorResponse(req, res, error.message);
+  }
+};
+
+
+export const signUp = async (req, res) => {
+  try {
+    const {
+      email, password, product,SerialNumber,UniqueNumber
+    } = req.body;
+
+    
+
+    const user = await User.scope('withSecretColumns').findOne({
+      where: { email },
+    });
+    if (user) {
+      throw new Error('User already exists with same username');
+    }
+    const reqPass = crypto
+      .createHash('sha256')
+      .update(password)
+      .digest('hex');
+    const payload = {
+      email,
+      name:email,
+      userLoginType:product,
+      WaterSerialNumber:SerialNumber || '',
+      UniqueCode:UniqueNumber || '',
+      password: reqPass,
+      isVerified: true,
+    };
+
+    const newUser = await User.create(payload);
+    return successResponse(req, res, {});
   } catch (error) {
     return errorResponse(req, res, error.message);
   }

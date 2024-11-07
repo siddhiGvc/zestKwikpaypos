@@ -55,6 +55,21 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
 
+      },
+      UserLoginType:{
+        type: DataTypes.STRING,
+        defaultValue: null,
+
+      },
+      WaterSerialNumber:{
+        type: DataTypes.STRING,
+        defaultValue: null,
+
+      },
+      UniqueCode:{
+        type: DataTypes.STRING,
+        defaultValue: null,
+
       }
     },
     {

@@ -22,7 +22,8 @@ const customerRouter=require("./src/routes/customer");
 const trafficRouter =require("./src/routes/TrafficLights/route");
 const testingBoardRouter=require("./src/routes/TestingBoard/testing");
 const UnilineUserRouter=require('./src/routes/unilineAdmin')
-const UnilineCustomerRouter=require('./src/routes/TestingBoard/customers')
+const UnilineCustomerRouter=require('./src/routes/TestingBoard/customers');
+const signupRouter=require('./src/routes/signup');
 
 dotenv.config();
 require('./src/config/sequelize');
@@ -45,6 +46,7 @@ app.use('/api', apiMiddleware, apiRoutes);
 app.use('/api/admin', apiMiddleware, adminMiddleware, adminRoutes);
 app.use('/add',vcRoutes);
 app.use('/', paytmRouter);
+app.use('/signup',signupRouter);
 app.use('/colors',colorRouter);
 app.use('/inventory',inventoryRouter);
 app.use('/customers',customerRouter);
