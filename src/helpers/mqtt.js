@@ -45,6 +45,7 @@ const parseInternal = async(payload, mqttClient,topic) => {
         {
             if(serial)
             {
+                // console.log("serial found")
              serial.BatteryVoltage=parts[2],
              serial.BatteryCapacity=parts[3],
              serial.IpFrequency=parts[5],
