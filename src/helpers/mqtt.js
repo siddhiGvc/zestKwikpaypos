@@ -29,119 +29,149 @@ const transactionBuffers = {}; // Dictionary to store buffers by SerialNumber
 const parseInternal = async(payload, mqttClient,topic) => {
     // 'Parsing message - ' + payload
     try {
-        const parts = payload.split(' ');
-        const SerialNumber= parts[parts.length-2];
-        const data=await UnilineMacMapping.findOne({where:{SNoutput:SerialNumber}});
-        const messageType = parts[parts.length - 1];
-
-        if (!transactionBuffers[SerialNumber]) {
-            transactionBuffers[SerialNumber] = { G1: null, G2: null, G3: null, I: null, GF: null ,isSaving:null};
-        }
-
-        const buffer = transactionBuffers[SerialNumber];
-    if (messageType === 'G1') buffer.G1 = parts.toString();
-    else if (messageType === 'G2') buffer.G2 = parts.toString();
-    else if (messageType === 'G3') buffer.G3 = parts.toString();
-    else if (messageType === 'I') buffer.I = parts.toString();
-    else if (messageType === 'GF') buffer.GF = parts.toString();
-
-        if(data && parts[parts.length-1]=='G1')
-            {
-              
-                data.G1=parts.toString();
-                data.lastHeartBeatTime=new Date().toISOString();
-                await data.save();
-    
-              
-            }
-        if(data && parts[parts.length-1]=='G2')
+        let parts;
+        if(payload.includes(','))
         {
-            let Data1=parts[0].split('');
-            let Data2=parts[1].split('');
-            let  status = '';
-            if(Data1[6] =='1' && Data2[7]== '1')
+            parts = payload.split(',');
+        }
+        else{
+            parts = payload.split(':');
+        }
+       
+      if(parts[0].includes("GVC-CUPS"))
+      {
+        const serial=await UnilineMacMapping.findOne({where:{SNoutput:parts[0]}})
+        if(parts[1]=='G1')
+        {
+            if(serial)
             {
-              status='ON'
+             serial.BatteryVoltage=parts[2],
+             serial.BatteryCapacity=parts[3],
+             serial.IpFrequency=parts[5],
+             serial.OpFreuency=parts[6],
+             serial.lastHeartBeatTime=new Date().toISOString(),
+             await serial.save();
             }
             else{
-              status='OFF'
-            }
-            
-            const [latestEntry] = await sequelize.query(
-                'SELECT status FROM InverterStatusLog ORDER BY timestamp DESC LIMIT 1',
-                { type: sequelize.QueryTypes.SELECT }
-              );
-          
-              // Step 2: Check if the new status is different
-              if (!latestEntry || latestEntry.status !== status) {
-                // Step 3: Insert the new status if it's different
-                await sequelize.query(
-                  'INSERT INTO InverterStatusLog (status) VALUES (?)',
-                  {
-                    replacements: [status],
-                    type: sequelize.QueryTypes.INSERT
-                  }
-                );
-              }
-              
-            data.G2=parts.toString();
-            data.lastHeartBeatTime=new Date().toISOString();
-            await data.save();
+            await UnilineMacMapping.create({
+                SNoutput:parts[0],
+                BatteryVoltage:parts[2],
+                BatteryCapacity:parts[3],
+                IpFrequency:parts[5],
+                OpFreuency:parts[6],
+                lastHeartBeatTime:new Date().toISOString(),
 
-          
+
+            })
+           }
         }
-      
-            if(data && parts[parts.length-1]=='G3')
+        if(parts[1]=='G3')
+            {
+                if(serial)
                 {
-                   
-                    data.G3=parts.toString();
-                    data.lastHeartBeatTime=new Date().toISOString();
-                    await data.save();
-        
-                  
+                 serial.IpVoltage1=parts[2],
+                 serial.IpVoltage2=parts[3],
+                 serial.IpVoltage3=parts[4],
+                 serial.OpVoltage1=parts[5],
+                 serial.OpVoltage2=parts[6],
+                 serial.OpVoltage3=parts[7],
+                 serial.Load1=parts[8],
+                 serial.Load2=parts[9],
+                 serial.Load3=parts[10],
+                 serial.lastHeartBeatTime=new Date().toISOString(),
+                 await serial.save();
                 }
-                if(data && parts[parts.length-1]=='I')
+                else{
+                await UnilineMacMapping.create({
+                    SNoutput:parts[0],
+                    IpVoltage1:parts[2],
+                    IpVoltage2:parts[3],
+                    IpVoltage3:parts[4],
+                    OpVoltage1:parts[5],
+                    OpVoltage2:parts[6],
+                    OpVoltage3:parts[7],
+                    Load1:parts[8],
+                    Load2:parts[9],
+                    Load3:parts[10],
+                    lastHeartBeatTime:new Date().toISOString(),
+                })
+               }
+            }
+
+            if(parts[1]=='I')
+                {
+                    if(serial)
                     {
-                       
-                        data.I=parts.toString();
-                        data.lastHeartBeatTime=new Date().toISOString();
-                        await data.save();
-            
-                      
+                     serial.Company=parts[2],
+                     serial.Model=parts[3],
+                     serial.Version=parts[4],
+                     serial.lastHeartBeatTime=new Date().toISOString(),
+                     await serial.save();
                     }
+                    else{
+                    await UnilineMacMapping.create({
+                        SNoutput:parts[0],
+                        Company:parts[2],
+                        Model:parts[3],
+                        Version:parts[4],
+                        lastHeartBeatTime:new Date().toISOString(),
+                    })
+                   }
+                }
 
-                    if(data && parts[parts.length-1]=='GF')
+                if(parts[1]=='GF')
+                    {
+                        if(serial)
                         {
-                           
-                            console.log(data.GF);
-                            data.GF=parts.toString();
-                            data.lastHeartBeatTime=new Date().toISOString();
-                            await data.save();
-                
-                          
-                        }
+                         serial.RectiferNeutral=parts[2],
+                         serial.RectfierPhase=parts[3],
+                         serial.RectiferTopology=parts[4],
+                         serial.RectfierFrequency=parts[5],
 
-                        if (buffer.G1 && buffer.G2 && buffer.G3 && buffer.I && buffer.GF &&!buffer.isSaving) {
-                            console.log("UnilineTransaction saved for SerialNumber:", SerialNumber);
-                            buffer.isSaving=true
-                            // Save transaction for this SerialNumber
-                            await UnilineTransactions.create({
-                                G1: buffer.G1,
-                                G2: buffer.G2,
-                                G3: buffer.G3,
-                                I: buffer.I,
-                                GF: buffer.GF,
-                                SNoutput: SerialNumber
-                            });
-                    
-                            buffer.G1 = null;
-                            buffer.G2 = null;
-                            buffer.G3 = null;
-                            buffer.I = null;
-                            buffer.GF = null;
-                            buffer.isSaving = false; // Reset the saving flag
+                         serial.BypassNeutral=parts[6],
+                         serial.BypassPhase=parts[7],
+                         serial.BypassTopology=parts[8],
+                         serial.BypassFrequency=parts[9],
+
+                         serial.OutputNeutral=parts[6],
+                         serial.OutputPhase=parts[7],
+                         serial.OutputTopology=parts[8],
+                         serial.OutputFrequency=parts[9], 
+
+                         serial.UpsBatteryVoltage=parts[10],
+                         serial.PowerRating=parts[11]
+                         serial.lastHeartBeatTime=new Date().toISOString(),
+                       
+                         await serial.save();
                         }
-                
+                        else{
+                        await UnilineMacMapping.create({
+                            SNoutput:parts[0],
+                            RectiferNeutral:parts[2],
+                            RectfierPhase:parts[3],
+                            RectiferTopology:parts[4],
+                            RectfierFrequency:parts[5],
+   
+                            BypassNeutral:parts[6],
+                            BypassPhase:parts[7],
+                            BypassTopology:parts[8],
+                            BypassFrequency:parts[9],
+   
+                            OutputNeutral:parts[6],
+                            OutputPhase:parts[7],
+                            OutputTopology:parts[8],
+                            OutputFrequency:parts[9], 
+                           
+                            UpsBatteryVoltage:parts[10],
+                            PowerRating:parts[11],
+                            lastHeartBeatTime:new Date().toISOString(),
+                           
+                        })
+                       }
+                    }
+       
+    }
+
         
        
         events.pubsub.on('getResponse1',(SerialNumber,callback) => {
