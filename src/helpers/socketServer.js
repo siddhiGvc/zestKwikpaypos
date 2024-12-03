@@ -894,6 +894,7 @@ const server = net.createServer((socket) => {
                   await MacMapping.create({
                     MacID:command[1],
                     SNoutput:command[2],
+                    SocketNumber:remotePort,
                     lastHeartBeatTime:new Date().toISOString(),
                     INHinput:false,
                     INHoutput:false
