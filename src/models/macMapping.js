@@ -209,6 +209,10 @@ module.exports = (sequelize, DataTypes) => {
             type:DataTypes.STRING,
             
           },
+          Doutput:{
+            type:DataTypes.STRING,
+            
+          },
           
          
          

@@ -350,6 +350,13 @@ const server = net.createServer((socket) => {
           socket.write(`*PW1:${name}:${getDateTime()}:${pwd}#`);
         }
       });
+      events.pubsub.on('sendD', function(port,unixTS,name) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*D:${unixTS}#`);
+        }
+      });
       events.pubsub.on('sendCA', function(port,num,polarity,name) {
      
         
@@ -819,6 +826,37 @@ const server = net.createServer((socket) => {
                  
                 
               } 
+              else  if(command[0]=="D-OK")
+                {
+                  
+                  
+                    const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                  
+                    if(data)
+                        {
+                          
+                            data.Doutput=command[0];
+                            data.lastHeartBeatTime=new Date().toISOString();
+                            await data.save();
+                              await Transaction.create({
+                                  machine:data.UID,
+                                  command:command[0],
+                                  p1:command[1],
+                                  p2:command[2],
+                                  p3:command[3],
+                                  p4:command[4]
+                              })
+                               console.log("Saved In Transactions");
+                               setTimeout(()=>{
+                                data.Doutput='';
+                              
+                               data.save();
+  
+                              },8000)
+                        }
+                   
+                  
+                } 
               else  if(command[0]=="PT")
                 {
                   

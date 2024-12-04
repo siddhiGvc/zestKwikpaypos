@@ -41,5 +41,6 @@ router.post('/setL',macAddress.setL);
 router.get('/getSerialPorts',macAddress.getSerialPorts);
 router.post('/sendPassThru',macAddress.sendPassThru);
 router.post('/checkPassThru',macAddress.checkPassThru);
+router.post('/sendD',macAddress.sendD);
 
 module.exports = router;
