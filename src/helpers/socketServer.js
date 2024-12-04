@@ -355,6 +355,7 @@ const server = net.createServer((socket) => {
         
         if(remotePort == port) {
           socket.write(`*D:${unixTS}#`);
+          console.log(`*D:${unixTS}#`);
         }
       });
       events.pubsub.on('sendCA', function(port,num,polarity,name) {
