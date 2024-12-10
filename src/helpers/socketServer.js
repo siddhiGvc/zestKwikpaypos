@@ -358,6 +358,15 @@ const server = net.createServer((socket) => {
           console.log(`*D:${unixTS}#`);
         }
       });
+
+      events.pubsub.on('sendVS', function(port,unixTS,name) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*VS?#`);
+          console.log(`*VS?#`);
+        }
+      });
       events.pubsub.on('sendCA', function(port,num,polarity,name) {
      
         
@@ -1140,6 +1149,33 @@ const server = net.createServer((socket) => {
                        
                       
                     }
+                    else  if((command[0].includes("VS")))
+                      {
+                        
+                          
+                          const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                        
+                          if(data)
+                              {
+                                const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                                    // console.log(data);
+                                   
+                                
+                                  data.VSoutput=strData;
+                                  data.lastHeartBeatTime=new Date().toISOString();
+                                  await data.save();
+                                   
+                                     console.log("Saved In Transactions");
+                                     setTimeout(()=>{
+                                      data.VSoutput='';
+                                    
+                                     data.save();
+        
+                                    },8000)
+                              }
+                         
+                        
+                      }
                     else  if((command[0].includes("V")) && !command[0].includes("TV") && !command[0].includes("GVC") && !command[0].includes("Kwikpay"))
                       {
                         

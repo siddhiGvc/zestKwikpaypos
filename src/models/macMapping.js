@@ -213,6 +213,10 @@ module.exports = (sequelize, DataTypes) => {
             type:DataTypes.STRING,
             
           },
+          VSoutput:{
+            type:DataTypes.STRING,
+            
+          },
           
          
          

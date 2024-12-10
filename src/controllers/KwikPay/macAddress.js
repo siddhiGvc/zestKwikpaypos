@@ -642,6 +642,24 @@ export const sendD=async(req,res)=>{
 
 }
 
+export const sendVS=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('sendVS',req.body.socketNumber,req.body.UserName) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}
+
 export const modeTest1=async(req,res)=>{
     try{
         
