@@ -299,7 +299,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*SIP:${name}:${getDateTime()}:${ip}:${pin}#`);
+          socket.write(`*SIP:${name}:${getDateTime()}:${pin}#`);
         }
       });
 
