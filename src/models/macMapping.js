@@ -117,6 +117,10 @@ module.exports = (sequelize, DataTypes) => {
             type:DataTypes.STRING,
             
           },
+          CCmessage:{
+            type:DataTypes.STRING,
+            
+          },
           Soutput:{
             type:DataTypes.STRING,
             

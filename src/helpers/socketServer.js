@@ -271,11 +271,19 @@ const server = net.createServer((socket) => {
         }
       });
 
-      events.pubsub.on('sendCC', function(port,name) {
+      events.pubsub.on('sendCC', function(port,name,us) {
      
         
         if(remotePort == port) {
-          socket.write(`*CC:${name}:${getDateTime()}#`);
+          socket.write(`*CC:${name}:${getDateTime()}:${us}#`);
+        }
+      });
+
+      events.pubsub.on('askCC', function(port) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*CC?#`);
         }
       });
 
@@ -1353,6 +1361,49 @@ const server = net.createServer((socket) => {
                        
                       
                     }
+                    else  if(command[0]=="CC")
+                      {
+                        
+                         // console.log(remotePort);
+                         
+                        
+                          
+                         
+                          const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                        // console.log(data);
+                          if(data)
+                              {
+                                const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                                // console.log(data);
+                                 if(data)
+                                 {
+                                     data.Color="";
+                                     await data.save();
+                                 }
+                                
+                                  data.CCmessage=command[0];
+                                  data.lastHeartBeatTime=new Date().toISOString();
+                                  await data.save();
+                                  setTimeout(()=>{
+                                    data.CCmessage='';
+                                  
+                                   data.save();
+      
+                                  },8000)
+                                    await Transaction.create({
+                                        machine:data.UID,
+                                        command:command[0],
+                                        p1:command[1],
+                                        p2:command[2],
+                                        p3:command[3],
+                                        p4:command[4]
+                                    })
+                                     console.log("Saved In Transactions");
+                                   
+                              }
+                         
+                        
+                      }
                     else  if(command[0]=="SIP-OK")
                       {
                         
