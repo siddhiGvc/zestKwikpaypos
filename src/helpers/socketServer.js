@@ -1381,7 +1381,7 @@ const server = net.createServer((socket) => {
                                      await data.save();
                                  }
                                 
-                                  data.CCmessage=command[0];
+                                  data.CCmessage=strData;
                                   data.lastHeartBeatTime=new Date().toISOString();
                                   await data.save();
                                   setTimeout(()=>{
