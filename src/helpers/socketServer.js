@@ -299,7 +299,7 @@ const server = net.createServer((socket) => {
      
         
         if(remotePort == port) {
-          socket.write(`*HBT:${value}#`);
+          socket.write(`*HBT#`);
         }
       });
 
