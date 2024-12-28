@@ -167,6 +167,7 @@ export const sendTC=async(req,res)=>{
         
       
         events.pubsub.emit('sendTC',req.body.socketNumber,req.body.UserName) ;
+        console.log("sending TC");
         const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
        
         res.status(200).json({data:obj})
