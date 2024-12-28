@@ -687,10 +687,12 @@ const server = net.createServer((socket) => {
        
    
    function startSocketListeners() {
+
     socket.on('disconnect', function(){
-        // Do stuff (probably some jQuery)
-        console.log("socket disconneced",remotePort);
-    });
+      // Do stuff (probably some jQuery)
+      console.log("socket disconneced",remotePort);
+  });
+   
     socket.on("data",async (data) => {
        
         const strData = data.toString();
@@ -2022,6 +2024,11 @@ const server = net.createServer((socket) => {
        await socket.write(`RemotePort From Server:${remotePort}`);
     });
     }
+
+    socket.on('disconnect', function(){
+      // Do stuff (probably some jQuery)
+      console.log("socket disconneced",remotePort);
+  });
 
     socket.on("end", () => {
         console.log("Client disconnected");
