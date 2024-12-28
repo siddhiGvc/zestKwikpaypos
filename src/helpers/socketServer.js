@@ -223,9 +223,10 @@ const server = net.createServer((socket) => {
        });
 
        events.pubsub.on('sendTC', function(port,name) {
-     
+          console.log("About to send TC socket");
         
         if(remotePort == port) {
+            console.log("sending TC socket");
             socket.write(`*TC?#`);
         }
       });
