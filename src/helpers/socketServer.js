@@ -687,6 +687,10 @@ const server = net.createServer((socket) => {
        
    
    function startSocketListeners() {
+    socket.on('disconnect', function(){
+        // Do stuff (probably some jQuery)
+        console.log("socket disconneced",remotePort);
+    });
     socket.on("data",async (data) => {
        
         const strData = data.toString();
