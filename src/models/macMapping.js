@@ -161,6 +161,14 @@ module.exports = (sequelize, DataTypes) => {
             type:DataTypes.STRING,
             
           },
+          QRoutput:{
+            type:DataTypes.STRING,
+            
+          },
+          QRmessage:{
+            type:DataTypes.STRING,
+            
+          },
           SNoutput:{
             type:DataTypes.STRING,
             

@@ -412,6 +412,42 @@ export const askCC=async(req,res)=>{
 
 }
 
+export const sendQR=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('sendQR',req.body.socketNumber,req.body.UserName,req.body.QR) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}
+
+export const askQR=async(req,res)=>{
+    try{
+        
+      
+        events.pubsub.emit('askQR',req.body.socketNumber,req.body.UserName) ;
+        const obj = await MacMapping.findOne({where:{MacID:req.body.MacId}});
+       
+        res.status(200).json({data:obj})
+  
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.status(505).json({status:505})
+    }
+
+}
+
 export const sendLight=async(req,res)=>{
     try{
         

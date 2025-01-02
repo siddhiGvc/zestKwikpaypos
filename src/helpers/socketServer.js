@@ -288,6 +288,22 @@ const server = net.createServer((socket) => {
         }
       });
 
+      events.pubsub.on('sendQR', function(port,name,qr) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*QR:${qr}#`);
+        }
+      });
+
+      events.pubsub.on('askQR', function(port) {
+     
+        
+        if(remotePort == port) {
+          socket.write(`*QR?#`);
+        }
+      });
+
       events.pubsub.on('sendLight', function(port,light,postion,name) {
      
         
@@ -1443,6 +1459,82 @@ const server = net.createServer((socket) => {
                          
                         
                       }
+                      else  if(command[0]=="QR-OK")
+                        {
+                          
+                           // console.log(remotePort);
+                           
+                          
+                            
+                           
+                            const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                          // console.log(data);
+                            if(data)
+                                {
+                                  const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                                 
+                                  
+                                    data.QRoutput=command[0];
+                                    data.lastHeartBeatTime=new Date().toISOString();
+                                    await data.save();
+                                    setTimeout(()=>{
+                                      data.QRoutput='';
+                                    
+                                     data.save();
+        
+                                    },8000)
+                                      await Transaction.create({
+                                          machine:data.UID,
+                                          command:command[0],
+                                          p1:command[1],
+                                          p2:command[2],
+                                          p3:command[3],
+                                          p4:command[4]
+                                      })
+                                       console.log("Saved In Transactions");
+                                     
+                                }
+                           
+                          
+                        }
+                        else  if(command[0]=="QR")
+                          {
+                            
+                             // console.log(remotePort);
+                             
+                            
+                              
+                             
+                              const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                            // console.log(data);
+                              if(data)
+                                  {
+                                    const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
+                                    // console.log(data);
+                                  
+                                      data.QRoutput=strData;
+                                      data.lastHeartBeatTime=new Date().toISOString();
+                                      await data.save();
+                                      setTimeout(()=>{
+                                        data.QRoutput='';
+                                      
+                                       data.save();
+          
+                                      },8000)
+                                        await Transaction.create({
+                                            machine:data.UID,
+                                            command:command[0],
+                                            p1:command[1],
+                                            p2:command[2],
+                                            p3:command[3],
+                                            p4:command[4]
+                                        })
+                                         console.log("Saved In Transactions");
+                                       
+                                  }
+                             
+                            
+                          }
                     else  if(command[0]=="SIP-OK")
                       {
                         
