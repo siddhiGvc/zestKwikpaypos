@@ -1474,7 +1474,7 @@ const server = net.createServer((socket) => {
                                   const data=await MacMapping.findOne({where:{SocketNumber:remotePort}});
                                  
                                   
-                                    data.QRoutput=command[0];
+                                    data.QRoutput=strData;
                                     data.lastHeartBeatTime=new Date().toISOString();
                                     await data.save();
                                     setTimeout(()=>{
